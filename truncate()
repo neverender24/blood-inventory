@@ -1,0 +1,55 @@
+
+   ErrorException  : file_put_contents(E:\xampp\htdocs\boilerplate\database/seeds/DB::table('users')-;.php): failed to open stream: No such file or directory
+
+  at E:\xampp\htdocs\boilerplate\vendor\laravel\framework\src\Illuminate\Filesystem\Filesystem.php:122
+    118|      * @return int
+    119|      */
+    120|     public function put($path, $contents, $lock = false)
+    121|     {
+  > 122|         return file_put_contents($path, $contents, $lock ? LOCK_EX : 0);
+    123|     }
+    124| 
+    125|     /**
+    126|      * Prepend to a file.
+
+  Exception trace:
+
+  1   file_put_contents("E:\xampp\htdocs\boilerplate\database/seeds/DB::table('users')-;.php", "<?php
+
+use Illuminate\Database\Seeder;
+
+class DB::table('users')-; extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        //
+    }
+}
+")
+      E:\xampp\htdocs\boilerplate\vendor\laravel\framework\src\Illuminate\Filesystem\Filesystem.php:122
+
+  2   Illuminate\Filesystem\Filesystem::put("E:\xampp\htdocs\boilerplate\database/seeds/DB::table('users')-;.php", "<?php
+
+use Illuminate\Database\Seeder;
+
+class DB::table('users')-; extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        //
+    }
+}
+")
+      E:\xampp\htdocs\boilerplate\vendor\laravel\framework\src\Illuminate\Console\GeneratorCommand.php:72
+
+  Please use the argument -v to see more details.
