@@ -22,11 +22,18 @@
     },
     "dependencies": {
         "babel-preset-stage-2": "^6.24.1",
-        "es6-promise": "^4.2.5",
+        "chart.js": "^2.7.3",
+        "es6-promise": "^4.2.6",
         "flag-icon-css": "^3.2.1",
         "font-awesome": "^4.7.0",
         "mdi": "^2.2.43",
         "simple-line-icons": "^2.4.1",
-        "vue-router": "^3.0.1"
+        "vue-chartjs": "^3.4.0",
+        "vue-router": "^3.0.1",
+        "vue-select": "^2.5.1",
+        "vue-snotify": "^3.2.1",
+        "vue-toasted": "^1.1.26",
+        "vuelidate": "^0.7.4",
+        "vuex": "^3.1.0"
     }
 }
