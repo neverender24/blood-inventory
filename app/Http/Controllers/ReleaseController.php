@@ -32,6 +32,7 @@ class ReleaseController extends Controller
 		$dir = $request->dir;
         $searchValue = $request->search;
         $show = $request->show;
+
         
         //$index = $this->model->with(['bloodType', 'bloodComponent'])->orderBy($sortFields[$column], $dir);
 

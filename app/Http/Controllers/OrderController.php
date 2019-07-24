@@ -135,11 +135,18 @@ class OrderController extends Controller
     public function generateCode() {
         $prefix = BloodStation::where('id', auth()->user()->blood_station_id)->value('prefix');
 
+        // $totalOrder = $this->model->whereHas('user', function($q){
+        //     $q->where('blood_station_id', auth()->user()->blood_station_id);
+        // })->whereYear('order_date', date('Y'))->withTrashed()->count();
+
         $totalOrder = $this->model->whereHas('user', function($q){
             $q->where('blood_station_id', auth()->user()->blood_station_id);
-        })->whereYear('order_date', date('Y'))->withTrashed()->count();
+        })->whereYear('order_date', date('Y'))->orderBy("created_at", "desc")->first();
+        
 
-        return $prefix."-".date('Y')."-".($totalOrder + 1);
+        $getLastDigit = explode("-", $totalOrder->transaction_code);
+
+        return $prefix."-".date('Y')."-".($getLastDigit[2] + 1);
     }
 
     public function print(Request $request)

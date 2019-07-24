@@ -34,8 +34,17 @@
                                 class="form-control"
                                 v-model="tableData.search"
                                 @input="getData()"
-                            >
+                            />
                         </div>
+                    </div>
+                    <div class="form-group col-4">
+                        <input
+                            type="text"
+                            class="form-control"
+                            v-model="tableData.serial"
+                            placeholder="Enter serial"
+                            @input="getData()"
+                        />
                     </div>
                 </div>
 
@@ -116,7 +125,7 @@ import Pagination from "../../helpers/pagination.vue";
 import Releases from "./Releases.vue";
 import Store from "./Store.vue";
 import EditDisposition from "./edit";
-import { mapState } from 'vuex';
+import { mapState } from "vuex";
 
 export default {
     components: {
@@ -153,7 +162,8 @@ export default {
                 search: "",
                 column: 0,
                 dir: "desc",
-                show: "available"
+                show: "available",
+                serial: ""
             },
             pagination: {
                 lastPage: "",
@@ -275,13 +285,27 @@ export default {
 
         identifyBloodType(bloodType) {
             if (bloodType == "Platelet") {
-                return "<label class='badge badge-primary'>" + bloodType +"</label>"
+                return (
+                    "<label class='badge badge-primary'>" +
+                    bloodType +
+                    "</label>"
+                );
             } else if (bloodType == "Whole Blood") {
-                return "<label class='badge badge-info'>" + bloodType +"</label>"
+                return (
+                    "<label class='badge badge-info'>" + bloodType + "</label>"
+                );
             } else if (bloodType == "Plasma") {
-                return "<label class='badge badge-success'>" + bloodType +"</label>"
+                return (
+                    "<label class='badge badge-success'>" +
+                    bloodType +
+                    "</label>"
+                );
             } else if (bloodType == "Packed RBC") {
-                return "<label class='badge badge-warning'>" + bloodType +"</label>"
+                return (
+                    "<label class='badge badge-warning'>" +
+                    bloodType +
+                    "</label>"
+                );
             }
         }
     }

@@ -95835,6 +95835,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
 
 
 
@@ -96329,7 +96332,7 @@ var render = function() {
                         _c("div", { staticClass: "col-1" }, [
                           _c("div", { staticClass: "form-group" }, [
                             _c("i", {
-                              staticClass: "fa fa-times-circle",
+                              staticClass: "fa fa-times-circle text-danger",
                               on: {
                                 click: function($event) {
                                   _vm.removeDetails(index)
@@ -97472,6 +97475,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -97507,7 +97519,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 search: "",
                 column: 0,
                 dir: "desc",
-                show: "available"
+                show: "available",
+                serial: ""
             },
             pagination: {
                 lastPage: "",
@@ -99137,6 +99150,35 @@ var render = function() {
                     }
                   })
                 ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group col-4" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.tableData.serial,
+                      expression: "tableData.serial"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text", placeholder: "Enter serial" },
+                  domProps: { value: _vm.tableData.serial },
+                  on: {
+                    input: [
+                      function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.tableData, "serial", $event.target.value)
+                      },
+                      function($event) {
+                        _vm.getData()
+                      }
+                    ]
+                  }
+                })
               ])
             ]),
             _vm._v(" "),
@@ -99579,7 +99621,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var timeDiff = new Date(startDate) - endDate;
             var days = timeDiff / (1000 * 60 * 60 * 24);
 
-            if (days <= 35) {
+            if (days <= 10) {
                 return true;
             } else {
                 return false;

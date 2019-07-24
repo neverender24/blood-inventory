@@ -128,7 +128,10 @@
                                 </div>
                                 <div class="col-1">
                                     <div class="form-group">
-                                        <i class="fa fa-times-circle" @click="removeDetails(index)"></i>
+                                        <i
+                                            class="fa fa-times-circle text-danger"
+                                            @click="removeDetails(index)"
+                                        ></i>
                                     </div>
                                 </div>
                             </div>

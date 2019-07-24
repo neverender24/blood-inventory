@@ -153,6 +153,7 @@ class DispositionController extends Controller
 		$dir            = $request->dir;
         $searchValue    = $request->search;
         $show           = $request->show;
+        $serial         = $request->serial;
 
         $index = $this->model->with(['bloodType', 'bloodComponent'])
             ->whereHas('users', function($u){
@@ -160,6 +161,12 @@ class DispositionController extends Controller
             })
             ->doesntHave('releases')
             ->orderBy($sortFields[$column], $dir);
+
+        if ($serial) {
+			$index->where(function($query) use($serial){
+				$query->orWhere('serial','LIKE','%'.$serial.'%');
+			});
+        }
 
         $this->search($index, $searchValue);
 		$index = $index->paginate($length);
