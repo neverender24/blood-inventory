@@ -24,6 +24,7 @@ class DispositionController extends Controller
 		$dir            = $request->dir;
         $searchValue    = $request->search;
         $show           = $request->show;
+        $serial         = $request->serial;
 
         $index = $this->model->with(['bloodType', 'bloodComponent', 'order_details'=>function($od){
             $od->with(['order'=>function($u){
@@ -35,6 +36,12 @@ class DispositionController extends Controller
             }])
             ->doesntHave('users')
             ->orderBy($sortFields[$column], $dir);
+
+        if ($serial) {
+			$index->where(function($query) use($serial){
+				$query->orWhere('serial','LIKE','%'.$serial.'%');
+			});
+        }
 
         if ($show == 'available') {
             $index->doesntHave('order_details');
@@ -55,7 +62,7 @@ class DispositionController extends Controller
     }
 
     public function getNoDispositions() {
-        return $this->model->doesntHave('order_details')->get();
+        return $this->model->with(['bloodType', 'bloodComponent'])->doesntHave('order_details')->get();
     }
 
     public function getDispositions() {

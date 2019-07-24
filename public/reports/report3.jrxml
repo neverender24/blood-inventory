@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report3" language="groovy" pageWidth="792" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8560fc15-12e3-4757-9cb6-d9112f0c66f5">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="order_id" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select orders.id, orders.transaction_code,orders.order_date,orders.order_time,od.qty, od.remarks,bc.description as bc,bt.description as bt from orders left join order_details od on orders.id = od.order_id left join blood_types bt on od.blood_type_id = bt.id left join blood_components bc on od.blood_component_id = bc.id where orders.id = $P{order_id}
+]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="transaction_code" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="order_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="order_time" class="java.sql.Time">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="qty" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="remarks" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bc" class="java.lang.String"/>
+	<field name="bt" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="60" splitType="Stretch">
+			<staticText>
+				<reportElement x="4" y="0" width="322" height="40" uuid="f880a808-f792-4484-9b23-dd1de2a5b761"/>
+				<textElement>
+					<font fontName="Arial" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hospital Blood Product Order Form]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="25" width="262" height="20" uuid="c0b06bd2-0c3a-465d-841d-19480564bcdb"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Laboratory Department]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="107" splitType="Stretch">
+			<textField>
+				<reportElement x="115" y="0" width="100" height="20" uuid="bc328238-aac1-49d8-85bf-3dfa52b56c88"/>
+				<textFieldExpression><![CDATA[$F{transaction_code}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="281" y="1" width="69" height="20" uuid="c84d71af-6ea2-445c-8643-45c9dcab56f8"/>
+				<textFieldExpression><![CDATA[$F{order_date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="281" y="18" width="69" height="20" uuid="77f91887-21fb-4697-9182-ad5721585003"/>
+				<textFieldExpression><![CDATA[$F{order_time}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="4" y="0" width="99" height="20" uuid="655ff695-84fb-46c8-8a76-0f9b1956a6db"/>
+				<text><![CDATA[Transaction Number :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="17" width="99" height="20" uuid="9c09fdf8-d56d-4de3-8f07-7ad9a2113e6f"/>
+				<text><![CDATA[Hospital :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="54" width="99" height="20" uuid="260f6617-91ca-41b4-a1cd-9a1c13d808aa"/>
+				<text><![CDATA[Delivery]]></text>
+			</staticText>
+			<rectangle radius="10">
+				<reportElement x="10" y="87" width="13" height="10" uuid="47c3e90c-db02-4b1f-a421-1592f246578d"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="29" y="80" width="99" height="20" uuid="7b55dc67-1b1e-4be2-b851-3227ce26baeb"/>
+				<text><![CDATA[Routine]]></text>
+			</staticText>
+			<rectangle radius="10">
+				<reportElement x="139" y="87" width="13" height="10" uuid="ba2d6765-4bd4-491c-9b8a-94683105ea60"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="158" y="80" width="99" height="20" uuid="f86153e7-2b56-4c8f-828d-b8256749baee"/>
+				<text><![CDATA[Date/Time Needed]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="223" y="1" width="58" height="20" uuid="4380bbb9-1bf9-456c-8b6c-73db3ed24093"/>
+				<text><![CDATA[Order Date :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="223" y="18" width="60" height="20" uuid="7138024e-54d2-4d8f-aeab-4c57c8d50e95"/>
+				<text><![CDATA[Order Time: ]]></text>
+			</staticText>
+			<line>
+				<reportElement x="105" y="14" width="110" height="1" uuid="844d40f2-56bf-4cf2-869b-c1f231fb2cf4"/>
+			</line>
+			<line>
+				<reportElement x="47" y="30" width="168" height="1" uuid="1f3124b1-1a66-4931-b6d0-520cc7c0b2da"/>
+			</line>
+			<line>
+				<reportElement x="281" y="16" width="69" height="1" uuid="45d578a5-6673-4042-bc82-42821ac76ca8"/>
+			</line>
+			<line>
+				<reportElement x="281" y="30" width="69" height="1" uuid="9ba2bbe0-e4b9-4976-b650-7faae01043b1"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement x="4" y="2" width="100" height="20" uuid="321065e7-3a5d-4479-ba65-39685f6a43a8"/>
+				<text><![CDATA[bc]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="108" y="2" width="50" height="20" uuid="998df67a-3178-4610-8eca-7a6d1b2a9195"/>
+				<text><![CDATA[bt]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="164" y="2" width="45" height="20" uuid="992fbb08-316e-4e40-90fd-97c4c441e5e2"/>
+				<text><![CDATA[qty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="215" y="2" width="100" height="20" uuid="eae123ac-86d0-4c8a-908d-07847f94d5a5"/>
+				<text><![CDATA[remarks]]></text>
+			</staticText>
+			<line>
+				<reportElement x="3" y="0" width="345" height="1" uuid="7132578d-dd47-4392-8d66-089d87239a72"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement x="4" y="3" width="100" height="20" uuid="4dd82dca-e289-447d-816e-061941705623"/>
+				<textFieldExpression><![CDATA[$F{bc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="108" y="3" width="50" height="20" uuid="be66f23b-f31d-47cf-a050-5fa25ead2d4c"/>
+				<textFieldExpression><![CDATA[$F{bt}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="164" y="3" width="45" height="20" uuid="3ebfb0d6-43d1-4cf8-9036-55381fe18b33"/>
+				<textFieldExpression><![CDATA[$F{qty}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="215" y="3" width="100" height="20" uuid="ff608359-3d61-492c-9354-7a6a9fd2cc18"/>
+				<textFieldExpression><![CDATA[$F{remarks}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="3" y="-3" width="345" height="1" uuid="7a1788bf-f6d1-43e9-9803-9d4de5fd7651"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

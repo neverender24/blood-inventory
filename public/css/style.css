@@ -16105,7 +16105,8 @@ ul {
 /* === Landing screens === */
 /* Auth */
 .auth.auth-bg-1 {
-  background: url("../images/auth/login_1.jpg");
+  /* background: url("../images/auth/login_1.jpg"); */
+  background-color: #194a74;
   background-size: cover; }
 
 .auth.register-bg-1 {

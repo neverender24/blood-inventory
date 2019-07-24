@@ -10,6 +10,7 @@
                             <option value="available" selected>Available</option>
                         </select>
                     </div>
+
                     <div class="form-group col-4">
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -22,8 +23,17 @@
                                 class="form-control"
                                 v-model="tableData.search"
                                 @input="getData()"
-                            >
+                            />
                         </div>
+                    </div>
+                    <div class="form-group col-4">
+                        <input
+                            type="text"
+                            class="form-control"
+                            v-model="tableData.serial"
+                            placeholder="Enter serial"
+                            @input="getData()"
+                        />
                     </div>
                 </div>
 
@@ -34,7 +44,7 @@
                     @sort="sortBy"
                 >
                     <tbody>
-                        <tr v-for="item in data" :key="item.serial">
+                        <tr v-for="item in data">
                             <td class="text-danger" v-if="nearExpire(item.date_expiry)">
                                 <span class="fa fa-exclamation"></span>
                             </td>
@@ -263,7 +273,7 @@ export default {
             const timeDiff = new Date(startDate) - endDate;
             const days = timeDiff / (1000 * 60 * 60 * 24);
 
-            if (days <= 35) {
+            if (days <= 10) {
                 return true;
             } else {
                 return false;

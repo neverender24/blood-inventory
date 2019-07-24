@@ -3,19 +3,30 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Orders</h4>
-                <div class="form-group col-6">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <i class="fa fa-filter"></i>
-                            </span>
+                <div class="row">
+                    <div class="form-group col-4">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fa fa-filter"></i>
+                                </span>
+                            </div>
+                            <input
+                                type="date"
+                                class="form-control"
+                                v-model="tableData.search"
+                                @input="getData()"
+                            />
                         </div>
+                    </div>
+                    <div class="form-group col-4">
                         <input
-                            type="date"
+                            type="text"
                             class="form-control"
-                            v-model="tableData.search"
+                            v-model="tableData.transaction_code"
+                            placeholder="Enter transaction code"
                             @input="getData()"
-                        >
+                        />
                     </div>
                 </div>
 
@@ -138,7 +149,8 @@ export default {
                 length: 15,
                 search: "",
                 column: 0,
-                dir: "desc"
+                dir: "desc",
+                transaction_code: ""
             },
             pagination: {
                 lastPage: "",

@@ -57,7 +57,7 @@ class ReportController extends Controller
 
     public function getPendingOrders() {
         return Order::whereHas('user', function($q){
-            $q->orWhere('blood_station_id', auth()->user()->blood_station_id)
+            $q->where('blood_station_id', auth()->user()->blood_station_id)
                 ->orWhere('blood_station_id', 5);
         })->whereNull('delivery_date')->count();
     }
@@ -81,7 +81,7 @@ class ReportController extends Controller
             });
         }
         
-        $expire = $expire->where( 'date_expiry', '<=', Carbon::now()->addDays(35))->get();
+        $expire = $expire->where( 'date_expiry', '<=', Carbon::now()->addDays(10) )->get();
 
         return $expire;
     }

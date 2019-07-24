@@ -6,6 +6,7 @@ use App\Order;
 use App\Disposition;
 use App\BloodStation;
 use Illuminate\Http\Request;
+use JasperPHP\JasperPHP as JasperPHP;
 
 class OrderController extends Controller
 {
@@ -15,12 +16,13 @@ class OrderController extends Controller
     }
 
     public function index(Request $request) {
-        $sortFields = ['transaction_code'];
+        $sortFields = ['order_date', 'order_time'];
 
 		$length = $request->length;
 		$column = $request->column;
 		$dir = $request->dir;
-        $searchValue = $request->search;
+        $date_ordered = $request->date_ordered;
+        $transaction_code = $request->transaction_code;
         
         $index = $this->model->with(['user', 'order_details'])
                     ->orderBy($sortFields[$column], $dir);
@@ -29,9 +31,15 @@ class OrderController extends Controller
             $index->isOwner();
         }
 
-        if ($searchValue) {
-			$index->where(function($query) use($searchValue){
-				$query->orWhere('transaction_code','LIKE','%'.$searchValue.'%');
+        if ($transaction_code) {
+			$index->where(function($query) use($transaction_code){
+				$query->orWhere('transaction_code','LIKE','%'.$transaction_code.'%');
+			});
+        }
+        
+        if ($date_ordered) {
+			$index->where(function($query) use($date_ordered){
+				$query->orWhere('order_date',$date_ordered);
 			});
 		}
 
@@ -129,9 +137,26 @@ class OrderController extends Controller
 
         $totalOrder = $this->model->whereHas('user', function($q){
             $q->where('blood_station_id', auth()->user()->blood_station_id);
-        })->whereYear('order_date', '2019')->withTrashed()->count();
+        })->whereYear('order_date', date('Y'))->withTrashed()->count();
 
         return $prefix."-".date('Y')."-".($totalOrder + 1);
+    }
+
+    public function print(Request $request)
+    {
+        $jasper = new JasperPHP;
+        $jasper->compile(public_path() . '/reports/report3.jrxml')->execute();
+
+        $jasper->process(
+            public_path() . '/reports/report3.jasper',
+            public_path() . '/reports/report3',
+            array("pdf"),
+            array(
+              "order_id"=> $request->id
+            ),
+            \Config::get('database.connections.mysql') //DB connection array
+        )->execute();
+        
     }
 
 

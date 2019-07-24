@@ -25,10 +25,19 @@
                             <input
                                 type="date"
                                 class="form-control"
-                                v-model="tableData.search"
+                                v-model="tableData.date_ordered"
                                 @input="getData()"
-                            >
+                            />
                         </div>
+                    </div>
+                    <div class="form-group col-3">
+                        <input
+                            type="text"
+                            class="form-control"
+                            v-model="tableData.transaction_code"
+                            placeholder="Enter transaction code"
+                            @input="getData()"
+                        />
                     </div>
                 </div>
 
@@ -88,6 +97,11 @@
                                         data-toggle="modal"
                                         data-target="#detailsModal"
                                     >Details</button>
+                                    <button
+                                        type="button"
+                                        class="btn btn-outline-primary"
+                                        @click="printer(item.id)"
+                                    >Print</button>
                                 </div>
                             </td>
                         </tr>
@@ -161,9 +175,11 @@ export default {
             tableData: {
                 draw: 0,
                 length: 15,
-                search: "",
+                date_ordered: "",
+                transaction_code: "",
                 column: 0,
-                dir: "desc"
+                dir: "desc",
+                serial: ""
             },
             pagination: {
                 lastPage: "",
@@ -301,6 +317,22 @@ export default {
             }
 
             return time;
+        },
+
+        /**
+         * Printing
+         */
+        printer(index) {
+            this.loading = !this.loading;
+            axios
+                .post("printer", {
+                    id: index
+                })
+                .then(response => {
+                    this.loading = !this.loading;
+                    // window.open("/pdf", "_blank")
+                    this.dialogVisible = true;
+                });
         }
     }
 };

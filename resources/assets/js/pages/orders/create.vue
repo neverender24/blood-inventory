@@ -30,7 +30,7 @@
                                     class="form-control"
                                     :class="{ 'is-invalid': $v.list.transaction_code.$error }"
                                     v-model.trim="$v.list.transaction_code.$model"
-                                >
+                                />
                             </div>
                             <div class="row" v-if="user.role!='Administrator'">
                                 <div class="col-6">
@@ -40,7 +40,7 @@
                                             type="date"
                                             class="form-control"
                                             v-model.trim="$v.list.order_date.$model"
-                                        >
+                                        />
                                     </div>
                                 </div>
                                 <div class="col-6">
@@ -50,7 +50,7 @@
                                             type="time"
                                             class="form-control"
                                             v-model.trim="$v.list.order_time.$model"
-                                        >
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -63,12 +63,12 @@
                                             checked
                                             v-model="list.routine"
                                             value="1"
-                                        > Routine
+                                        /> Routine
                                         <i class="input-helper"></i>
                                     </label>
                                 </div>
                             </div>
-                            <hr>
+                            <hr />
                             <div class="row">
                                 <div class="col-4 text-center">
                                     <label>Group</label>
@@ -116,14 +116,19 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-3">
                                     <div class="form-group">
                                         <input
                                             type="number"
                                             class="form-control"
                                             :class="{ 'is-invalid': row.qty.$error }"
                                             v-model.trim="row.qty.$model"
-                                        >
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-1">
+                                    <div class="form-group">
+                                        <i class="fa fa-times-circle" @click="removeDetails(index)"></i>
                                     </div>
                                 </div>
                             </div>
@@ -137,7 +142,7 @@
                             class="btn btn-light"
                             data-dismiss="modal"
                             @click="cancel()"
-                        >Cancel</button>
+                        >Close</button>
                     </div>
                 </div>
             </div>
@@ -154,17 +159,13 @@
 
 <script>
 import { required, minLength, minValue } from "vuelidate/lib/validators";
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 
 export default {
-    props: [
-        "current_date",
-        "current_time",
-        "code"
-    ],
+    props: ["current_date", "current_time", "code"],
     data() {
         return {
-            list: { 
+            list: {
                 order_date: "",
                 order_time: "",
                 order_details: [
@@ -174,16 +175,12 @@ export default {
                         qty: 0
                     }
                 ],
-                transaction_code: "",
-            },
+                transaction_code: ""
+            }
         };
     },
     computed: {
-        ...mapState([
-            'bloodTypes',
-            'bloodComponents',
-            'user'
-        ])
+        ...mapState(["bloodTypes", "bloodComponents", "user"])
     },
 
     watch: {
@@ -233,6 +230,10 @@ export default {
                 blood_component_id: "",
                 qty: ""
             });
+        },
+
+        removeDetails(index) {
+            this.list.order_details.splice(index, 1);
         },
 
         cancel() {}

@@ -18,15 +18,26 @@
                         </button>
                     </div>
                     <div class="modal-body">
+                        <table class="table table-hover table-bordered table-sm">
+                            <thead>
+                                <tr>
+                                    <td>#</td>
+                                    <td>Serial</td>
+                                    <td>Component</td>
+                                    <td>Type</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="row, index in newDetails">
+                                    <td>{{ index + 1 }}</td>
+                                    <td>{{ row.serial }}</td>
+                                    <td>{{ row.component }}</td>
+                                    <td>{{ row.type }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                         <form class="forms-sample">
-                            <div class="form-group">
-                                <div v-for="d in data.order_details">
-                                    <p
-                                        v-for="disp in d.dispositions"
-                                    >{{ disp.serial }} - {{ disp.blood_component.description }} - {{ disp.blood_type.description }}</p>
-                                </div>
-                            </div>
-                            <hr>
+                            <hr />
                             <div class="row" v-if="user.role!='Administrator'">
                                 <div class="col-6">
                                     <div class="form-group">
@@ -36,7 +47,7 @@
                                             class="form-control"
                                             :class="{ 'is-invalid': $v.data.received_date.$error }"
                                             v-model.trim="$v.data.received_date.$model"
-                                        >
+                                        />
                                     </div>
                                 </div>
                                 <div class="col-6">
@@ -47,7 +58,7 @@
                                             class="form-control"
                                             :class="{ 'is-invalid': $v.data.received_time.$error }"
                                             v-model.trim="$v.data.received_time.$model"
-                                        >
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -73,11 +84,14 @@
 .form-check .form-check-label .input-helper:before {
     border: 1px black solid;
 }
+.modal-content {
+    background-color: #fff;
+}
 </style>
 
 <script>
 import { required, minValue } from "vuelidate/lib/validators";
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 export default {
     props: ["data"],
     data() {
@@ -85,6 +99,7 @@ export default {
             editable: true
         };
     },
+    mounted() {},
     watch: {
         data: function() {
             let self = this;
@@ -97,7 +112,21 @@ export default {
         }
     },
     computed: {
-        ...mapState(["user"])
+        ...mapState(["user"]),
+        newDetails: function() {
+            var details = [];
+            _.forEach(this.data.order_details, function(e) {
+                _.forEach(e.dispositions, function(f) {
+                    details.push({
+                        serial: f.serial,
+                        component: f.blood_component.description,
+                        type: f.blood_type.description
+                    });
+                });
+            });
+
+            return details;
+        }
     },
     methods: {
         save() {

@@ -55,26 +55,7 @@
                             </td>
                             <td>{{ item.serial }}</td>
                             <td>{{ item.blood_type.description }}</td>
-                            <td v-if="item.blood_component.description == 'Platelet'">
-                                <label
-                                    class="badge badge-primary"
-                                >{{ item.blood_component.description }}</label>
-                            </td>
-                            <td v-if="item.blood_component.description == 'Whole Blood'">
-                                <label
-                                    class="badge badge-info"
-                                >{{ item.blood_component.description }}</label>
-                            </td>
-                            <td v-if="item.blood_component.description == 'Plasma'">
-                                <label
-                                    class="badge badge-success"
-                                >{{ item.blood_component.description }}</label>
-                            </td>
-                            <td v-if="item.blood_component.description == 'Packed RBC'">
-                                <label
-                                    class="badge badge-warning"
-                                >{{ item.blood_component.description }}</label>
-                            </td>
+                            <td v-html="identifyBloodType(item.blood_component.description)"></td>
                             <td>{{ item.vol }}</td>
                             <td>{{ item.date_extracted }}</td>
                             <td>{{ item.date_expiry }}</td>
@@ -290,6 +271,18 @@ export default {
 
         refreshNotification() {
             this.$emit("notify");
+        },
+
+        identifyBloodType(bloodType) {
+            if (bloodType == "Platelet") {
+                return "<label class='badge badge-primary'>" + bloodType +"</label>"
+            } else if (bloodType == "Whole Blood") {
+                return "<label class='badge badge-info'>" + bloodType +"</label>"
+            } else if (bloodType == "Plasma") {
+                return "<label class='badge badge-success'>" + bloodType +"</label>"
+            } else if (bloodType == "Packed RBC") {
+                return "<label class='badge badge-warning'>" + bloodType +"</label>"
+            }
         }
     }
 };

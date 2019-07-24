@@ -52,7 +52,7 @@
                                         <option value></option>
                                         <option value="Transfer">Transfer</option>
                                         <option value="Transfuse">Transfuse</option>
-                                        <option value="Sell">Sell</option>
+                                        <!-- <option value="Sell">Sell</option> -->
                                     </select>
                                 </div>
 
@@ -62,7 +62,7 @@
                                     <div
                                         v-for="(row, index) in $v.data.dispositions.$each.$iter"
                                     >
-                                        <select
+                                        <!-- <select
                                             class="form-control"
                                             :class="{ 'is-invalid': row.disposition_id.$error }"
                                             v-model.trim="row.disposition_id.$model"
@@ -72,7 +72,12 @@
                                                 v-bind:item="option"
                                                 :value="option.id"
                                             >{{ option.serial }}</option>
-                                        </select>
+                                        </select> -->
+                                        <model-select
+                                        :options="searchOfficeSelect"
+                                        v-model.trim="row.disposition_id.$model"
+                                        placeholder="select item"
+                                    ></model-select>
                                     </div>
                                 </div>
 
@@ -127,6 +132,7 @@
 
 <script>
 import { required, minLength, minValue } from "vuelidate/lib/validators";
+import { ModelSelect } from 'vue-search-select'
 
 export default {
     props: ["dispositions"],
@@ -143,7 +149,24 @@ export default {
         };
     },
     mounted() {},
+    components: {
+        ModelSelect
+    },
+    computed: {
+        searchOfficeSelect: function() {
+            var self = this;
+            var select = [];
 
+            _.forEach(self.dispositions, function(e) {
+                select.push({
+                    value: e.id,
+                    text: e.serial
+                });
+            });
+
+            return select;
+        }
+    },
     methods: {
         save() {
             this.$v.$touch();
@@ -181,7 +204,14 @@ export default {
         },
 
         cancel() {
-            this.data = [];
+            this.data = {
+                released_by: "",
+                released_time: "",
+                released_date: "",
+                type: "",
+                remarks: "",
+                dispositions: []
+            };
         }
     },
 

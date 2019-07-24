@@ -50,7 +50,7 @@
                 </div>
               </form>
             </div>
-            <p class="footer-text text-center auth-footer">copyright © 2018 Bootstrapdash. All rights reserved.</p>
+            {{-- <p class="footer-text text-center auth-footer">Copyright © 2018 ITCDD. All rights reserved.</p> --}}
           </div>
         </div>
       </div>

@@ -24,6 +24,7 @@ Route::post('generate-code', 'OrderController@generateCode');
 
 Route::get('client-dispositions', 'DispositionController@getClientDispositions');
 
+Route::post("printer","OrderController@print");
 
 Route::middleware('auth')->group(function () {
     Route::resource('dispositions', 'DispositionController');
