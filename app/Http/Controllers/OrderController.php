@@ -163,7 +163,13 @@ class OrderController extends Controller
             ),
             \Config::get('database.connections.mysql') //DB connection array
         )->execute();
-        
+
+        // $pdf_file = escapeshellarg( public_path() . '/reports/report3.pdf' );
+        // $jpg_file = escapeshellarg( public_path() . '/reports/report3.jpg' );
+
+        // $result = 0;
+        // exec( "convert -density 300 {$pdf_file} {$jpg_file}", null, $result );
+        // return view('');
     }
 
 

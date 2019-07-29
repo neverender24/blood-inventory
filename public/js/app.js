@@ -94984,6 +94984,17 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -95013,7 +95024,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         }
     },
 
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapState */])(['bloodTypes', 'bloodComponents', 'user'])),
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapState */])(["bloodTypes", "bloodComponents", "user"])),
 
     methods: {
         save: function save() {
@@ -95047,6 +95058,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 blood_component_id: "",
                 qty: ""
             });
+        },
+        removeDetails: function removeDetails(index) {
+            this.list.order_details.splice(index, 1);
         }
     },
 
@@ -95318,7 +95332,7 @@ var render = function() {
                       index
                     ) {
                       return _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col-4" }, [
+                        _c("div", { staticClass: "col-3" }, [
                           _c("div", { staticClass: "form-group" }, [
                             _c(
                               "select",
@@ -95434,7 +95448,7 @@ var render = function() {
                           ])
                         ]),
                         _vm._v(" "),
-                        _c("div", { staticClass: "col-4" }, [
+                        _c("div", { staticClass: "col-3" }, [
                           _c("div", { staticClass: "form-group" }, [
                             _c("input", {
                               directives: [
@@ -95463,6 +95477,19 @@ var render = function() {
                                 },
                                 blur: function($event) {
                                   _vm.$forceUpdate()
+                                }
+                              }
+                            })
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-1" }, [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("i", {
+                              staticClass: "fa fa-times-circle text-danger",
+                              on: {
+                                click: function($event) {
+                                  _vm.removeDetails(index)
                                 }
                               }
                             })
@@ -95551,7 +95578,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-4 text-center" }, [
+      _c("div", { staticClass: "col-3 text-center" }, [
         _c("label", [_vm._v("Group")])
       ]),
       _vm._v(" "),
@@ -95559,9 +95586,11 @@ var staticRenderFns = [
         _c("label", [_vm._v("Product")])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-4 text-center" }, [
+      _c("div", { staticClass: "col-3 text-center" }, [
         _c("label", [_vm._v("Qty")])
-      ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-1 text-center" }, [_c("label")])
     ])
   }
 ]
@@ -97626,7 +97655,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             var timeDiff = new Date(startDate) - endDate;
             var days = timeDiff / (1000 * 60 * 60 * 24);
 
-            if (days <= 35) {
+            if (days <= 10) {
                 return true;
             } else {
                 return false;
@@ -100353,8 +100382,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
 
 
 
@@ -100589,176 +100616,171 @@ var render = function() {
                   _c("h6", [_vm._v("TOTAL: " + _vm._s(_vm.totalOrder))])
                 ]),
                 _vm._v(" "),
-                _c("form", { staticClass: "forms-sample" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _vm.selectDisposition.length
-                      ? _c("div", { staticClass: "row" }, [
-                          _c(
-                            "div",
-                            { staticClass: "col-10" },
-                            [
-                              _c("model-select", {
-                                attrs: {
-                                  options: _vm.selectDisposition,
-                                  placeholder: "select item"
+                _c("div", { staticClass: "form-group" }, [
+                  _vm.selectDisposition.length
+                    ? _c("div", { staticClass: "row" }, [
+                        _c(
+                          "div",
+                          { staticClass: "col-10" },
+                          [
+                            _c("model-select", {
+                              attrs: {
+                                options: _vm.selectDisposition,
+                                placeholder: "select item"
+                              },
+                              model: {
+                                value: _vm.disposition_id,
+                                callback: function($$v) {
+                                  _vm.disposition_id = $$v
                                 },
-                                model: {
-                                  value: _vm.disposition_id,
-                                  callback: function($$v) {
-                                    _vm.disposition_id = $$v
-                                  },
-                                  expression: "disposition_id"
+                                expression: "disposition_id"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-2" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                "btn btn-icons btn-rounded btn-success",
+                              on: {
+                                click: function($event) {
+                                  _vm.getSerial()
                                 }
+                              }
+                            },
+                            [_c("i", { staticClass: "fa fa-check" })]
+                          )
+                        ])
+                      ])
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _vm.dispositionList.length
+                    ? _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-12" }, [
+                          _c(
+                            "table",
+                            { staticClass: "table table-bordered table-sm" },
+                            [
+                              _vm._m(1),
+                              _vm._v(" "),
+                              _vm._l(_vm.dispositionList, function(row, index) {
+                                return _c("tr", [
+                                  _c("td", [_vm._v(_vm._s(row.serial))]),
+                                  _vm._v(" "),
+                                  _c("td", [_vm._v(_vm._s(row.component))]),
+                                  _vm._v(" "),
+                                  _c("td", [_vm._v(_vm._s(row.blood))]),
+                                  _vm._v(" "),
+                                  _c("td", [
+                                    _c(
+                                      "span",
+                                      {
+                                        staticClass: "badge badge-danger",
+                                        on: {
+                                          click: function($event) {
+                                            _vm.removeDisposition(index)
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Remove")]
+                                    )
+                                  ])
+                                ])
                               })
                             ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-2" }, [
-                            _c(
-                              "button",
-                              {
-                                staticClass:
-                                  "btn btn-icons btn-rounded btn-success",
-                                on: {
-                                  click: function($event) {
-                                    _vm.getSerial()
-                                  }
-                                }
-                              },
-                              [_c("i", { staticClass: "fa fa-check" })]
-                            )
-                          ])
+                            2
+                          )
                         ])
-                      : _vm._e()
+                      ])
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-6" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", [_vm._v("Date")]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model.trim",
+                            value: _vm.$v.details.delivery_date.$model,
+                            expression: "$v.details.delivery_date.$model",
+                            modifiers: { trim: true }
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid": _vm.$v.details.delivery_date.$error
+                        },
+                        attrs: { type: "date" },
+                        domProps: {
+                          value: _vm.$v.details.delivery_date.$model
+                        },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.$v.details.delivery_date,
+                              "$model",
+                              $event.target.value.trim()
+                            )
+                          },
+                          blur: function($event) {
+                            _vm.$forceUpdate()
+                          }
+                        }
+                      })
+                    ])
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "form-group" }, [
-                    _vm.dispositionList.length
-                      ? _c("div", { staticClass: "row" }, [
-                          _c("div", { staticClass: "col-12" }, [
-                            _c(
-                              "table",
-                              { staticClass: "table table-bordered table-sm" },
-                              [
-                                _vm._m(1),
-                                _vm._v(" "),
-                                _vm._l(_vm.dispositionList, function(
-                                  row,
-                                  index
-                                ) {
-                                  return _c("tr", [
-                                    _c("td", [_vm._v(_vm._s(row.serial))]),
-                                    _vm._v(" "),
-                                    _c("td", [_vm._v(_vm._s(row.component))]),
-                                    _vm._v(" "),
-                                    _c("td", [_vm._v(_vm._s(row.blood))]),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      _c(
-                                        "span",
-                                        {
-                                          staticClass: "badge badge-danger",
-                                          on: {
-                                            click: function($event) {
-                                              _vm.removeDisposition(index)
-                                            }
-                                          }
-                                        },
-                                        [_vm._v("Remove")]
-                                      )
-                                    ])
-                                  ])
-                                })
-                              ],
-                              2
+                  _c("div", { staticClass: "col-6" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", [_vm._v("Time")]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model.trim",
+                            value: _vm.$v.details.delivery_time.$model,
+                            expression: "$v.details.delivery_time.$model",
+                            modifiers: { trim: true }
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid": _vm.$v.details.delivery_time.$error
+                        },
+                        attrs: { type: "time" },
+                        domProps: {
+                          value: _vm.$v.details.delivery_time.$model
+                        },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.$v.details.delivery_time,
+                              "$model",
+                              $event.target.value.trim()
                             )
-                          ])
-                        ])
-                      : _vm._e()
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-6" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", [_vm._v("Date")]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model.trim",
-                              value: _vm.$v.details.delivery_date.$model,
-                              expression: "$v.details.delivery_date.$model",
-                              modifiers: { trim: true }
-                            }
-                          ],
-                          staticClass: "form-control",
-                          class: {
-                            "is-invalid": _vm.$v.details.delivery_date.$error
                           },
-                          attrs: { type: "date" },
-                          domProps: {
-                            value: _vm.$v.details.delivery_date.$model
-                          },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.$v.details.delivery_date,
-                                "$model",
-                                $event.target.value.trim()
-                              )
-                            },
-                            blur: function($event) {
-                              _vm.$forceUpdate()
-                            }
+                          blur: function($event) {
+                            _vm.$forceUpdate()
                           }
-                        })
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-6" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", [_vm._v("Time")]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model.trim",
-                              value: _vm.$v.details.delivery_time.$model,
-                              expression: "$v.details.delivery_time.$model",
-                              modifiers: { trim: true }
-                            }
-                          ],
-                          staticClass: "form-control",
-                          class: {
-                            "is-invalid": _vm.$v.details.delivery_time.$error
-                          },
-                          attrs: { type: "time" },
-                          domProps: {
-                            value: _vm.$v.details.delivery_time.$model
-                          },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.$v.details.delivery_time,
-                                "$model",
-                                $event.target.value.trim()
-                              )
-                            },
-                            blur: function($event) {
-                              _vm.$forceUpdate()
-                            }
-                          }
-                        })
-                      ])
+                        }
+                      })
                     ])
                   ])
                 ])

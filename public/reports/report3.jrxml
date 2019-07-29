@@ -5,8 +5,7 @@
 	<property name="ireport.y" value="0"/>
 	<parameter name="order_id" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select orders.id, orders.transaction_code,orders.order_date,orders.order_time,od.qty, od.remarks,bc.description as bc,bt.description as bt from orders left join order_details od on orders.id = od.order_id left join blood_types bt on od.blood_type_id = bt.id left join blood_components bc on od.blood_component_id = bc.id where orders.id = $P{order_id}
-]]>
+		<![CDATA[select orders.id, orders.transaction_code,orders.order_date,orders.order_time,od.qty, od.remarks,bc.description as bc,bt.description as bt from orders left join order_details od on orders.id = od.order_id left join blood_types bt on od.blood_type_id = bt.id left join blood_components bc on od.blood_component_id = bc.id where orders.id = $P{order_id}]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -76,14 +75,14 @@
 				<text><![CDATA[Delivery]]></text>
 			</staticText>
 			<rectangle radius="10">
-				<reportElement x="10" y="87" width="13" height="10" uuid="47c3e90c-db02-4b1f-a421-1592f246578d"/>
+				<reportElement x="10" y="87" width="10" height="10" uuid="47c3e90c-db02-4b1f-a421-1592f246578d"/>
 			</rectangle>
 			<staticText>
 				<reportElement x="29" y="80" width="99" height="20" uuid="7b55dc67-1b1e-4be2-b851-3227ce26baeb"/>
 				<text><![CDATA[Routine]]></text>
 			</staticText>
 			<rectangle radius="10">
-				<reportElement x="139" y="87" width="13" height="10" uuid="ba2d6765-4bd4-491c-9b8a-94683105ea60"/>
+				<reportElement x="139" y="87" width="10" height="10" uuid="ba2d6765-4bd4-491c-9b8a-94683105ea60"/>
 			</rectangle>
 			<staticText>
 				<reportElement x="158" y="80" width="99" height="20" uuid="f86153e7-2b56-4c8f-828d-b8256749baee"/>

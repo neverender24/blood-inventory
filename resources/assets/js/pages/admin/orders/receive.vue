@@ -30,7 +30,6 @@
                         <label class="badge badge-dark">
                             <h6>TOTAL: {{ totalOrder }}</h6>
                         </label>
-                        <form class="forms-sample">
                             <div class="form-group">
                                 <div class="row" v-if="selectDisposition.length">
                                     <div class="col-10">
@@ -99,7 +98,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-success" @click="save()">Save</button>

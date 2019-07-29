@@ -30,7 +30,7 @@
                                     class="form-control"
                                     :class="{ 'is-invalid': $v.list.transaction_code.$error }"
                                     v-model.trim="$v.list.transaction_code.$model"
-                                >
+                                />
                             </div>
                             <div class="row" v-if="user.role!='Administrator'">
                                 <div class="col-6">
@@ -41,7 +41,7 @@
                                             class="form-control"
                                             :class="{ 'is-invalid': $v.list.order_date.$error }"
                                             v-model.trim="$v.list.order_date.$model"
-                                        >
+                                        />
                                     </div>
                                 </div>
                                 <div class="col-6">
@@ -52,7 +52,7 @@
                                             class="form-control"
                                             :class="{ 'is-invalid': $v.list.order_time.$error }"
                                             v-model.trim="$v.list.order_time.$model"
-                                        >
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -65,29 +65,32 @@
                                             checked
                                             v-model="list.routine"
                                             value="1"
-                                        > Routine
+                                        /> Routine
                                         <i class="input-helper"></i>
                                     </label>
                                 </div>
                             </div>
 
-                            <hr>
+                            <hr />
                             <div class="row">
-                                <div class="col-4 text-center">
+                                <div class="col-3 text-center">
                                     <label>Group</label>
                                 </div>
                                 <div class="col-4 text-center">
                                     <label>Product</label>
                                 </div>
-                                <div class="col-4 text-center">
+                                <div class="col-3 text-center">
                                     <label>Qty</label>
+                                </div>
+                                <div class="col-1 text-center">
+                                    <label></label>
                                 </div>
                             </div>
                             <div
                                 class="row"
                                 v-for="(row, index) in $v.list.order_details.$each.$iter"
                             >
-                                <div class="col-4">
+                                <div class="col-3">
                                     <div class="form-group">
                                         <select
                                             class="form-control form-control"
@@ -119,14 +122,22 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-3">
                                     <div class="form-group">
                                         <input
                                             type="number"
                                             class="form-control"
                                             :class="{ 'is-invalid': row.qty.$error }"
                                             v-model.trim="row.qty.$model"
-                                        >
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-1">
+                                    <div class="form-group">
+                                        <i
+                                            class="fa fa-times-circle text-danger"
+                                            @click="removeDetails(index)"
+                                        ></i>
                                     </div>
                                 </div>
                             </div>
@@ -146,7 +157,7 @@
 
 <script>
 import { required, minValue } from "vuelidate/lib/validators";
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 
 export default {
     props: ["id", "data"],
@@ -175,11 +186,7 @@ export default {
     },
 
     computed: {
-        ...mapState([
-            'bloodTypes',
-            'bloodComponents',
-            'user'
-        ])
+        ...mapState(["bloodTypes", "bloodComponents", "user"])
     },
 
     methods: {
@@ -213,6 +220,10 @@ export default {
                 blood_component_id: "",
                 qty: ""
             });
+        },
+
+        removeDetails(index) {
+            this.list.order_details.splice(index, 1);
         }
     },
 

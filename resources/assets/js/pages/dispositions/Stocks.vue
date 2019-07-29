@@ -272,7 +272,7 @@ export default {
             const timeDiff = new Date(startDate) - endDate;
             const days = timeDiff / (1000 * 60 * 60 * 24);
 
-            if (days <= 35) {
+            if (days <= 10) {
                 return true;
             } else {
                 return false;

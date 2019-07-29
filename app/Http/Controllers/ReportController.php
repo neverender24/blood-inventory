@@ -64,7 +64,7 @@ class ReportController extends Controller
 
     public function getExpiredDispositions(Request $request) {
         //dd(Carbon::now()->addDays(35));
-        $expire = Disposition::with(['bloodComponent', 'bloodType','order_details'=>function($od){
+        $expire = Disposition::with(['bloodComponent', 'bloodType','releases','user','order_details'=>function($od){
                     $od->with(['order'=>function($u){
                         $u->with(['user'=>function($usr){
                             $usr->with('bloodStation')->get();
@@ -76,12 +76,19 @@ class ReportController extends Controller
         if ($request['role'] == 'Administrator') {
             $expire = $expire->doesntHave('order_details');
         } else {
-            $expire = $expire->whereHas('order_details.order.user', function($wew){
-                $wew->where('blood_station_id', auth()->user()->blood_station_id);
+            $expire = $expire->where(function($q){ 
+                $q->whereHas('order_details.order.user', function($wew){
+                    $wew->where('blood_station_id', auth()->user()->blood_station_id);
+                })->whereHas('order_details.order', function($wew){
+                    $wew->where('received_date',"!=", null);
+                })->orWhereHas('user', function($wew){
+                    $wew->where('blood_station_id', auth()->user()->blood_station_id);
+                }); 
             });
         }
         
-        $expire = $expire->where( 'date_expiry', '<=', Carbon::now()->addDays(10) )->get();
+        
+        $expire = $expire->doesntHave('releases')->where( 'date_expiry', '<=', Carbon::now()->addDays(10) )->get();
 
         return $expire;
     }
