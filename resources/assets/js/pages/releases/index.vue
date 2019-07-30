@@ -27,6 +27,15 @@
                             />
                         </div>
                     </div>
+                    <div class="form-group col-4">
+                        <input
+                            type="text"
+                            class="form-control"
+                            v-model="tableData.serial"
+                            placeholder="Enter serial"
+                            @input="getData()"
+                        />
+                    </div>
                 </div>
 
                 <datatable
@@ -107,7 +116,8 @@ export default {
                 search: "",
                 column: 0,
                 dir: "desc",
-                show: "All"
+                show: "All",
+                serial: ""
             },
             pagination: {
                 lastPage: "",

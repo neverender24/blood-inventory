@@ -1,10 +1,11 @@
-
-
 // Variables
 @import 'variables';
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+// hover
+@import '~hover.css/scss/hover';
 
 // mdi
 @import '~mdi/scss/materialdesignicons';
@@ -16,6 +17,6 @@
 
 
 .navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }

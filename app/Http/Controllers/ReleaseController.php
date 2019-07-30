@@ -32,9 +32,7 @@ class ReleaseController extends Controller
 		$dir = $request->dir;
         $searchValue = $request->search;
         $show = $request->show;
-
-        
-        //$index = $this->model->with(['bloodType', 'bloodComponent'])->orderBy($sortFields[$column], $dir);
+        $serial = $request->serial;
 
         $index = $this->model->with(['disposition'=>function($d){
             $d->with(['bloodType', 'bloodComponent'])->get();
@@ -50,9 +48,16 @@ class ReleaseController extends Controller
 
         if ($searchValue) {
 			$index->where(function($query) use($searchValue){
-				$query->orWhere('released_date','LIKE','%'.$searchValue.'%');
+                $query->orWhere('released_date','LIKE','%'.$searchValue.'%');
 			});
-		}
+        }
+        
+        if ($serial) {
+            $index->whereHas('disposition', function($query) use($serial){
+                $query->where('serial','LIKE','%'.$serial.'%');
+            });
+        }
+		
 
 		$index = $index->paginate($length);
 

@@ -74293,6 +74293,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
 
 
 
@@ -74312,9 +74314,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         return {
             notifications: {
                 near_expire: [],
+                expired: [],
                 pending_orders: 0
             },
-            actual_expire: {}
+            actual_expire: {},
+            actual_near_expire: {}
         };
     },
     mounted: function mounted() {},
@@ -74326,9 +74330,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         setNotifications: function setNotifications() {
             var _this = this;
 
-            axios.post("expired-blood", this.user).then(function (response) {
+            axios.post("near-expired-blood", this.user).then(function (response) {
                 _this.notifications.near_expire = response.data;
                 _this.actual_expire = _.groupBy(response.data, "blood_type.description");
+            });
+
+            axios.post("expired-blood", this.user).then(function (response) {
+                _this.notifications.expired = response.data;
+                _this.actual_near_expire = _.groupBy(response.data, "blood_type.description");
             });
         }
     }
@@ -77070,7 +77079,9 @@ var render = function() {
                   attrs: {
                     pending_orders: _vm.notifications.pending_orders,
                     near_expire: _vm.notifications.near_expire,
-                    actual_expire: _vm.actual_expire
+                    expired: _vm.notifications.expired,
+                    actual_expire: _vm.actual_expire,
+                    actual_near_expire: _vm.actual_near_expire
                   },
                   on: {
                     notify: function($event) {
@@ -80120,13 +80131,47 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ["pending_orders", "near_expire", "actual_expire"],
+    props: ["pending_orders", "near_expire", "actual_expire", "expired", "actual_near_expire"],
     components: {
         CreateDisposition: __WEBPACK_IMPORTED_MODULE_0__dispositions_create_vue___default.a,
         LineChart: __WEBPACK_IMPORTED_MODULE_1__LineChart_js__["a" /* default */]
@@ -80138,6 +80183,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             mara: 0,
             pant: 0,
             stock: 0,
+            nearExpiryMon: [],
+            nearExpiryLaa: [],
+            nearExpiryMar: [],
+            nearExpiryPan: [],
             actualMon: [],
             actualLaa: [],
             actualMar: [],
@@ -80161,31 +80210,59 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     mounted: function mounted() {
         var _this = this;
 
-        this.$store.dispatch('countPendingOrders');
+        this.$store.dispatch("countPendingOrders");
 
         axios.get("all-stocks").then(function (response) {
             var stocks = response.data;
             var self = _this;
+            var nearExpiryMon = [];
+            var nearExpiryLaa = [];
+            var nearExpiryMar = [];
+            var nearExpiryPan = [];
 
             _.forEach(stocks, function (s) {
                 if (s.prefix == "MON") {
                     //montevista
                     self.mont = s.dispositions_count;
                     self.actualMon = _.groupBy(s.dispositions, "blood_type.description");
+                    _.forEach(s.dispositions, function (dispositions) {
+                        if (self.nearExpire(dispositions.date_expiry)) {
+                            nearExpiryMon.push(dispositions);
+                        }
+                    });
+                    self.nearExpiryMon = _.groupBy(nearExpiryMon, "blood_type.description");
                 } else if (s.prefix == "LAA") {
                     //laak
                     self.laak = s.dispositions_count;
                     self.actualLaa = _.groupBy(s.dispositions, "blood_type.description");
+                    _.forEach(s.dispositions, function (dispositions) {
+                        if (self.nearExpire(dispositions.date_expiry)) {
+                            nearExpiryLaa.push(dispositions);
+                        }
+                    });
+                    self.nearExpiryLaa = _.groupBy(nearExpiryLaa, "blood_type.description");
                 }
                 if (s.prefix == "MAR") {
                     //maragusan
                     self.mara = s.dispositions_count;
                     self.actualMar = _.groupBy(s.dispositions, "blood_type.description");
+                    _.forEach(s.dispositions, function (dispositions) {
+                        if (self.nearExpire(dispositions.date_expiry)) {
+                            nearExpiryMar.push(dispositions);
+                        }
+                    });
+                    self.nearExpiryMar = _.groupBy(nearExpiryMar, "blood_type.description");
                 }
                 if (s.prefix == "PAN") {
                     //pantukan
                     self.pant = s.dispositions_count;
                     self.actualPan = _.groupBy(s.dispositions, "blood_type.description");
+                    _.forEach(s.dispositions, function (dispositions) {
+                        if (self.nearExpire(dispositions.date_expiry)) {
+                            nearExpiryPan.push(dispositions);
+                        }
+                    });
+                    self.nearExpiryPan = _.groupBy(nearExpiryPan, "blood_type.description");
                 }
             });
         });
@@ -80226,6 +80303,18 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 datasets: chart,
                 tooltips: false
             };
+        },
+        nearExpire: function nearExpire(date) {
+            var startDate = date;
+            var endDate = new Date();
+            var timeDiff = new Date(startDate) - endDate;
+            var days = timeDiff / (1000 * 60 * 60 * 24);
+
+            if (days <= 10 && days >= 0) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 });
@@ -92352,9 +92441,31 @@ var render = function() {
                         _vm._v(
                           "\n                            " +
                             _vm._s(item) +
-                            " - " +
+                            " (" +
                             _vm._s(row.length) +
-                            "\n                        "
+                            ")\n                        "
+                        )
+                      ])
+                    }),
+                    _vm._v(" "),
+                    _c("hr"),
+                    _vm._v(" "),
+                    _c("small", { staticClass: "text-danger" }, [
+                      _vm._v("Near Expiry")
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.nearExpiryMon, function(row, item) {
+                      return _c("p", { staticClass: "mt-1 mb-0" }, [
+                        _c("i", {
+                          staticClass: "fa fa-check",
+                          attrs: { "aria-hidden": "true" }
+                        }),
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(item) +
+                            " (" +
+                            _vm._s(row.length) +
+                            ")\n                        "
                         )
                       ])
                     })
@@ -92399,15 +92510,37 @@ var render = function() {
                     _vm._l(_vm.actualMar, function(row, item) {
                       return _c("p", { staticClass: "mt-1 mb-0" }, [
                         _c("i", {
-                          staticClass: "fa",
-                          attrs: { "fa-check": "", "aria-hidden": "true" }
+                          staticClass: "fa fa-check",
+                          attrs: { "aria-hidden": "true" }
                         }),
                         _vm._v(
                           "\n                            " +
                             _vm._s(item) +
-                            " - " +
+                            " (" +
                             _vm._s(row.length) +
-                            "\n                        "
+                            ")\n                        "
+                        )
+                      ])
+                    }),
+                    _vm._v(" "),
+                    _c("hr"),
+                    _vm._v(" "),
+                    _c("small", { staticClass: "text-danger" }, [
+                      _vm._v("Near Expiry")
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.nearExpiryMar, function(row, item) {
+                      return _c("p", { staticClass: "mt-1 mb-0" }, [
+                        _c("i", {
+                          staticClass: "fa fa-check",
+                          attrs: { "aria-hidden": "true" }
+                        }),
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(item) +
+                            " (" +
+                            _vm._s(row.length) +
+                            ")\n                        "
                         )
                       ])
                     })
@@ -92461,9 +92594,31 @@ var render = function() {
                         _vm._v(
                           "\n                            " +
                             _vm._s(item) +
-                            " - " +
+                            " (" +
                             _vm._s(row.length) +
-                            "\n                        "
+                            ")\n                        "
+                        )
+                      ])
+                    }),
+                    _vm._v(" "),
+                    _c("hr"),
+                    _vm._v(" "),
+                    _c("small", { staticClass: "text-danger" }, [
+                      _vm._v("Near Expiry")
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.nearExpiryLaa, function(row, item) {
+                      return _c("p", { staticClass: "mt-1 mb-0" }, [
+                        _c("i", {
+                          staticClass: "fa fa-check",
+                          attrs: { "aria-hidden": "true" }
+                        }),
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(item) +
+                            " (" +
+                            _vm._s(row.length) +
+                            ")\n                        "
                         )
                       ])
                     })
@@ -92517,9 +92672,31 @@ var render = function() {
                         _vm._v(
                           "\n                            " +
                             _vm._s(item) +
-                            " - " +
+                            " (" +
                             _vm._s(row.length) +
-                            "\n                        "
+                            ")\n                        "
+                        )
+                      ])
+                    }),
+                    _vm._v(" "),
+                    _c("hr"),
+                    _vm._v(" "),
+                    _c("small", { staticClass: "text-danger" }, [
+                      _vm._v("Near Expiry")
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.nearExpiryPan, function(row, item) {
+                      return _c("p", { staticClass: "mt-1 mb-0" }, [
+                        _c("i", {
+                          staticClass: "fa fa-check",
+                          attrs: { "aria-hidden": "true" }
+                        }),
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(item) +
+                            " (" +
+                            _vm._s(row.length) +
+                            ")\n                        "
                         )
                       ])
                     })
@@ -92575,9 +92752,9 @@ var render = function() {
                         _vm._v(
                           "\n                            " +
                             _vm._s(item) +
-                            " - " +
+                            " (" +
                             _vm._s(row.length) +
-                            "\n                        "
+                            ")\n                        "
                         )
                       ])
                     })
@@ -92600,7 +92777,7 @@ var render = function() {
                   "div",
                   { staticClass: "card-body" },
                   [
-                    _c("h4", [_vm._v("Total")]),
+                    _c("h4", [_vm._v("Expired")]),
                     _vm._v(" "),
                     _c("div", { staticClass: "clearfix" }, [
                       _vm._m(5),
@@ -92611,19 +92788,34 @@ var render = function() {
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "fluid-container" }, [
-                          _c("h3", {
-                            staticClass: "font-weight-medium text-right mb-0",
-                            domProps: { textContent: _vm._s(_vm.stock.length) }
-                          })
+                          _c(
+                            "h3",
+                            {
+                              staticClass: "font-weight-medium text-right mb-0"
+                            },
+                            [_vm._v(_vm._s(_vm.expired.length))]
+                          )
                         ])
                       ])
                     ]),
                     _vm._v(" "),
-                    _c("line-chart", {
-                      attrs: { "chart-data": _vm.datacollection }
+                    _vm._l(_vm.actual_near_expire, function(row, item) {
+                      return _c("p", { staticClass: "mt-1 mb-0" }, [
+                        _c("i", {
+                          staticClass: "fa fa-check",
+                          attrs: { "aria-hidden": "true" }
+                        }),
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(item) +
+                            " (" +
+                            _vm._s(row.length) +
+                            ")\n                        "
+                        )
+                      ])
                     })
                   ],
-                  1
+                  2
                 )
               ])
             ]
@@ -92663,7 +92855,46 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _vm._m(7)
+          _c(
+            "div",
+            {
+              staticClass:
+                "col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card"
+            },
+            [
+              _c("div", { staticClass: "card card-statistics" }, [
+                _c(
+                  "div",
+                  { staticClass: "card-body" },
+                  [
+                    _c("h4", [_vm._v("Total")]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "clearfix" }, [
+                      _vm._m(7),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "float-right" }, [
+                        _c("p", { staticClass: "mb-0 text-right" }, [
+                          _vm._v("Stock")
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "fluid-container" }, [
+                          _c("h3", {
+                            staticClass: "font-weight-medium text-right mb-0",
+                            domProps: { textContent: _vm._s(_vm.stock.length) }
+                          })
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("line-chart", {
+                      attrs: { "chart-data": _vm.datacollection }
+                    })
+                  ],
+                  1
+                )
+              ])
+            ]
+          )
         ])
       ]),
       _vm._v(" "),
@@ -92718,7 +92949,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "float-left" }, [
-      _c("i", { staticClass: "fa fa-tint text-danger icon-lg" })
+      _c("i", { staticClass: "fa fa-clock-o text-danger icon-lg" })
     ])
   },
   function() {
@@ -92733,42 +92964,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card"
-      },
-      [
-        _c("div", { staticClass: "card card-statistics" }, [
-          _c("div", { staticClass: "card-body" }, [
-            _c("h4", [_vm._v("Returned")]),
-            _vm._v(" "),
-            _c("div", { staticClass: "clearfix" }, [
-              _c("div", { staticClass: "float-left" }, [
-                _c("i", {
-                  staticClass: "fa fa-arrow-circle-left text-danger icon-lg"
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "float-right" }, [
-                _c("p", { staticClass: "mb-0 text-right" }, [_vm._v("Stock")]),
-                _vm._v(" "),
-                _c("div", { staticClass: "fluid-container" }, [
-                  _c(
-                    "h3",
-                    { staticClass: "font-weight-medium text-right mb-0" },
-                    [_vm._v("0")]
-                  )
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("p", { staticClass: "text-muted mt-3 mb-0" })
-          ])
-        ])
-      ]
-    )
+    return _c("div", { staticClass: "float-left" }, [
+      _c("i", { staticClass: "fa fa-tint text-danger icon-lg" })
+    ])
   }
 ]
 render._withStripped = true
@@ -92841,25 +93039,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__edit___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__edit__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__create_vue__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__create_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__create_vue__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -93120,6 +93299,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         refreshNotification: function refreshNotification() {
             this.$emit("notify");
+        },
+        identifyBloodComponent: function identifyBloodComponent(desc) {
+            if (desc == "Platelet") {
+                return '<label class="badge badge-primary">' + desc + "</label>";
+            } else if (desc == "Whole Blood") {
+                return '<label class="badge badge-info">' + desc + "</label>";
+            } else if (desc == "Plasma") {
+                return '<label class="badge badge-success">' + desc + "</label>";
+            } else if (desc == "Packed RBC") {
+                return '<label class="badge badge-warning">' + desc + "</label>";
+            }
         }
     }
 });
@@ -94185,43 +94375,15 @@ var render = function() {
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(item.blood_type.description))]),
                       _vm._v(" "),
-                      item.blood_component.description == "Platelet"
-                        ? _c("td", [
-                            _c(
-                              "label",
-                              { staticClass: "badge badge-primary" },
-                              [_vm._v(_vm._s(item.blood_component.description))]
+                      _c("td", {
+                        domProps: {
+                          innerHTML: _vm._s(
+                            _vm.identifyBloodComponent(
+                              item.blood_component.description
                             )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      item.blood_component.description == "Whole Blood"
-                        ? _c("td", [
-                            _c("label", { staticClass: "badge badge-info" }, [
-                              _vm._v(_vm._s(item.blood_component.description))
-                            ])
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      item.blood_component.description == "Plasma"
-                        ? _c("td", [
-                            _c(
-                              "label",
-                              { staticClass: "badge badge-success" },
-                              [_vm._v(_vm._s(item.blood_component.description))]
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      item.blood_component.description == "Packed RBC"
-                        ? _c("td", [
-                            _c(
-                              "label",
-                              { staticClass: "badge badge-warning" },
-                              [_vm._v(_vm._s(item.blood_component.description))]
-                            )
-                          ])
-                        : _vm._e(),
+                          )
+                        }
+                      }),
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(item.vol))]),
                       _vm._v(" "),
@@ -99523,6 +99685,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -99554,7 +99725,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 search: "",
                 column: 0,
                 dir: "desc",
-                show: "All"
+                show: "All",
+                serial: ""
             },
             pagination: {
                 lastPage: "",
@@ -99765,6 +99937,35 @@ var render = function() {
                   }
                 })
               ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group col-4" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.tableData.serial,
+                    expression: "tableData.serial"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "Enter serial" },
+                domProps: { value: _vm.tableData.serial },
+                on: {
+                  input: [
+                    function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.tableData, "serial", $event.target.value)
+                    },
+                    function($event) {
+                      _vm.getData()
+                    }
+                  ]
+                }
+              })
             ])
           ]),
           _vm._v(" "),

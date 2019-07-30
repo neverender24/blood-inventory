@@ -20,6 +20,7 @@ Route::get('all-stocks', 'ReportController@getAllStocks');
 Route::post('total-stocks', 'ReportController@getTotalStocks');
 Route::get('pending-orders', 'ReportController@getPendingOrders');
 Route::post('expired-blood', 'ReportController@getExpiredDispositions');
+Route::post('near-expired-blood', 'ReportController@getNearExpiredDispositions');
 Route::post('generate-code', 'OrderController@generateCode');
 
 Route::get('client-dispositions', 'DispositionController@getClientDispositions');

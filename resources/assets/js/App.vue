@@ -11,7 +11,9 @@
                         @notify="setNotifications()"
                         :pending_orders="notifications.pending_orders"
                         :near_expire="notifications.near_expire"
+                        :expired="notifications.expired"
                         :actual_expire="actual_expire"
+                        :actual_near_expire="actual_near_expire"
                     ></router-view>
                 </div>
             </div>
@@ -25,7 +27,7 @@ import NavBar from "./components/NavBar.vue";
 import NavBarClient from "./components/NavBarClient.vue";
 import SideBar from "./components/SideBar.vue";
 import SideBarClient from "./components/SideBarClient.vue";
-import { mapState } from 'vuex';
+import { mapState } from "vuex";
 
 export default {
     components: {
@@ -39,33 +41,38 @@ export default {
         return {
             notifications: {
                 near_expire: [],
+                expired: [],
                 pending_orders: 0
             },
-            actual_expire: {}
+            actual_expire: {},
+            actual_near_expire: {}
         };
     },
 
-    mounted() {
-        
-    },
-    
+    mounted() {},
+
     computed: {
         ...mapState(["user"])
     },
 
     methods: {
-
         setNotifications() {
-            axios.post("expired-blood", this.user).then(response => {
+            axios.post("near-expired-blood", this.user).then(response => {
                 this.notifications.near_expire = response.data;
                 this.actual_expire = _.groupBy(
                     response.data,
                     "blood_type.description"
                 );
             });
-        },
 
-
+            axios.post("expired-blood", this.user).then(response => {
+                this.notifications.expired = response.data;
+                this.actual_near_expire = _.groupBy(
+                    response.data,
+                    "blood_type.description"
+                );
+            });
+        }
     }
 };
 </script>

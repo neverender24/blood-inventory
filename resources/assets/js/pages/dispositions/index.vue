@@ -53,26 +53,7 @@
                             </td>
                             <td>{{ item.serial }}</td>
                             <td>{{ item.blood_type.description }}</td>
-                            <td v-if="item.blood_component.description == 'Platelet'">
-                                <label
-                                    class="badge badge-primary"
-                                >{{ item.blood_component.description }}</label>
-                            </td>
-                            <td v-if="item.blood_component.description == 'Whole Blood'">
-                                <label
-                                    class="badge badge-info"
-                                >{{ item.blood_component.description }}</label>
-                            </td>
-                            <td v-if="item.blood_component.description == 'Plasma'">
-                                <label
-                                    class="badge badge-success"
-                                >{{ item.blood_component.description }}</label>
-                            </td>
-                            <td v-if="item.blood_component.description == 'Packed RBC'">
-                                <label
-                                    class="badge badge-warning"
-                                >{{ item.blood_component.description }}</label>
-                            </td>
+                            <td v-html="identifyBloodComponent(item.blood_component.description)"></td>
                             <td>{{ item.vol }}</td>
                             <td>{{ item.date_extracted }}</td>
                             <td>{{ item.date_expiry }}</td>
@@ -282,6 +263,24 @@ export default {
 
         refreshNotification() {
             this.$emit("notify");
+        },
+
+        identifyBloodComponent(desc) {
+            if (desc == "Platelet") {
+                return (
+                    '<label class="badge badge-primary">' + desc + "</label>"
+                );
+            } else if (desc == "Whole Blood") {
+                return '<label class="badge badge-info">' + desc + "</label>";
+            } else if (desc == "Plasma") {
+                return (
+                    '<label class="badge badge-success">' + desc + "</label>"
+                );
+            } else if (desc == "Packed RBC") {
+                return (
+                    '<label class="badge badge-warning">' + desc + "</label>"
+                );
+            }
         }
     }
 };

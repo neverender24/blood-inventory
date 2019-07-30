@@ -24,12 +24,6 @@
                                 <i class="fa fa-check" aria-hidden="true"></i>
                                 {{ item }} ({{row.length}})
                             </p>
-                            <hr />
-                            <small class="text-danger">Near Expiry</small>
-                            <p class="mt-1 mb-0" v-for="(row, item) in nearExpiryMon">
-                                <i class="fa fa-check" aria-hidden="true"></i>
-                                {{ item }} ({{row.length}})
-                            </p>
                         </div>
                     </div>
                 </div>
@@ -55,12 +49,6 @@
                                 <i class="fa fa-check" aria-hidden="true"></i>
                                 {{ item }} ({{row.length}})
                             </p>
-                            <hr />
-                            <small class="text-danger">Near Expiry</small>
-                            <p class="mt-1 mb-0" v-for="(row, item) in nearExpiryMar">
-                                <i class="fa fa-check" aria-hidden="true"></i>
-                                {{ item }} ({{row.length}})
-                            </p>
                         </div>
                     </div>
                 </div>
@@ -83,12 +71,6 @@
                                 <i class="fa fa-check" aria-hidden="true"></i>
                                 {{ item }} ({{row.length}})
                             </p>
-                            <hr />
-                            <small class="text-danger">Near Expiry</small>
-                            <p class="mt-1 mb-0" v-for="(row, item) in nearExpiryLaa">
-                                <i class="fa fa-check" aria-hidden="true"></i>
-                                {{ item }} ({{row.length}})
-                            </p>
                         </div>
                     </div>
                 </div>
@@ -108,12 +90,6 @@
                                 </div>
                             </div>
                             <p class="mt-1 mb-0" v-for="(row, item) in actualPan">
-                                <i class="fa fa-check" aria-hidden="true"></i>
-                                {{ item }} ({{row.length}})
-                            </p>
-                            <hr />
-                            <small class="text-danger">Near Expiry</small>
-                            <p class="mt-1 mb-0" v-for="(row, item) in nearExpiryPan">
                                 <i class="fa fa-check" aria-hidden="true"></i>
                                 {{ item }} ({{row.length}})
                             </p>
@@ -257,10 +233,6 @@ export default {
             mara: 0,
             pant: 0,
             stock: 0,
-            nearExpiryMon: [],
-            nearExpiryLaa: [],
-            nearExpiryMar: [],
-            nearExpiryPan: [],
             actualMon: [],
             actualLaa: [],
             actualMar: [],
@@ -288,10 +260,6 @@ export default {
         axios.get("all-stocks").then(response => {
             let stocks = response.data;
             let self = this;
-            var nearExpiryMon = [];
-            var nearExpiryLaa = [];
-            var nearExpiryMar = [];
-            var nearExpiryPan = [];
 
             _.forEach(stocks, function(s) {
                 if (s.prefix == "MON") {
@@ -301,29 +269,11 @@ export default {
                         s.dispositions,
                         "blood_type.description"
                     );
-                    _.forEach(s.dispositions, function(dispositions) {
-                        if (self.nearExpire(dispositions.date_expiry)) {
-                            nearExpiryMon.push(dispositions);
-                        }
-                    });
-                    self.nearExpiryMon = _.groupBy(
-                        nearExpiryMon,
-                        "blood_type.description"
-                    );
                 } else if (s.prefix == "LAA") {
                     //laak
                     self.laak = s.dispositions_count;
                     self.actualLaa = _.groupBy(
                         s.dispositions,
-                        "blood_type.description"
-                    );
-                    _.forEach(s.dispositions, function(dispositions) {
-                        if (self.nearExpire(dispositions.date_expiry)) {
-                            nearExpiryLaa.push(dispositions);
-                        }
-                    });
-                    self.nearExpiryLaa = _.groupBy(
-                        nearExpiryLaa,
                         "blood_type.description"
                     );
                 }
@@ -334,30 +284,12 @@ export default {
                         s.dispositions,
                         "blood_type.description"
                     );
-                    _.forEach(s.dispositions, function(dispositions) {
-                        if (self.nearExpire(dispositions.date_expiry)) {
-                            nearExpiryMar.push(dispositions);
-                        }
-                    });
-                    self.nearExpiryMar = _.groupBy(
-                        nearExpiryMar,
-                        "blood_type.description"
-                    );
                 }
                 if (s.prefix == "PAN") {
                     //pantukan
                     self.pant = s.dispositions_count;
                     self.actualPan = _.groupBy(
                         s.dispositions,
-                        "blood_type.description"
-                    );
-                    _.forEach(s.dispositions, function(dispositions) {
-                        if (self.nearExpire(dispositions.date_expiry)) {
-                            nearExpiryPan.push(dispositions);
-                        }
-                    });
-                    self.nearExpiryPan = _.groupBy(
-                        nearExpiryPan,
                         "blood_type.description"
                     );
                 }
@@ -402,19 +334,6 @@ export default {
                 datasets: chart,
                 tooltips: false
             };
-        },
-
-        nearExpire(date) {
-            const startDate = date;
-            const endDate = new Date();
-            const timeDiff = new Date(startDate) - endDate;
-            const days = timeDiff / (1000 * 60 * 60 * 24);
-
-            if (days <= 10 && days >= 0) {
-                return true;
-            } else {
-                return false;
-            }
         }
     }
 };

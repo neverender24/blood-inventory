@@ -26,6 +26,7 @@
         "es6-promise": "^4.2.6",
         "flag-icon-css": "^3.2.1",
         "font-awesome": "^4.7.0",
+        "hover.css": "^2.3.2",
         "mdi": "^2.2.43",
         "simple-line-icons": "^2.4.1",
         "vue-chartjs": "^3.4.0",

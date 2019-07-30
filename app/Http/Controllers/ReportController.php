@@ -12,16 +12,6 @@ class ReportController extends Controller
 {
     public function getAllStocks() {
         
-        // return Disposition::with(['order_details'=>function($od){
-        //     $od->with(['order'=>function($u){
-        //         $u->with(['user'=>function($usr){
-        //             $usr->with('bloodStation')->get();
-        //         }])->get();
-        //     }])
-        //         ->get();
-        //     }])
-        //     ->get();
-
             return BloodStation::with(['dispositions'=>function($q){
                         $q->with(['bloodComponent', 'bloodType'])->doesntHave('releases')->get();
                     }])->whereHas('dispositions', function($a){
@@ -43,7 +33,7 @@ class ReportController extends Controller
             }]);
 
             if ($request['role'] == 'Administrator') {
-                $expire = $expire->doesntHave('users');
+                $expire = $expire->doesntHave('order_details')->doesntHave('users');
             } else {
                 $expire = $expire->whereHas('order_details.order.user', function($wew){
                     $wew->where('blood_station_id', auth()->user()->blood_station_id);
@@ -62,7 +52,7 @@ class ReportController extends Controller
         })->whereNull('delivery_date')->count();
     }
 
-    public function getExpiredDispositions(Request $request) {
+    public function getNearExpiredDispositions(Request $request) {
         //dd(Carbon::now()->addDays(35));
         $expire = Disposition::with(['bloodComponent', 'bloodType','releases','user','order_details'=>function($od){
                     $od->with(['order'=>function($u){
@@ -74,7 +64,11 @@ class ReportController extends Controller
                     }]);
 
         if ($request['role'] == 'Administrator') {
-            $expire = $expire->doesntHave('order_details');
+            $expire = $expire->doesntHave('order_details')->where(function($q){ 
+                $q->whereHas('user', function($wew){
+                    $wew->where('blood_station_id', auth()->user()->blood_station_id);
+                }); 
+            });
         } else {
             $expire = $expire->where(function($q){ 
                 $q->whereHas('order_details.order.user', function($wew){
@@ -87,8 +81,44 @@ class ReportController extends Controller
             });
         }
         
-        
-        $expire = $expire->doesntHave('releases')->where( 'date_expiry', '<=', Carbon::now()->addDays(10) )->get();
+        $expire = $expire->doesntHave('releases')->where(function($q) {
+            $q->where('date_expiry', '<=', Carbon::now()->addDays(10))
+                ->where('date_expiry', '>=', Carbon::now()->addDays(0));
+        })->get();
+
+        return $expire;
+    }
+
+    public function getExpiredDispositions(Request $request) {
+        //dd(Carbon::now()->addDays(35));
+        $expire = Disposition::with(['bloodComponent', 'bloodType','releases','user','order_details'=>function($od){
+                    $od->with(['order'=>function($u){
+                        $u->with(['user'=>function($usr){
+                            $usr->with('bloodStation')->get();
+                        }])->get();
+                    }])
+                        ->get();
+                    }]);
+
+        if ($request['role'] == 'Administrator') {
+            $expire = $expire->doesntHave('order_details')->where(function($q){ 
+                $q->whereHas('user', function($wew){
+                    $wew->where('blood_station_id', auth()->user()->blood_station_id);
+                }); 
+            });
+        } else {
+            $expire = $expire->where(function($q){ 
+                $q->whereHas('order_details.order.user', function($wew){
+                    $wew->where('blood_station_id', auth()->user()->blood_station_id);
+                })->whereHas('order_details.order', function($wew){
+                    $wew->where('received_date',"!=", null);
+                })->orWhereHas('user', function($wew){
+                    $wew->where('blood_station_id', auth()->user()->blood_station_id);
+                }); 
+            });
+        }
+    
+        $expire = $expire->doesntHave('releases')->where( 'date_expiry', '<=', Carbon::now() )->get();
 
         return $expire;
     }
