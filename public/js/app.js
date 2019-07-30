@@ -80165,6 +80165,38 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -92409,69 +92441,76 @@ var render = function() {
             },
             [
               _c("div", { staticClass: "card card-statistics" }, [
-                _c(
-                  "div",
-                  { staticClass: "card-body" },
-                  [
-                    _c("h4", [_vm._v("Montevista")]),
+                _c("div", { staticClass: "card-body" }, [
+                  _c("h4", [_vm._v("Montevista")]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "clearfix" }, [
+                    _vm._m(0),
                     _vm._v(" "),
-                    _c("div", { staticClass: "clearfix" }, [
-                      _vm._m(0),
+                    _c("div", { staticClass: "float-right" }, [
+                      _c("p", { staticClass: "mb-0 text-right" }, [
+                        _vm._v("Stock")
+                      ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "float-right" }, [
-                        _c("p", { staticClass: "mb-0 text-right" }, [
-                          _vm._v("Stock")
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "fluid-container" }, [
-                          _c("h3", {
-                            staticClass: "font-weight-medium text-right mb-0",
-                            domProps: { textContent: _vm._s(_vm.mont) }
-                          })
-                        ])
+                      _c("div", { staticClass: "fluid-container" }, [
+                        _c("h3", {
+                          staticClass: "font-weight-medium text-right mb-0",
+                          domProps: { textContent: _vm._s(_vm.mont) }
+                        })
                       ])
-                    ]),
-                    _vm._v(" "),
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "row" },
                     _vm._l(_vm.actualMon, function(row, item) {
-                      return _c("p", { staticClass: "mt-1 mb-0" }, [
-                        _c("i", {
-                          staticClass: "fa fa-check",
-                          attrs: { "aria-hidden": "true" }
-                        }),
-                        _vm._v(
-                          "\n                            " +
-                            _vm._s(item) +
-                            " (" +
-                            _vm._s(row.length) +
-                            ")\n                        "
-                        )
+                      return _c("div", { staticClass: "col-6" }, [
+                        _c("p", { staticClass: "mt-1 mb-0" }, [
+                          _c("i", {
+                            staticClass: "fa fa-check",
+                            attrs: { "aria-hidden": "true" }
+                          }),
+                          _vm._v(
+                            "\n                                    " +
+                              _vm._s(item) +
+                              " (" +
+                              _vm._s(row.length) +
+                              ")\n                                "
+                          )
+                        ])
                       ])
-                    }),
-                    _vm._v(" "),
-                    _c("hr"),
-                    _vm._v(" "),
-                    _c("small", { staticClass: "text-danger" }, [
-                      _vm._v("Near Expiry")
-                    ]),
-                    _vm._v(" "),
+                    })
+                  ),
+                  _vm._v(" "),
+                  _c("hr"),
+                  _vm._v(" "),
+                  _c("small", { staticClass: "text-danger" }, [
+                    _vm._v("Near Expiry")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "row" },
                     _vm._l(_vm.nearExpiryMon, function(row, item) {
-                      return _c("p", { staticClass: "mt-1 mb-0" }, [
-                        _c("i", {
-                          staticClass: "fa fa-check",
-                          attrs: { "aria-hidden": "true" }
-                        }),
-                        _vm._v(
-                          "\n                            " +
-                            _vm._s(item) +
-                            " (" +
-                            _vm._s(row.length) +
-                            ")\n                        "
-                        )
+                      return _c("div", { staticClass: "col-6" }, [
+                        _c("p", { staticClass: "mt-1 mb-0" }, [
+                          _c("i", {
+                            staticClass: "fa fa-check",
+                            attrs: { "aria-hidden": "true" }
+                          }),
+                          _vm._v(
+                            "\n                                    " +
+                              _vm._s(item) +
+                              " (" +
+                              _vm._s(row.length) +
+                              ")\n                                "
+                          )
+                        ])
                       ])
                     })
-                  ],
-                  2
-                )
+                  )
+                ])
               ])
             ]
           ),
@@ -92484,69 +92523,76 @@ var render = function() {
             },
             [
               _c("div", { staticClass: "card card-statistics" }, [
-                _c(
-                  "div",
-                  { staticClass: "card-body" },
-                  [
-                    _c("h4", [_vm._v("Maragusan")]),
+                _c("div", { staticClass: "card-body" }, [
+                  _c("h4", [_vm._v("Maragusan")]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "clearfix" }, [
+                    _vm._m(1),
                     _vm._v(" "),
-                    _c("div", { staticClass: "clearfix" }, [
-                      _vm._m(1),
+                    _c("div", { staticClass: "float-right" }, [
+                      _c("p", { staticClass: "mb-0 text-right" }, [
+                        _vm._v("Stock")
+                      ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "float-right" }, [
-                        _c("p", { staticClass: "mb-0 text-right" }, [
-                          _vm._v("Stock")
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "fluid-container" }, [
-                          _c("h3", {
-                            staticClass: "font-weight-medium text-right mb-0",
-                            domProps: { textContent: _vm._s(_vm.mara) }
-                          })
-                        ])
+                      _c("div", { staticClass: "fluid-container" }, [
+                        _c("h3", {
+                          staticClass: "font-weight-medium text-right mb-0",
+                          domProps: { textContent: _vm._s(_vm.mara) }
+                        })
                       ])
-                    ]),
-                    _vm._v(" "),
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "row" },
                     _vm._l(_vm.actualMar, function(row, item) {
-                      return _c("p", { staticClass: "mt-1 mb-0" }, [
-                        _c("i", {
-                          staticClass: "fa fa-check",
-                          attrs: { "aria-hidden": "true" }
-                        }),
-                        _vm._v(
-                          "\n                            " +
-                            _vm._s(item) +
-                            " (" +
-                            _vm._s(row.length) +
-                            ")\n                        "
-                        )
+                      return _c("div", { staticClass: "col-6" }, [
+                        _c("p", { staticClass: "mt-1 mb-0" }, [
+                          _c("i", {
+                            staticClass: "fa fa-check",
+                            attrs: { "aria-hidden": "true" }
+                          }),
+                          _vm._v(
+                            "\n                                    " +
+                              _vm._s(item) +
+                              " (" +
+                              _vm._s(row.length) +
+                              ")\n                                "
+                          )
+                        ])
                       ])
-                    }),
-                    _vm._v(" "),
-                    _c("hr"),
-                    _vm._v(" "),
-                    _c("small", { staticClass: "text-danger" }, [
-                      _vm._v("Near Expiry")
-                    ]),
-                    _vm._v(" "),
+                    })
+                  ),
+                  _vm._v(" "),
+                  _c("hr"),
+                  _vm._v(" "),
+                  _c("small", { staticClass: "text-danger" }, [
+                    _vm._v("Near Expiry")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "row" },
                     _vm._l(_vm.nearExpiryMar, function(row, item) {
-                      return _c("p", { staticClass: "mt-1 mb-0" }, [
-                        _c("i", {
-                          staticClass: "fa fa-check",
-                          attrs: { "aria-hidden": "true" }
-                        }),
-                        _vm._v(
-                          "\n                            " +
-                            _vm._s(item) +
-                            " (" +
-                            _vm._s(row.length) +
-                            ")\n                        "
-                        )
+                      return _c("div", { staticClass: "col-6" }, [
+                        _c("p", { staticClass: "mt-1 mb-0" }, [
+                          _c("i", {
+                            staticClass: "fa fa-check",
+                            attrs: { "aria-hidden": "true" }
+                          }),
+                          _vm._v(
+                            "\n                                    " +
+                              _vm._s(item) +
+                              " (" +
+                              _vm._s(row.length) +
+                              ")\n                                "
+                          )
+                        ])
                       ])
                     })
-                  ],
-                  2
-                )
+                  )
+                ])
               ])
             ]
           ),
@@ -92559,72 +92605,77 @@ var render = function() {
             },
             [
               _c("div", { staticClass: "card card-statistics" }, [
-                _c(
-                  "div",
-                  { staticClass: "card-body" },
-                  [
-                    _c("h4", [_vm._v("Laak")]),
+                _c("div", { staticClass: "card-body" }, [
+                  _c("h4", [_vm._v("Laak")]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "clearfix" }, [
+                    _vm._m(2),
                     _vm._v(" "),
-                    _c("div", { staticClass: "clearfix" }, [
-                      _vm._m(2),
+                    _c("div", { staticClass: "float-right" }, [
+                      _c("p", { staticClass: "mb-0 text-right" }, [
+                        _vm._v("Stock")
+                      ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "float-right" }, [
-                        _c("p", { staticClass: "mb-0 text-right" }, [
-                          _vm._v("Stock")
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "fluid-container" }, [
-                          _c(
-                            "h3",
-                            {
-                              staticClass: "font-weight-medium text-right mb-0"
-                            },
-                            [_vm._v(_vm._s(_vm.laak))]
-                          )
-                        ])
+                      _c("div", { staticClass: "fluid-container" }, [
+                        _c(
+                          "h3",
+                          { staticClass: "font-weight-medium text-right mb-0" },
+                          [_vm._v(_vm._s(_vm.laak))]
+                        )
                       ])
-                    ]),
-                    _vm._v(" "),
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "row" },
                     _vm._l(_vm.actualLaa, function(row, item) {
-                      return _c("p", { staticClass: "mt-1 mb-0" }, [
-                        _c("i", {
-                          staticClass: "fa fa-check",
-                          attrs: { "aria-hidden": "true" }
-                        }),
-                        _vm._v(
-                          "\n                            " +
-                            _vm._s(item) +
-                            " (" +
-                            _vm._s(row.length) +
-                            ")\n                        "
-                        )
-                      ])
-                    }),
-                    _vm._v(" "),
-                    _c("hr"),
-                    _vm._v(" "),
-                    _c("small", { staticClass: "text-danger" }, [
-                      _vm._v("Near Expiry")
-                    ]),
-                    _vm._v(" "),
-                    _vm._l(_vm.nearExpiryLaa, function(row, item) {
-                      return _c("p", { staticClass: "mt-1 mb-0" }, [
-                        _c("i", {
-                          staticClass: "fa fa-check",
-                          attrs: { "aria-hidden": "true" }
-                        }),
-                        _vm._v(
-                          "\n                            " +
-                            _vm._s(item) +
-                            " (" +
-                            _vm._s(row.length) +
-                            ")\n                        "
-                        )
+                      return _c("div", { staticClass: "col-6" }, [
+                        _c("p", { staticClass: "mt-1 mb-0" }, [
+                          _c("i", {
+                            staticClass: "fa fa-check",
+                            attrs: { "aria-hidden": "true" }
+                          }),
+                          _vm._v(
+                            "\n                                    " +
+                              _vm._s(item) +
+                              " (" +
+                              _vm._s(row.length) +
+                              ")\n                                "
+                          )
+                        ])
                       ])
                     })
-                  ],
-                  2
-                )
+                  ),
+                  _vm._v(" "),
+                  _c("hr"),
+                  _vm._v(" "),
+                  _c("small", { staticClass: "text-danger" }, [
+                    _vm._v("Near Expiry")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "row" },
+                    _vm._l(_vm.nearExpiryLaa, function(row, item) {
+                      return _c("div", { staticClass: "col-6" }, [
+                        _c("p", { staticClass: "mt-1 mb-0" }, [
+                          _c("i", {
+                            staticClass: "fa fa-check",
+                            attrs: { "aria-hidden": "true" }
+                          }),
+                          _vm._v(
+                            "\n                                    " +
+                              _vm._s(item) +
+                              " (" +
+                              _vm._s(row.length) +
+                              ")\n                                "
+                          )
+                        ])
+                      ])
+                    })
+                  )
+                ])
               ])
             ]
           ),
@@ -92637,72 +92688,77 @@ var render = function() {
             },
             [
               _c("div", { staticClass: "card card-statistics" }, [
-                _c(
-                  "div",
-                  { staticClass: "card-body" },
-                  [
-                    _c("h4", [_vm._v("Pantukan")]),
+                _c("div", { staticClass: "card-body" }, [
+                  _c("h4", [_vm._v("Pantukan")]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "clearfix" }, [
+                    _vm._m(3),
                     _vm._v(" "),
-                    _c("div", { staticClass: "clearfix" }, [
-                      _vm._m(3),
+                    _c("div", { staticClass: "float-right" }, [
+                      _c("p", { staticClass: "mb-0 text-right" }, [
+                        _vm._v("Stock")
+                      ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "float-right" }, [
-                        _c("p", { staticClass: "mb-0 text-right" }, [
-                          _vm._v("Stock")
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "fluid-container" }, [
-                          _c(
-                            "h3",
-                            {
-                              staticClass: "font-weight-medium text-right mb-0"
-                            },
-                            [_vm._v(_vm._s(_vm.pant))]
+                      _c("div", { staticClass: "fluid-container" }, [
+                        _c(
+                          "h3",
+                          { staticClass: "font-weight-medium text-right mb-0" },
+                          [_vm._v(_vm._s(_vm.pant))]
+                        )
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "row" },
+                    _vm._l(_vm.actualPan, function(row, item) {
+                      return _c("div", { staticClass: "col-6" }, [
+                        _c("p", { staticClass: "mt-1 mb-0" }, [
+                          _c("i", {
+                            staticClass: "fa fa-check",
+                            attrs: { "aria-hidden": "true" }
+                          }),
+                          _vm._v(
+                            "\n                                    " +
+                              _vm._s(item) +
+                              " (" +
+                              _vm._s(row.length) +
+                              ")\n                                "
                           )
                         ])
                       ])
-                    ]),
-                    _vm._v(" "),
-                    _vm._l(_vm.actualPan, function(row, item) {
-                      return _c("p", { staticClass: "mt-1 mb-0" }, [
-                        _c("i", {
-                          staticClass: "fa fa-check",
-                          attrs: { "aria-hidden": "true" }
-                        }),
-                        _vm._v(
-                          "\n                            " +
-                            _vm._s(item) +
-                            " (" +
-                            _vm._s(row.length) +
-                            ")\n                        "
-                        )
-                      ])
-                    }),
-                    _vm._v(" "),
-                    _c("hr"),
-                    _vm._v(" "),
-                    _c("small", { staticClass: "text-danger" }, [
-                      _vm._v("Near Expiry")
-                    ]),
-                    _vm._v(" "),
+                    })
+                  ),
+                  _vm._v(" "),
+                  _c("hr"),
+                  _vm._v(" "),
+                  _c("small", { staticClass: "text-danger" }, [
+                    _vm._v("Near Expiry")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "row" },
                     _vm._l(_vm.nearExpiryPan, function(row, item) {
-                      return _c("p", { staticClass: "mt-1 mb-0" }, [
-                        _c("i", {
-                          staticClass: "fa fa-check",
-                          attrs: { "aria-hidden": "true" }
-                        }),
-                        _vm._v(
-                          "\n                            " +
-                            _vm._s(item) +
-                            " (" +
-                            _vm._s(row.length) +
-                            ")\n                        "
-                        )
+                      return _c("div", { staticClass: "col-6" }, [
+                        _c("p", { staticClass: "mt-1 mb-0" }, [
+                          _c("i", {
+                            staticClass: "fa fa-check",
+                            attrs: { "aria-hidden": "true" }
+                          }),
+                          _vm._v(
+                            "\n                                    " +
+                              _vm._s(item) +
+                              " (" +
+                              _vm._s(row.length) +
+                              ")\n                                "
+                          )
+                        ])
                       ])
                     })
-                  ],
-                  2
-                )
+                  )
+                ])
               ])
             ]
           )

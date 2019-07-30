@@ -20,16 +20,24 @@
                                     </div>
                                 </div>
                             </div>
-                            <p class="mt-1 mb-0" v-for="(row, item) in actualMon">
-                                <i class="fa fa-check" aria-hidden="true"></i>
-                                {{ item }} ({{row.length}})
-                            </p>
+                            <div class="row">
+                                <div class="col-6" v-for="(row, item) in actualMon">
+                                    <p class="mt-1 mb-0">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        {{ item }} ({{row.length}})
+                                    </p>
+                                </div>
+                            </div>
                             <hr />
                             <small class="text-danger">Near Expiry</small>
-                            <p class="mt-1 mb-0" v-for="(row, item) in nearExpiryMon">
-                                <i class="fa fa-check" aria-hidden="true"></i>
-                                {{ item }} ({{row.length}})
-                            </p>
+                            <div class="row">
+                                <div class="col-6" v-for="(row, item) in nearExpiryMon">
+                                    <p class="mt-1 mb-0">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        {{ item }} ({{row.length}})
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -51,16 +59,24 @@
                                     </div>
                                 </div>
                             </div>
-                            <p class="mt-1 mb-0" v-for="(row, item) in actualMar">
-                                <i class="fa fa-check" aria-hidden="true"></i>
-                                {{ item }} ({{row.length}})
-                            </p>
+                            <div class="row">
+                                <div class="col-6" v-for="(row, item) in actualMar">
+                                    <p class="mt-1 mb-0">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        {{ item }} ({{row.length}})
+                                    </p>
+                                </div>
+                            </div>
                             <hr />
                             <small class="text-danger">Near Expiry</small>
-                            <p class="mt-1 mb-0" v-for="(row, item) in nearExpiryMar">
-                                <i class="fa fa-check" aria-hidden="true"></i>
-                                {{ item }} ({{row.length}})
-                            </p>
+                            <div class="row">
+                                <div class="col-6" v-for="(row, item) in nearExpiryMar">
+                                    <p class="mt-1 mb-0">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        {{ item }} ({{row.length}})
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -79,16 +95,24 @@
                                     </div>
                                 </div>
                             </div>
-                            <p class="mt-1 mb-0" v-for="(row, item) in actualLaa">
-                                <i class="fa fa-check" aria-hidden="true"></i>
-                                {{ item }} ({{row.length}})
-                            </p>
+                            <div class="row">
+                                <div class="col-6" v-for="(row, item) in actualLaa">
+                                    <p class="mt-1 mb-0">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        {{ item }} ({{row.length}})
+                                    </p>
+                                </div>
+                            </div>
                             <hr />
                             <small class="text-danger">Near Expiry</small>
-                            <p class="mt-1 mb-0" v-for="(row, item) in nearExpiryLaa">
-                                <i class="fa fa-check" aria-hidden="true"></i>
-                                {{ item }} ({{row.length}})
-                            </p>
+                            <div class="row">
+                                <div class="col-6" v-for="(row, item) in nearExpiryLaa">
+                                    <p class="mt-1 mb-0">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        {{ item }} ({{row.length}})
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -107,16 +131,24 @@
                                     </div>
                                 </div>
                             </div>
-                            <p class="mt-1 mb-0" v-for="(row, item) in actualPan">
-                                <i class="fa fa-check" aria-hidden="true"></i>
-                                {{ item }} ({{row.length}})
-                            </p>
+                            <div class="row">
+                                <div class="col-6" v-for="(row, item) in actualPan">
+                                    <p class="mt-1 mb-0">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        {{ item }} ({{row.length}})
+                                    </p>
+                                </div>
+                            </div>
                             <hr />
                             <small class="text-danger">Near Expiry</small>
-                            <p class="mt-1 mb-0" v-for="(row, item) in nearExpiryPan">
-                                <i class="fa fa-check" aria-hidden="true"></i>
-                                {{ item }} ({{row.length}})
-                            </p>
+                            <div class="row">
+                                <div class="col-6" v-for="(row, item) in nearExpiryPan">
+                                    <p class="mt-1 mb-0">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        {{ item }} ({{row.length}})
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
