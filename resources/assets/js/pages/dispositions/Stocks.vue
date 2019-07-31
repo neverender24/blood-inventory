@@ -56,12 +56,7 @@
                 >
                     <tbody>
                         <tr v-for="item in data" :key="item.serial">
-                            <td class="text-danger" v-if="nearExpire(item.date_expiry)">
-                                <span class="fa fa-exclamation"></span>
-                            </td>
-                            <td class="text-success" v-else>
-                                <span class="fa fa-check"></span>
-                            </td>
+                            <td v-html="nearExpire(item.date_expiry)"></td>
                             <td>{{ item.serial }}</td>
                             <td>{{ item.blood_type.description }}</td>
                             <td v-html="identifyBloodType(item.blood_component.description)"></td>
@@ -272,10 +267,12 @@ export default {
             const timeDiff = new Date(startDate) - endDate;
             const days = timeDiff / (1000 * 60 * 60 * 24);
 
-            if (days <= 10) {
-                return true;
+            if (days <= 10 && days >= 0) {
+                return '<span class="fa fa-exclamation text-danger"></span>';
+            } else if (days <= 0) {
+                return '<span class="fa fa-close text-danger"></span>';
             } else {
-                return false;
+                return '<span class="fa fa-check text-success"></span>';
             }
         },
 

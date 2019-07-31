@@ -47,14 +47,6 @@
                 >
                     <tbody>
                         <tr v-for="item in data">
-                            <td>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input type="checkbox" class="form-check-input" />
-                                        <i class="input-helper"></i>
-                                    </label>
-                                </div>
-                            </td>
                             <td v-html="nearExpire(item.date_expiry)"></td>
                             <td>{{ item.serial }}</td>
                             <td>{{ item.blood_type.description }}</td>

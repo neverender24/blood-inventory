@@ -93408,14 +93408,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -94641,19 +94633,6 @@ var render = function() {
                   "tbody",
                   _vm._l(_vm.data, function(item) {
                     return _c("tr", [
-                      _c("td", [
-                        _c("div", { staticClass: "form-check" }, [
-                          _c("label", { staticClass: "form-check-label" }, [
-                            _c("input", {
-                              staticClass: "form-check-input",
-                              attrs: { type: "checkbox" }
-                            }),
-                            _vm._v(" "),
-                            _c("i", { staticClass: "input-helper" })
-                          ])
-                        ])
-                      ]),
-                      _vm._v(" "),
                       _c("td", {
                         domProps: {
                           innerHTML: _vm._s(_vm.nearExpire(item.date_expiry))
@@ -97959,11 +97938,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 
@@ -98106,10 +98080,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             var timeDiff = new Date(startDate) - endDate;
             var days = timeDiff / (1000 * 60 * 60 * 24);
 
-            if (days <= 10) {
-                return true;
+            if (days <= 10 && days >= 0) {
+                return '<span class="fa fa-exclamation text-danger"></span>';
+            } else if (days <= 0) {
+                return '<span class="fa fa-close text-danger"></span>';
             } else {
-                return false;
+                return '<span class="fa fa-check text-success"></span>';
             }
         },
         refreshNotification: function refreshNotification() {
@@ -98186,13 +98162,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuelidate_lib_validators___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vuelidate_lib_validators__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_search_select__ = __webpack_require__(170);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_search_select___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_search_select__);
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -98579,6 +98548,10 @@ var render = function() {
                         _vm._v(" "),
                         _c("option", { attrs: { value: "Transfuse" } }, [
                           _vm._v("Transfuse")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "Expired" } }, [
+                          _vm._v("Expired")
                         ])
                       ]
                     )
@@ -99677,13 +99650,11 @@ var render = function() {
                   "tbody",
                   _vm._l(_vm.data, function(item) {
                     return _c("tr", { key: item.serial }, [
-                      _vm.nearExpire(item.date_expiry)
-                        ? _c("td", { staticClass: "text-danger" }, [
-                            _c("span", { staticClass: "fa fa-exclamation" })
-                          ])
-                        : _c("td", { staticClass: "text-success" }, [
-                            _c("span", { staticClass: "fa fa-check" })
-                          ]),
+                      _c("td", {
+                        domProps: {
+                          innerHTML: _vm._s(_vm.nearExpire(item.date_expiry))
+                        }
+                      }),
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(item.serial))]),
                       _vm._v(" "),

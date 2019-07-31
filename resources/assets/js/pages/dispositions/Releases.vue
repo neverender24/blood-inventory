@@ -19,50 +19,44 @@
                     </div>
                     <div class="modal-body">
                         <form class="forms-sample">
+                            <div class="form-group">
+                                <label>Released By</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    :class="{ 'is-invalid': $v.data.released_by.$error }"
+                                    v-model.trim="$v.data.released_by.$model"
+                                />
+                            </div>
 
-                                    <div class="form-group">
-                                        <label>Released By</label>
-                                        <input
-                                            type="text"
-                                            class="form-control"
-                                            :class="{ 'is-invalid': $v.data.released_by.$error }"
-                                            v-model.trim="$v.data.released_by.$model"
-                                        >
-                                    </div>
+                            <div class="form-group">
+                                <label>Remarks</label>
+                                <textarea
+                                    type="text"
+                                    class="form-control"
+                                    :class="{ 'is-invalid': $v.data.remarks.$error }"
+                                    v-model.trim="$v.data.remarks.$model"
+                                ></textarea>
+                            </div>
 
-        
-                                <div class="form-group">
-                                    <label>Remarks</label>
-                                    <textarea
-                                        type="text"
-                                        class="form-control"
-                                        :class="{ 'is-invalid': $v.data.remarks.$error }"
-                                        v-model.trim="$v.data.remarks.$model"
-                                    ></textarea>
-                                </div>
-    
+                            <div class="form-group">
+                                <label>Type</label>
+                                <select
+                                    class="form-control"
+                                    :class="{ 'is-invalid': $v.data.type.$error }"
+                                    v-model.trim="$v.data.type.$model"
+                                >
+                                    <option value></option>
+                                    <option value="Transfer">Transfer</option>
+                                    <option value="Transfuse">Transfuse</option>
+                                    <option value="Expired">Expired</option>
+                                </select>
+                            </div>
 
-                                <div class="form-group">
-                                    <label>Type</label>
-                                    <select
-                                        class="form-control"
-                                        :class="{ 'is-invalid': $v.data.type.$error }"
-                                        v-model.trim="$v.data.type.$model"
-                                    >
-                                        <option value></option>
-                                        <option value="Transfer">Transfer</option>
-                                        <option value="Transfuse">Transfuse</option>
-                                        <!-- <option value="Sell">Sell</option> -->
-                                    </select>
-                                </div>
-
-
-                                <div class="form-group">
-                                    <label>Disposition</label>
-                                    <div
-                                        v-for="(row, index) in $v.data.dispositions.$each.$iter"
-                                    >
-                                        <!-- <select
+                            <div class="form-group">
+                                <label>Disposition</label>
+                                <div v-for="(row, index) in $v.data.dispositions.$each.$iter">
+                                    <!-- <select
                                             class="form-control"
                                             :class="{ 'is-invalid': row.disposition_id.$error }"
                                             v-model.trim="row.disposition_id.$model"
@@ -72,15 +66,14 @@
                                                 v-bind:item="option"
                                                 :value="option.id"
                                             >{{ option.serial }}</option>
-                                        </select> -->
-                                        <model-select
+                                    </select>-->
+                                    <model-select
                                         :options="searchOfficeSelect"
                                         v-model.trim="row.disposition_id.$model"
                                         placeholder="select item"
                                     ></model-select>
-                                    </div>
                                 </div>
-
+                            </div>
 
                             <div class="row">
                                 <div class="col-6">
@@ -91,7 +84,7 @@
                                             class="form-control"
                                             :class="{ 'is-invalid': $v.data.released_date.$error }"
                                             v-model.trim="$v.data.released_date.$model"
-                                        >
+                                        />
                                     </div>
                                 </div>
                                 <div class="col-6">
@@ -102,7 +95,7 @@
                                             class="form-control"
                                             :class="{ 'is-invalid': $v.data.released_time.$error }"
                                             v-model.trim="$v.data.released_time.$model"
-                                        >
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -132,7 +125,7 @@
 
 <script>
 import { required, minLength, minValue } from "vuelidate/lib/validators";
-import { ModelSelect } from 'vue-search-select'
+import { ModelSelect } from "vue-search-select";
 
 export default {
     props: ["dispositions"],

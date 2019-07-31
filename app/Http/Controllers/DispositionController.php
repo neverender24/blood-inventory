@@ -45,7 +45,7 @@ class DispositionController extends Controller
         }
 
         if ($show == 'available') {
-            $index->doesntHave('order_details');
+            $index->doesntHave('order_details')->where( 'date_expiry', '>', Carbon::now() )->doesntHave('order_details');
         } else if ($show == 'near_expiry') {
             $index->where('date_expiry', '<=', Carbon::now()->addDays(10))
                 ->where('date_expiry', '>=', Carbon::now()->addDays(0))->doesntHave('order_details');

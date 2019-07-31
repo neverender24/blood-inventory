@@ -40,7 +40,7 @@ class ReportController extends Controller
                 });
             }
             
-            $expire = $expire->get();
+            $expire = $expire->where( 'date_expiry', '<=', Carbon::now() )->get();
 
             return $expire;
     }
