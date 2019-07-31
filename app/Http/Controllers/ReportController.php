@@ -33,14 +33,14 @@ class ReportController extends Controller
             }]);
 
             if ($request['role'] == 'Administrator') {
-                $expire = $expire->doesntHave('order_details')->doesntHave('users');
+                $expire = $expire->doesntHave('order_details');
             } else {
                 $expire = $expire->whereHas('order_details.order.user', function($wew){
                     $wew->where('blood_station_id', auth()->user()->blood_station_id);
                 });
             }
             
-            $expire = $expire->where( 'date_expiry', '<=', Carbon::now() )->get();
+            $expire = $expire->doesntHave('releases')->where( 'date_expiry', '>', Carbon::now() )->get();
 
             return $expire;
     }
