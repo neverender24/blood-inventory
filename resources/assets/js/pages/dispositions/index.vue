@@ -8,6 +8,8 @@
                         <select v-model="tableData.show" @change="getData()" class="form-control">
                             <option value="all">All</option>
                             <option value="available" selected>Available</option>
+                            <option value="near_expiry">Near Expiry</option>
+                            <option value="expired">Expired</option>
                         </select>
                     </div>
 
@@ -45,12 +47,15 @@
                 >
                     <tbody>
                         <tr v-for="item in data">
-                            <td class="text-danger" v-if="nearExpire(item.date_expiry)">
-                                <span class="fa fa-exclamation"></span>
+                            <td>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input" />
+                                        <i class="input-helper"></i>
+                                    </label>
+                                </div>
                             </td>
-                            <td class="text-success" v-else>
-                                <span class="fa fa-check"></span>
-                            </td>
+                            <td v-html="nearExpire(item.date_expiry)"></td>
                             <td>{{ item.serial }}</td>
                             <td>{{ item.blood_type.description }}</td>
                             <td v-html="identifyBloodComponent(item.blood_component.description)"></td>
@@ -254,10 +259,12 @@ export default {
             const timeDiff = new Date(startDate) - endDate;
             const days = timeDiff / (1000 * 60 * 60 * 24);
 
-            if (days <= 10) {
-                return true;
+            if (days <= 10 && days >= 0) {
+                return '<span class="fa fa-exclamation text-danger"></span>';
+            } else if (days <= 0) {
+                return '<span class="fa fa-close text-danger"></span>';
             } else {
-                return false;
+                return '<span class="fa fa-check text-success"></span>';
             }
         },
 

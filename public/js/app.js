@@ -80197,6 +80197,78 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -80215,6 +80287,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             mara: 0,
             pant: 0,
             stock: 0,
+            showExpiries: [],
             nearExpiryMon: [],
             nearExpiryLaa: [],
             nearExpiryMar: [],
@@ -80346,6 +80419,17 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 return true;
             } else {
                 return false;
+            }
+        },
+        showNearExpiryDetails: function showNearExpiryDetails(details) {
+            if (details == "mon") {
+                this.showExpiries = this.nearExpiryMon;
+            } else if (details == "mar") {
+                this.showExpiries = this.nearExpiryMar;
+            } else if (details == "laa") {
+                this.showExpiries = this.nearExpiryLaa;
+            } else if (details == "pan") {
+                this.showExpiries = this.nearExpiryPan;
             }
         }
     }
@@ -92509,6 +92593,24 @@ var render = function() {
                         ])
                       ])
                     })
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary btn-xs",
+                      attrs: {
+                        type: "button",
+                        "data-toggle": "modal",
+                        "data-target": "#exampleModal"
+                      },
+                      on: {
+                        click: function($event) {
+                          _vm.showNearExpiryDetails("mon")
+                        }
+                      }
+                    },
+                    [_vm._v("Details")]
                   )
                 ])
               ])
@@ -92591,6 +92693,24 @@ var render = function() {
                         ])
                       ])
                     })
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary btn-xs",
+                      attrs: {
+                        type: "button",
+                        "data-toggle": "modal",
+                        "data-target": "#exampleModal"
+                      },
+                      on: {
+                        click: function($event) {
+                          _vm.showNearExpiryDetails("mar")
+                        }
+                      }
+                    },
+                    [_vm._v("Details")]
                   )
                 ])
               ])
@@ -92674,6 +92794,24 @@ var render = function() {
                         ])
                       ])
                     })
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary btn-xs",
+                      attrs: {
+                        type: "button",
+                        "data-toggle": "modal",
+                        "data-target": "#exampleModal"
+                      },
+                      on: {
+                        click: function($event) {
+                          _vm.showNearExpiryDetails("laa")
+                        }
+                      }
+                    },
+                    [_vm._v("Details")]
                   )
                 ])
               ])
@@ -92757,6 +92895,24 @@ var render = function() {
                         ])
                       ])
                     })
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary btn-xs",
+                      attrs: {
+                        type: "button",
+                        "data-toggle": "modal",
+                        "data-target": "#exampleModal"
+                      },
+                      on: {
+                        click: function($event) {
+                          _vm.showNearExpiryDetails("pan")
+                        }
+                      }
+                    },
+                    [_vm._v("Details")]
                   )
                 ])
               ])
@@ -92829,67 +92985,11 @@ var render = function() {
             },
             [
               _c("div", { staticClass: "card card-statistics" }, [
-                _c(
-                  "div",
-                  { staticClass: "card-body" },
-                  [
-                    _c("h4", [_vm._v("Expired")]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "clearfix" }, [
-                      _vm._m(5),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "float-right" }, [
-                        _c("p", { staticClass: "mb-0 text-right" }, [
-                          _vm._v("Stock")
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "fluid-container" }, [
-                          _c(
-                            "h3",
-                            {
-                              staticClass: "font-weight-medium text-right mb-0"
-                            },
-                            [_vm._v(_vm._s(_vm.expired.length))]
-                          )
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _vm._l(_vm.actual_near_expire, function(row, item) {
-                      return _c("p", { staticClass: "mt-1 mb-0" }, [
-                        _c("i", {
-                          staticClass: "fa fa-check",
-                          attrs: { "aria-hidden": "true" }
-                        }),
-                        _vm._v(
-                          "\n                            " +
-                            _vm._s(item) +
-                            " (" +
-                            _vm._s(row.length) +
-                            ")\n                        "
-                        )
-                      ])
-                    })
-                  ],
-                  2
-                )
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass:
-                "col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card"
-            },
-            [
-              _c("div", { staticClass: "card card-statistics" }, [
                 _c("div", { staticClass: "card-body" }, [
                   _c("h4", [_vm._v("Pending Orders")]),
                   _vm._v(" "),
                   _c("div", { staticClass: "clearfix" }, [
-                    _vm._m(6),
+                    _vm._m(5),
                     _vm._v(" "),
                     _c("div", { staticClass: "float-right" }, [
                       _c("p", { staticClass: "mb-0 text-right" }, [
@@ -92926,7 +93026,7 @@ var render = function() {
                     _c("h4", [_vm._v("Total")]),
                     _vm._v(" "),
                     _c("div", { staticClass: "clearfix" }, [
-                      _vm._m(7),
+                      _vm._m(6),
                       _vm._v(" "),
                       _c("div", { staticClass: "float-right" }, [
                         _c("p", { staticClass: "mb-0 text-right" }, [
@@ -92953,6 +93053,65 @@ var render = function() {
           )
         ])
       ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          attrs: {
+            id: "exampleModal",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-labelledby": "exampleModalLabel",
+            "aria-hidden": "true"
+          }
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-dialog", attrs: { role: "document" } },
+            [
+              _c("div", { staticClass: "modal-content" }, [
+                _vm._m(7),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-body" }, [
+                  _c(
+                    "table",
+                    { staticClass: "table table-sm" },
+                    [
+                      _vm._m(8),
+                      _vm._v(" "),
+                      _vm._l(_vm.showExpiries, function(row1, item1) {
+                        return _c(
+                          "tbody",
+                          _vm._l(row1, function(row2, item2) {
+                            return _c("tr", [
+                              _c("td", [
+                                _vm._v(_vm._s(row2.blood_type.description))
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(_vm._s(row2.blood_component.description))
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(row2.serial))]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(row2.date_expiry))])
+                            ])
+                          })
+                        )
+                      })
+                    ],
+                    2
+                  )
+                ]),
+                _vm._v(" "),
+                _vm._m(9)
+              ])
+            ]
+          )
+        ]
+      ),
       _vm._v(" "),
       _c("create-disposition")
     ],
@@ -93005,14 +93164,6 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "float-left" }, [
-      _c("i", { staticClass: "fa fa-clock-o text-danger icon-lg" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "float-left" }, [
       _c("i", { staticClass: "fa fa-list text-danger icon-lg" })
     ])
   },
@@ -93022,6 +93173,62 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "float-left" }, [
       _c("i", { staticClass: "fa fa-tint text-danger icon-lg" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [_vm._v("Near Expiry")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("td", [_vm._v("Type")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("Component")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("Serial")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("Expiry Date")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-secondary",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("Close")]
+      )
     ])
   }
 ]
@@ -93095,6 +93302,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__edit___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__edit__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__create_vue__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__create_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__create_vue__);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -93347,10 +93559,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var timeDiff = new Date(startDate) - endDate;
             var days = timeDiff / (1000 * 60 * 60 * 24);
 
-            if (days <= 10) {
-                return true;
+            if (days <= 10 && days >= 0) {
+                return '<span class="fa fa-exclamation text-danger"></span>';
+            } else if (days <= 0) {
+                return '<span class="fa fa-close text-danger"></span>';
             } else {
-                return false;
+                return '<span class="fa fa-check text-success"></span>';
             }
         },
         refreshNotification: function refreshNotification() {
@@ -94336,7 +94550,15 @@ var render = function() {
                       "option",
                       { attrs: { value: "available", selected: "" } },
                       [_vm._v("Available")]
-                    )
+                    ),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "near_expiry" } }, [
+                      _vm._v("Near Expiry")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "expired" } }, [
+                      _vm._v("Expired")
+                    ])
                   ]
                 )
               ]),
@@ -94419,13 +94641,24 @@ var render = function() {
                   "tbody",
                   _vm._l(_vm.data, function(item) {
                     return _c("tr", [
-                      _vm.nearExpire(item.date_expiry)
-                        ? _c("td", { staticClass: "text-danger" }, [
-                            _c("span", { staticClass: "fa fa-exclamation" })
+                      _c("td", [
+                        _c("div", { staticClass: "form-check" }, [
+                          _c("label", { staticClass: "form-check-label" }, [
+                            _c("input", {
+                              staticClass: "form-check-input",
+                              attrs: { type: "checkbox" }
+                            }),
+                            _vm._v(" "),
+                            _c("i", { staticClass: "input-helper" })
                           ])
-                        : _c("td", { staticClass: "text-success" }, [
-                            _c("span", { staticClass: "fa fa-check" })
-                          ]),
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("td", {
+                        domProps: {
+                          innerHTML: _vm._s(_vm.nearExpire(item.date_expiry))
+                        }
+                      }),
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(item.serial))]),
                       _vm._v(" "),

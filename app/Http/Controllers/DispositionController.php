@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Order;
+use Carbon\Carbon;
 use App\Disposition;
 use App\OrderDetail;
 use App\BloodStation;
@@ -45,6 +46,11 @@ class DispositionController extends Controller
 
         if ($show == 'available') {
             $index->doesntHave('order_details');
+        } else if ($show == 'near_expiry') {
+            $index->where('date_expiry', '<=', Carbon::now()->addDays(10))
+                ->where('date_expiry', '>=', Carbon::now()->addDays(0))->doesntHave('order_details');
+        } else if ($show == 'expired') {
+            $index->where( 'date_expiry', '<=', Carbon::now() )->doesntHave('order_details');
         }
 
         $this->search($index, $searchValue);

@@ -38,9 +38,17 @@
                                     </p>
                                 </div>
                             </div>
+                            <button
+                                @click="showNearExpiryDetails('mon')"
+                                type="button"
+                                class="btn btn-primary btn-xs"
+                                data-toggle="modal"
+                                data-target="#exampleModal"
+                            >Details</button>
                         </div>
                     </div>
                 </div>
+
                 <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
                     <div class="card card-statistics">
                         <div class="card-body">
@@ -77,6 +85,13 @@
                                     </p>
                                 </div>
                             </div>
+                            <button
+                                @click="showNearExpiryDetails('mar')"
+                                type="button"
+                                class="btn btn-primary btn-xs"
+                                data-toggle="modal"
+                                data-target="#exampleModal"
+                            >Details</button>
                         </div>
                     </div>
                 </div>
@@ -113,6 +128,13 @@
                                     </p>
                                 </div>
                             </div>
+                            <button
+                                @click="showNearExpiryDetails('laa')"
+                                type="button"
+                                class="btn btn-primary btn-xs"
+                                data-toggle="modal"
+                                data-target="#exampleModal"
+                            >Details</button>
                         </div>
                     </div>
                 </div>
@@ -149,6 +171,13 @@
                                     </p>
                                 </div>
                             </div>
+                            <button
+                                @click="showNearExpiryDetails('pan')"
+                                type="button"
+                                class="btn btn-primary btn-xs"
+                                data-toggle="modal"
+                                data-target="#exampleModal"
+                            >Details</button>
                         </div>
                     </div>
                 </div>
@@ -180,7 +209,7 @@
                     </div>
                 </div>
 
-                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+                <!-- <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
                     <div class="card card-statistics">
                         <div class="card-body">
                             <h4>Expired</h4>
@@ -203,7 +232,7 @@
                             </p>
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
                     <div class="card card-statistics">
                         <div class="card-body">
@@ -256,6 +285,49 @@
                 </div>
             </div>
         </div>
+        <!-- Modal -->
+        <div
+            class="modal fade"
+            id="exampleModal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Near Expiry</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <td>Type</td>
+                                    <td>Component</td>
+                                    <td>Serial</td>
+                                    <td>Expiry Date</td>
+                                </tr>
+                            </thead>
+                            <tbody v-for="(row1, item1) in showExpiries">
+                                <tr v-for="(row2, item2) in row1">
+                                    <td>{{ row2.blood_type.description }}</td>
+                                    <td>{{ row2.blood_component.description }}</td>
+                                    <td>{{row2.serial}}</td>
+                                    <td>{{row2.date_expiry}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <create-disposition></create-disposition>
     </div>
 </template>
@@ -289,6 +361,7 @@ export default {
             mara: 0,
             pant: 0,
             stock: 0,
+            showExpiries: [],
             nearExpiryMon: [],
             nearExpiryLaa: [],
             nearExpiryMar: [],
@@ -446,6 +519,18 @@ export default {
                 return true;
             } else {
                 return false;
+            }
+        },
+
+        showNearExpiryDetails(details) {
+            if (details == "mon") {
+                this.showExpiries = this.nearExpiryMon;
+            } else if (details == "mar") {
+                this.showExpiries = this.nearExpiryMar;
+            } else if (details == "laa") {
+                this.showExpiries = this.nearExpiryLaa;
+            } else if (details == "pan") {
+                this.showExpiries = this.nearExpiryPan;
             }
         }
     }
