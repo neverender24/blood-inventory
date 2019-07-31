@@ -15,9 +15,9 @@ class ReportController extends Controller
             return BloodStation::with(['dispositions'=>function($q){
                         $q->with(['bloodComponent', 'bloodType'])->doesntHave('releases')->get();
                     }])->whereHas('dispositions', function($a){
-                        $a->doesntHave('releases');
+                        $a->doesntHave('releases')->where( 'date_expiry', '>', Carbon::now() );
                     })->withCount(['dispositions'=>function($q){
-                        $q->doesntHave('releases');
+                        $q->doesntHave('releases')->where( 'date_expiry', '>', Carbon::now() );
                     }])->get();
     }
 
