@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Order;
-use Carbon\Carbon;
 use App\Disposition;
 use App\OrderDetail;
 use App\BloodStation;
@@ -27,32 +26,19 @@ class DispositionController extends Controller
         $show           = $request->show;
         $serial         = $request->serial;
 
-        $index = $this->model->with(['bloodType', 'bloodComponent', 'order_details'=>function($od){
-            $od->with(['order'=>function($u){
-                $u->with(['user'=>function($usr){
-                    $usr->with('bloodStation')->get();
-                }])->get();
-            }])
-                ->get();
-            }])
-            ->doesntHave('users')
-            ->orderBy($sortFields[$column], $dir);
-
-        if ($serial) {
-			$index->where(function($query) use($serial){
-				$query->orWhere('serial','LIKE','%'.$serial.'%');
-			});
-        }
+        $index = $this->model->withRelationships()
+                    ->doesntHave('users')
+                    ->orderBy($sortFields[$column], $dir);
 
         if ($show == 'available') {
-            $index->doesntHave('order_details')->where( 'date_expiry', '>', Carbon::now() );
+            $index->doesntHave('order_details')->available();
         } else if ($show == 'near_expiry') {
-            $index->where('date_expiry', '<=', Carbon::now()->addDays(10))
-                ->where('date_expiry', '>=', Carbon::now()->addDays(0))->doesntHave('order_details');
+            $index->nearExpiry()->doesntHave('order_details');
         } else if ($show == 'expired') {
-            $index->where( 'date_expiry', '<=', Carbon::now() )->doesntHave('order_details');
+            $index->expired()->doesntHave('order_details');
         }
 
+        $this->searchSerial($index, $serial);
         $this->search($index, $searchValue);
 		$index = $index->paginate($length);
 
@@ -60,10 +46,19 @@ class DispositionController extends Controller
     }
 
     public function search($collection, $searchValue) {
+
         if ($searchValue) {
             return $collection->where(function($query) use($searchValue){
                 $query->orWhere('date_received','LIKE','%'.$searchValue.'%');
             });
+        }
+    }
+
+    public function searchSerial($collection, $serial) {
+        if ($serial) {
+			return $collection->where(function($query) use($serial){
+				$query->orWhere('serial','LIKE','%'.$serial.'%');
+			});
         }
     }
 
@@ -87,9 +82,10 @@ class DispositionController extends Controller
         $request['vol']     = (int)$request->vol;
         $created            = $this->model->create($request->all());
         $disposition        = $this->model->find($created->id);
+        $bloodStationId     = auth()->user()->blood_station_id;
 
-        if (!$disposition->users->contains(auth()->user()->blood_station_id)) {
-            $disposition->users()->attach(auth()->user()->blood_station_id);
+        if (!$disposition->users->contains($bloodStationId)) {
+            $disposition->users()->attach($bloodStationId);
         } 
     }
 
@@ -168,13 +164,7 @@ class DispositionController extends Controller
             ->doesntHave('releases')
             ->orderBy($sortFields[$column], $dir);
 
-        if ($serial) {
-			$index->where(function($query) use($serial){
-				$query->orWhere('serial','LIKE','%'.$serial.'%');
-			});
-        }
-
-        $this->search($index, $searchValue);
+        $this->searchSerial($index, $serial);
 		$index = $index->paginate($length);
 
     	return ['data'=>$index, 'draw'=> $request->draw]; 

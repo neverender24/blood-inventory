@@ -45,4 +45,50 @@ class Disposition extends Model
     public function releases() {
         return $this->hasMany('App\Release');
     }
+
+    public function scopeClientDispositions($query, $bloodStationId) {
+        return $query->where(function($q) use($bloodStationId){ 
+                $q->whereHas('order_details.order.user', function($wew) use($bloodStationId){
+                    $wew->where('blood_station_id', $bloodStationId);
+                })->whereHas('order_details.order', function($wew){
+                    $wew->where('received_date',"!=", null);
+                })->orWhereHas('user', function($wew) use($bloodStationId){
+                    $wew->where('blood_station_id', $bloodStationId);
+                }); 
+            });
+    }
+
+    public function scopeWithRelationships($query) {
+        return $query->with(['bloodComponent', 'bloodType','releases','user','order_details'=>function($od){
+                    $od->with(['order'=>function($u){
+                        $u->with(['user'=>function($usr){
+                            $usr->with('bloodStation')->get();
+                        }])->get();
+                    }])
+                        ->get();
+                    }]);
+    }
+
+    public function scopeAdminDispositions($query, $bloodStationId) {
+        return $query->doesntHave('order_details')->where(function($q) use($bloodStationId){ 
+                $q->whereHas('user', function($wew) use($bloodStationId){
+                    $wew->where('blood_station_id', $bloodStationId);
+                }); 
+            });
+    }
+
+    public function scopeNearExpiry($query) {
+        return $query->where(function($q) {
+            $q->where('date_expiry', '<=', now()->addDays(10))
+                ->where('date_expiry', '>=', now()->addDays(0));
+        });
+    }
+
+    public function scopeAvailable($query) {
+        return $query->doesntHave('releases')->where( 'date_expiry', '>', now() );
+    }
+
+    public function scopeExpired($query) {
+        return $query->doesntHave('releases')->where('date_expiry', '<=', now());
+    }
 }

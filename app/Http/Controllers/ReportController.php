@@ -3,122 +3,88 @@
 namespace App\Http\Controllers;
 
 use App\Order;
-use Carbon\Carbon;
 use App\Disposition;
 use App\BloodStation;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
+    public function __construct(
+        Disposition $disposition,
+        Order $order,
+        BloodStation $bloodStation
+    ) {
+        $this->disposition = $disposition;
+        $this->order = $order;
+        $this->bloodStation = $bloodStation;
+    }
+
     public function getAllStocks() {
-        
-            return BloodStation::with(['dispositions'=>function($q){
-                        $q->with(['bloodComponent', 'bloodType'])->doesntHave('releases')->get();
-                    }])->whereHas('dispositions', function($a){
-                        $a->doesntHave('releases')->where( 'date_expiry', '>', Carbon::now() );
-                    })->withCount(['dispositions'=>function($q){
-                        $q->doesntHave('releases')->where( 'date_expiry', '>', Carbon::now() );
-                    }])->get();
+        return $this->bloodStation->with(['dispositions'=>function($q){
+                    $q->with(['bloodComponent', 'bloodType'])->doesntHave('releases')->get();
+                }])->whereHas('dispositions', function($a){
+                    $a->available();
+                })->withCount(['dispositions'=>function($q){
+                    $q->available();
+                }])->get();
     }
 
     public function getTotalStocks(Request $request) {
 
-        $expire = Disposition::with(['bloodComponent', 'bloodType','order_details'=>function($od){
-            $od->with(['order'=>function($u){
-                $u->with(['user'=>function($usr){
-                    $usr->with('bloodStation')->get();
-                }])->get();
-            }])
-                ->get();
-            }]);
+        $bloodStationId = auth()->user()->blood_station_id;
+
+        $expire = $this->disposition->withRelationships();
 
             if ($request['role'] == 'Administrator') {
-                $expire = $expire->doesntHave('order_details');
+                $expire = $expire->adminDispositions($bloodStationId);
             } else {
-                $expire = $expire->whereHas('order_details.order.user', function($wew){
-                    $wew->where('blood_station_id', auth()->user()->blood_station_id);
-                });
+                $expire = $expire->clientDispositions($bloodStationId);
             }
             
-            $expire = $expire->doesntHave('releases')->where( 'date_expiry', '>', Carbon::now() )->get();
+            $expire = $expire->available()->get();
 
             return $expire;
     }
 
     public function getPendingOrders() {
-        return Order::whereHas('user', function($q){
+        return $this->order->whereHas('user', function($q){
             $q->where('blood_station_id', auth()->user()->blood_station_id)
                 ->orWhere('blood_station_id', 5);
         })->whereNull('delivery_date')->count();
     }
 
     public function getNearExpiredDispositions(Request $request) {
-        //dd(Carbon::now()->addDays(35));
-        $expire = Disposition::with(['bloodComponent', 'bloodType','releases','user','order_details'=>function($od){
-                    $od->with(['order'=>function($u){
-                        $u->with(['user'=>function($usr){
-                            $usr->with('bloodStation')->get();
-                        }])->get();
-                    }])
-                        ->get();
-                    }]);
+
+        $bloodStationId = auth()->user()->blood_station_id;
+
+        $expire = $this->disposition->withRelationships();
 
         if ($request['role'] == 'Administrator') {
-            $expire = $expire->doesntHave('order_details')->where(function($q){ 
-                $q->whereHas('user', function($wew){
-                    $wew->where('blood_station_id', auth()->user()->blood_station_id);
-                }); 
-            });
+            $expire = $expire->adminDispositions($bloodStationId);
         } else {
-            $expire = $expire->where(function($q){ 
-                $q->whereHas('order_details.order.user', function($wew){
-                    $wew->where('blood_station_id', auth()->user()->blood_station_id);
-                })->whereHas('order_details.order', function($wew){
-                    $wew->where('received_date',"!=", null);
-                })->orWhereHas('user', function($wew){
-                    $wew->where('blood_station_id', auth()->user()->blood_station_id);
-                }); 
-            });
+            $expire = $expire->clientDispositions($bloodStationId);
         }
         
-        $expire = $expire->doesntHave('releases')->where(function($q) {
-            $q->where('date_expiry', '<=', Carbon::now()->addDays(10))
-                ->where('date_expiry', '>=', Carbon::now()->addDays(0));
-        })->get();
+        $expire = $expire->doesntHave('releases')
+                        ->nearExpiry()
+                        ->get();
 
         return $expire;
     }
 
     public function getExpiredDispositions(Request $request) {
-        //dd(Carbon::now()->addDays(35));
-        $expire = Disposition::with(['bloodComponent', 'bloodType','releases','user','order_details'=>function($od){
-                    $od->with(['order'=>function($u){
-                        $u->with(['user'=>function($usr){
-                            $usr->with('bloodStation')->get();
-                        }])->get();
-                    }])
-                        ->get();
-                    }]);
+        
+        $bloodStationId = auth()->user()->blood_station_id;
+
+        $expire = $this->disposition->withRelationships();
 
         if ($request['role'] == 'Administrator') {
-            $expire = $expire->doesntHave('order_details')->where(function($q){ 
-                $q->whereHas('user', function($wew){
-                    $wew->where('blood_station_id', auth()->user()->blood_station_id);
-                }); 
-            });
+            $expire = $expire->adminDispositions($bloodStationId);
         } else {
-            $expire = $expire->where(function($q){ 
-                $q->whereHas('order_details.order.user', function($wew){
-                    $wew->where('blood_station_id', auth()->user()->blood_station_id);
-                })->whereHas('order_details.order', function($wew){
-                    $wew->where('received_date',"!=", null);
-                })->orWhereHas('user', function($wew){
-                    $wew->where('blood_station_id', auth()->user()->blood_station_id);
-                }); 
-            });
+            $expire = $expire->clientDispositions($bloodStationId);
         }
     
-        $expire = $expire->doesntHave('releases')->where( 'date_expiry', '<=', Carbon::now() )->get();
+        $expire = $expire->expired()->get();
 
         return $expire;
     }

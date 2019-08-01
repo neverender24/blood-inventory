@@ -43,7 +43,7 @@
                                 type="button"
                                 class="btn btn-primary btn-xs"
                                 data-toggle="modal"
-                                data-target="#exampleModal"
+                                data-target="#expiryModal"
                             >Details</button>
                         </div>
                     </div>
@@ -90,7 +90,7 @@
                                 type="button"
                                 class="btn btn-primary btn-xs"
                                 data-toggle="modal"
-                                data-target="#exampleModal"
+                                data-target="#expiryModal"
                             >Details</button>
                         </div>
                     </div>
@@ -133,7 +133,7 @@
                                 type="button"
                                 class="btn btn-primary btn-xs"
                                 data-toggle="modal"
-                                data-target="#exampleModal"
+                                data-target="#expiryModal"
                             >Details</button>
                         </div>
                     </div>
@@ -176,7 +176,7 @@
                                 type="button"
                                 class="btn btn-primary btn-xs"
                                 data-toggle="modal"
-                                data-target="#exampleModal"
+                                data-target="#expiryModal"
                             >Details</button>
                         </div>
                     </div>
@@ -288,7 +288,7 @@
         <!-- Modal -->
         <div
             class="modal fade"
-            id="exampleModal"
+            id="expiryModal"
             tabindex="-1"
             role="dialog"
             aria-labelledby="exampleModalLabel"
