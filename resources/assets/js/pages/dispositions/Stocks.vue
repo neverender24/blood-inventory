@@ -2,7 +2,7 @@
     <div>
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Dispositions</h4>
+                <h4 class="card-title">Stocks</h4>
                 <div class="row">
                     <div class="form-group col-2">
                         <button
@@ -56,7 +56,7 @@
                 >
                     <tbody>
                         <tr v-for="item in data" :key="item.serial">
-                            <td v-html="nearExpire(item.date_expiry)"></td>
+                            <td v-html="nearExpire(item.expiry)"></td>
                             <td>{{ item.serial }}</td>
                             <td>{{ item.blood_type.description }}</td>
                             <td v-html="identifyBloodType(item.blood_component.description)"></td>
@@ -261,15 +261,10 @@ export default {
             });
         },
 
-        nearExpire(date) {
-            const startDate = date;
-            const endDate = new Date();
-            const timeDiff = new Date(startDate) - endDate;
-            const days = timeDiff / (1000 * 60 * 60 * 24);
-
-            if (days <= 10 && days >= 0) {
+        nearExpire(expiry) {
+            if (expiry == "Near Expiry") {
                 return '<span class="fa fa-exclamation text-danger"></span>';
-            } else if (days <= 0) {
+            } else if (expiry == "Expired") {
                 return '<span class="fa fa-close text-danger"></span>';
             } else {
                 return '<span class="fa fa-check text-success"></span>';

@@ -10,9 +10,10 @@ use JasperPHP\JasperPHP as JasperPHP;
 
 class OrderController extends Controller
 {
-    public function __construct(Order $order) {
+    public function __construct(Order $order, JasperPHP $jasper) {
         $this->model = $order;
         $this->middleware('auth');
+        $this->jasper = $jasper;
     }
 
     public function index(Request $request) {
@@ -151,25 +152,19 @@ class OrderController extends Controller
 
     public function print(Request $request)
     {
-        $jasper = new JasperPHP;
-        $jasper->compile(public_path() . '/reports/report3.jrxml')->execute();
+        $path = public_path();
+        
+        $this->jasper->compile($path . '/reports/report3.jrxml')->execute();
 
-        $jasper->process(
-            public_path() . '/reports/report3.jasper',
-            public_path() . '/reports/report3',
+        $this->jasper->process(
+            $path . '/reports/report3.jasper',
+            $path . '/reports/report3',
             array("pdf"),
             array(
               "order_id"=> $request->id
             ),
-            \Config::get('database.connections.mysql') //DB connection array
+            config('database.connections.mysql') //DB connection array
         )->execute();
-
-        // $pdf_file = escapeshellarg( public_path() . '/reports/report3.pdf' );
-        // $jpg_file = escapeshellarg( public_path() . '/reports/report3.jpg' );
-
-        // $result = 0;
-        // exec( "convert -density 300 {$pdf_file} {$jpg_file}", null, $result );
-        // return view('');
     }
 
 

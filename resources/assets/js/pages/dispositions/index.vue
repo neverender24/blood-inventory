@@ -47,7 +47,7 @@
                 >
                     <tbody>
                         <tr v-for="item in data">
-                            <td v-html="nearExpire(item.date_expiry)"></td>
+                            <td v-html="nearExpire(item.expiry)"></td>
                             <td>{{ item.serial }}</td>
                             <td>{{ item.blood_type.description }}</td>
                             <td v-html="identifyBloodComponent(item.blood_component.description)"></td>
@@ -245,15 +245,10 @@ export default {
             });
         },
 
-        nearExpire(date) {
-            const startDate = date;
-            const endDate = new Date();
-            const timeDiff = new Date(startDate) - endDate;
-            const days = timeDiff / (1000 * 60 * 60 * 24);
-
-            if (days <= 10 && days >= 0) {
+        nearExpire(expiry) {
+            if (expiry == "Near Expiry") {
                 return '<span class="fa fa-exclamation text-danger"></span>';
-            } else if (days <= 0) {
+            } else if (expiry == "Expired") {
                 return '<span class="fa fa-close text-danger"></span>';
             } else {
                 return '<span class="fa fa-check text-success"></span>';

@@ -2,7 +2,7 @@
     <div>
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Dispositions</h4>
+                <h4 class="card-title">Releases</h4>
                 <div class="row">
                     <div class="form-group col-2">
                         <select v-model="tableData.show" @change="getData()" class="form-control">

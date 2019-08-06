@@ -20,7 +20,7 @@
                             href="#"
                             data-toggle="dropdown"
                         >
-                            <i class="mdi mdi-bell"></i>
+                            <i class="fa fa-bell"></i>
                             <span
                                 class="count"
                             >{{ notifications.near_expire.length + notifications.pending_orders }}</span>
@@ -43,7 +43,7 @@
                             >
                                 <div class="preview-thumbnail">
                                     <div class="preview-icon bg-success">
-                                        <i class="mdi mdi-alert-circle-outline mx-0"></i>
+                                        <i class="fa fa-exclamation-circle mx-0"></i>
                                     </div>
                                 </div>
                                 <div class="preview-item-content">
@@ -63,7 +63,7 @@
                             >
                                 <div class="preview-thumbnail">
                                     <div class="preview-icon bg-warning">
-                                        <i class="mdi mdi-comment-text-outline mx-0"></i>
+                                        <i class="fa fa-exclamation-circle mx-0"></i>
                                     </div>
                                 </div>
                                 <div class="preview-item-content">
@@ -90,7 +90,7 @@
                                 class="img-xs rounded-circle"
                                 src="images/faces/face1.jpg"
                                 alt="Profile image"
-                            >
+                            />
                         </a>
                         <div
                             class="dropdown-menu dropdown-menu-right navbar-dropdown"
@@ -101,17 +101,17 @@
                                     <div
                                         class="py-3 px-4 d-flex align-items-center justify-content-center"
                                     >
-                                        <i class="mdi mdi-bookmark-plus-outline mr-0 text-gray"></i>
+                                        <i class="fa fa-bookmark mr-0 text-gray"></i>
                                     </div>
                                     <div
                                         class="py-3 px-4 d-flex align-items-center justify-content-center border-left border-right"
                                     >
-                                        <i class="mdi mdi-account-outline mr-0 text-gray"></i>
+                                        <i class="fa fa-user mr-0 text-gray"></i>
                                     </div>
                                     <div
                                         class="py-3 px-4 d-flex align-items-center justify-content-center"
                                     >
-                                        <i class="mdi mdi-alarm-check mr-0 text-gray"></i>
+                                        <i class="fa fa-address-book mr-0 text-gray"></i>
                                     </div>
                                 </div>
                             </a>
@@ -129,7 +129,7 @@
                     type="button"
                     data-toggle="offcanvas"
                 >
-                    <span class="mdi mdi-menu"></span>
+                    <span class="fa fa-bars"></span>
                 </button>
             </div>
         </nav>
@@ -141,7 +141,7 @@
 <script>
 import Register from "../pages/users/register";
 import ChangePassword from "../pages/users/changePassword";
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 
 export default {
     props: ["notifications"],

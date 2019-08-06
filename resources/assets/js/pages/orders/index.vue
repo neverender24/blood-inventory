@@ -12,7 +12,7 @@
                             data-target="#orderModal"
                             @click="add()"
                         >
-                            <i class="mdi mdi-plus"></i>
+                            <i class="fa fa-plus"></i>
                         </button>
                     </div>
                     <div class="form-group col-3">
@@ -323,13 +323,11 @@ export default {
          * Printing
          */
         printer(index) {
-            this.loading = !this.loading;
             axios
                 .post("printer", {
                     id: index
                 })
                 .then(response => {
-                    this.loading = !this.loading;
                     // window.open("/pdf", "_blank")
                     this.dialogVisible = true;
                 });

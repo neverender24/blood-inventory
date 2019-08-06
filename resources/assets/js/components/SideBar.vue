@@ -17,13 +17,13 @@
                 </div>
               </div>
               <button class="btn btn-success btn-block" data-toggle="modal" data-target="#exampleModal">New Disposition
-                <i class="mdi mdi-plus"></i>
+                <i class="fa fa-plus"></i>
               </button>
             </div>
           </li>
           <li class="nav-item">
             <router-link to="/" class="nav-link">
-              <i class="menu-icon mdi mdi-television"></i>
+              <i class="menu-icon fa fa-television"></i>
               <span class="menu-title">Dashboard</span>
             </router-link>
             </a>
@@ -43,9 +43,8 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-              <i class="menu-icon mdi mdi-restart"></i>
+              <i class="menu-icon fa fa-cog"></i>
               <span class="menu-title">More Options</span>
-              <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="auth">
               <ul class="nav flex-column sub-menu">

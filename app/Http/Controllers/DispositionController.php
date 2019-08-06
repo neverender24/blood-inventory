@@ -40,9 +40,24 @@ class DispositionController extends Controller
 
         $this->searchSerial($index, $serial);
         $this->search($index, $searchValue);
-		$index = $index->paginate($length);
+
+
+        $index = $index->paginate($length);
+        $this->addExpiryField($index);
 
     	return ['data'=>$index, 'draw'=> $request->draw];
+    }
+
+    public function addExpiryField($collection) {
+        return $collection->map(function($item){
+            if ($item->date_expiry <= now()->addDays(10) && $item->date_expiry >= now()->addDays(0)) {
+                $item['expiry'] = "Near Expiry";
+            } else if ( $item->date_expiry <= now()) {
+                $item['expiry'] = "Expired";
+            } else {
+                $item['expiry'] = "";
+            }
+        });
     }
 
     public function search($collection, $searchValue) {
@@ -165,7 +180,8 @@ class DispositionController extends Controller
             ->orderBy($sortFields[$column], $dir);
 
         $this->searchSerial($index, $serial);
-		$index = $index->paginate($length);
+        $index = $index->paginate($length);
+        $this->addExpiryField($index);
 
     	return ['data'=>$index, 'draw'=> $request->draw]; 
     }

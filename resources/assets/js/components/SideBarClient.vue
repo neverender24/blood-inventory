@@ -23,7 +23,7 @@
           </li>
           <li class="nav-item">
             <router-link to="/" class="nav-link">
-              <i class="menu-icon mdi mdi-television"></i>
+              <i class="menu-icon fa fa-television"></i>
               <span class="menu-title">Dashboard</span>
             </router-link>
             </a>
