@@ -83,11 +83,23 @@
                         </tr>
                     </tbody>
                 </datatable>
-                <pagination
-                    :pagination="pagination"
-                    @prev="getData(pagination.prevPageUrl)"
-                    @next="getData(pagination.nextPageUrl)"
-                ></pagination>
+                <div class="py-3 d-flex flex-row align-items-center justify-content-between">
+                    <pagination
+                        :pagination="pagination"
+                        @prev="getData(pagination.prevPageUrl)"
+                        @next="getData(pagination.nextPageUrl)"
+                    ></pagination>
+                    <p>{{ pagination.from }} to {{pagination.to}} of {{ pagination.total }} entries</p>
+                    <select
+                        v-model="tableData.length"
+                        @change="getData()"
+                        class="form-control col-lg-1"
+                    >
+                        <option value="15" selected="selected">15</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                    </select>
+                </div>
             </div>
         </div>
         <receive
@@ -170,6 +182,7 @@ export default {
     },
 
     mounted() {
+        // this.$store.dispatch("toggleLoading", true);
         this.getData();
 
         axios.get("get-no-dispositions").then(response => {
@@ -206,6 +219,7 @@ export default {
         },
 
         getData(url = "orders") {
+            this.$store.dispatch("toggleLoading", true);
             axios.get(url, { params: this.tableData }).then(response => {
                 let data = response.data;
 
@@ -213,6 +227,7 @@ export default {
                     this.data = data.data.data;
                     this.configPagination(data.data);
                 }
+                this.$store.dispatch("toggleLoading", false);
             });
         },
 

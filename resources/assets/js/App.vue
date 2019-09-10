@@ -1,5 +1,6 @@
 <template>
     <div class="container-scroller">
+        <loader v-if="loading"></loader>
         <nav-bar :notifications="notifications" v-if="user.role == 'Administrator'"></nav-bar>
         <nav-bar-client :notifications="notifications" v-else></nav-bar-client>
         <div class="container-fluid page-body-wrapper">
@@ -28,13 +29,15 @@ import NavBarClient from "./components/NavBarClient.vue";
 import SideBar from "./components/SideBar.vue";
 import SideBarClient from "./components/SideBarClient.vue";
 import { mapState } from "vuex";
+import Loader from "./helpers/loader";
 
 export default {
     components: {
         NavBar,
         SideBar,
         SideBarClient,
-        NavBarClient
+        NavBarClient,
+        Loader
     },
 
     data() {
@@ -52,7 +55,7 @@ export default {
     mounted() {},
 
     computed: {
-        ...mapState(["user"])
+        ...mapState(["user", "loading"])
     },
 
     methods: {
@@ -71,6 +74,7 @@ export default {
                     response.data,
                     "blood_type.description"
                 );
+                this.$store.dispatch("toggleLoading", false);
             });
         }
     }

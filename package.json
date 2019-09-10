@@ -30,6 +30,7 @@
         "mdi": "^2.2.43",
         "simple-line-icons": "^2.4.1",
         "vue-chartjs": "^3.4.0",
+        "vue-json-excel": "^0.2.98",
         "vue-router": "^3.0.1",
         "vue-search-select": "^2.8.3",
         "vue-select": "^2.5.1",

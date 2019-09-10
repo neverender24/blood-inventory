@@ -388,8 +388,8 @@ export default {
     },
 
     mounted() {
+        this.$store.dispatch("toggleLoading", true);
         this.$store.dispatch("countPendingOrders");
-
         axios.get("all-stocks").then(response => {
             let stocks = response.data;
             let self = this;

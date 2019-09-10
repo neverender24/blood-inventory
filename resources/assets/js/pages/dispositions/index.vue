@@ -2,7 +2,20 @@
     <div>
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Dispositions</h4>
+                <div class="py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h4 class="card-title">Dispositions</h4>
+                    <json-excel
+                        class="btn btn-default"
+                        :fetch="print"
+                        :fields = "json_fields"
+                        worksheet="My Worksheet"
+                        name="filename.xls"
+                    >
+                        <button class="btn btn-primary btn-sm">
+                            <span class="fa fa-print"></span>
+                        </button>
+                    </json-excel>
+                </div>
                 <div class="row">
                     <div class="form-group col-2">
                         <select v-model="tableData.show" @change="getData()" class="form-control">
@@ -13,22 +26,46 @@
                         </select>
                     </div>
 
-                    <div class="form-group col-4">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="fa fa-filter"></i>
-                                </span>
-                            </div>
-                            <input
-                                type="date"
-                                class="form-control"
-                                v-model="tableData.search"
-                                @input="getData()"
-                            />
-                        </div>
+                    <div class="form-group col-2">
+                        <select
+                            class="form-control"
+                            @change="getData()"
+                            v-model="tableData.blood_type_id"
+                        >
+                            <option value></option>
+                            <option
+                                v-for="option in bloodTypes"
+                                v-bind:item="option"
+                                :value="option.id"
+                            >{{ option.description }}</option>
+                        </select>
                     </div>
-                    <div class="form-group col-4">
+
+                    <div class="form-group col-2">
+                        <select
+                            class="form-control"
+                            @change="getData()"
+                            v-model="tableData.blood_component_id"
+                        >
+                            <option value></option>
+                            <option
+                                v-for="option in bloodComponents"
+                                v-bind:item="option"
+                                :value="option.id"
+                            >{{ option.description }}</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-3">
+                        <input
+                            type="date"
+                            class="form-control"
+                            v-model="tableData.search"
+                            @input="getData()"
+                        />
+                    </div>
+
+                    <div class="form-group col-3">
                         <input
                             type="text"
                             class="form-control"
@@ -87,11 +124,24 @@
                         </tr>
                     </tbody>
                 </datatable>
-                <pagination
-                    :pagination="pagination"
-                    @prev="getData(pagination.prevPageUrl)"
-                    @next="getData(pagination.nextPageUrl)"
-                ></pagination>
+
+                <div class="py-3 d-flex flex-row align-items-center justify-content-between">
+                    <pagination
+                        :pagination="pagination"
+                        @prev="getData(pagination.prevPageUrl)"
+                        @next="getData(pagination.nextPageUrl)"
+                    ></pagination>
+                    <p>{{ pagination.from }} to {{pagination.to}} of {{ pagination.total }} entries</p>
+                    <select
+                        v-model="tableData.length"
+                        @change="getData()"
+                        class="form-control col-lg-1"
+                    >
+                        <option value="15" selected="selected">15</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                    </select>
+                </div>
             </div>
         </div>
         <edit-disposition
@@ -109,13 +159,16 @@ import Datatable from "../../helpers/datatable.vue";
 import Pagination from "../../helpers/pagination.vue";
 import EditDisposition from "./edit";
 import CreateDisposition from "./create.vue";
+import { mapState } from "vuex";
+import JsonExcel from "vue-json-excel";
 
 export default {
     components: {
         datatable: Datatable,
         pagination: Pagination,
         EditDisposition,
-        CreateDisposition
+        CreateDisposition,
+        JsonExcel
     },
     data() {
         let sortOrders = {};
@@ -144,7 +197,16 @@ export default {
                 search: "",
                 column: 0,
                 dir: "desc",
-                show: "available"
+                show: "available",
+                blood_component_id: "",
+                blood_type_id: ""
+            },
+            json_fields: {
+                'Serial': 'serial',
+                'Type': 'blood_type.description',
+                'Component': 'blood_component.description',
+                'Expiry': 'date_expiry',
+                'Extracted': 'date_extracted',
             },
             pagination: {
                 lastPage: "",
@@ -157,12 +219,14 @@ export default {
                 to: ""
             },
             data: [],
+            printData: [],
             id: "",
             editData: {}
         };
     },
 
     mounted() {
+        // this.$store.dispatch("toggleLoading", true);
         this.getData();
 
         this.$store.dispatch("loadBloodTypes");
@@ -171,6 +235,10 @@ export default {
         setTimeout(() => {
             this.$emit("notify");
         }, 1000);
+    },
+
+    computed: {
+        ...mapState(["bloodTypes", "bloodComponents"])
     },
 
     methods: {
@@ -197,13 +265,16 @@ export default {
         },
 
         getData(url = "dispositions") {
+            this.$store.dispatch("toggleLoading", true);
             axios.get(url, { params: this.tableData }).then(response => {
                 let data = response.data;
-
                 if (this.tableData.draw == data.draw) {
                     this.data = data.data.data;
                     this.configPagination(data.data);
                 }
+                this.$store.dispatch("toggleLoading", false);
+
+                this.tableData.print = false;
             });
         },
 
@@ -275,6 +346,16 @@ export default {
                     '<label class="badge badge-warning">' + desc + "</label>"
                 );
             }
+        },
+
+        async print(url = "dispositions") {
+            this.tableData.print = true;
+            this.$store.dispatch("toggleLoading", true);
+            const response = await axios.get(url, { params: this.tableData })
+            this.$store.dispatch("toggleLoading", false);
+            this.tableData.print = false;
+            return response.data.data
+
         }
     }
 };

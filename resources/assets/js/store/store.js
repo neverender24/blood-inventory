@@ -8,7 +8,8 @@ export const store = new Vuex.Store({
         user: [],
         bloodTypes: [],
         bloodComponents: [],
-        pendingOrders: ''
+        pendingOrders: '',
+        loading: false
     },
     getters: {
         isAdmin: state => {
@@ -31,6 +32,9 @@ export const store = new Vuex.Store({
         },
         updatePendingOrders(state, data) {
             state.pendingOrders = data
+        },
+        updateLoading(state, data) {
+            state.loading = data
         }
     },
     actions: {
@@ -65,5 +69,10 @@ export const store = new Vuex.Store({
             });
 
         },
+        toggleLoading(
+            context, bool
+        ) {
+            context.commit('updateLoading', bool)
+        }
     },
 })

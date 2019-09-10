@@ -25,6 +25,9 @@ class DispositionController extends Controller
         $searchValue    = $request->search;
         $show           = $request->show;
         $serial         = $request->serial;
+        $blood_type_id  = $request->blood_type_id;
+        $blood_component_id  = $request->blood_component_id;
+        $print  = $request->print;
 
         $index = $this->model->withRelationships()
                     ->doesntHave('users')
@@ -39,10 +42,17 @@ class DispositionController extends Controller
         }
 
         $this->searchSerial($index, $serial);
+        $this->searchBloodType($index, $blood_type_id);
+        $this->searchBloodComponent($index, $blood_component_id);
         $this->search($index, $searchValue);
+        
 
+        if ($print == "true") {
+            $index = $index->get();
+        } else {
+            $index = $index->paginate($length);
+        }
 
-        $index = $index->paginate($length);
         $this->addExpiryField($index);
 
     	return ['data'=>$index, 'draw'=> $request->draw];
@@ -73,6 +83,22 @@ class DispositionController extends Controller
         if ($serial) {
 			return $collection->where(function($query) use($serial){
 				$query->orWhere('serial','LIKE','%'.$serial.'%');
+			});
+        }
+    }
+
+    public function searchBloodType($collection, $data) {
+        if ($data) {
+			return $collection->where(function($query) use($data){
+				$query->orWhere('blood_type_id','LIKE','%'.$data.'%');
+			});
+        }
+    }
+
+    public function searchBloodComponent($collection, $data) {
+        if ($data) {
+			return $collection->where(function($query) use($data){
+				$query->orWhere('blood_component_id','LIKE','%'.$data.'%');
 			});
         }
     }

@@ -236,7 +236,7 @@ export default {
 
             axios.get(url, { params: this.tableData }).then(response => {
                 let data = response.data;
-
+                this.$store.dispatch("toggleLoading", true);
                 if (this.tableData.draw == data.draw) {
                     this.data = data.data.data;
                     this.configPagination(data.data);

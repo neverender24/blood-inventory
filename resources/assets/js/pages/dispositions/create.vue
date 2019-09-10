@@ -28,7 +28,7 @@
                                             class="form-control"
                                             :class="{ 'is-invalid': $v.data.date_received.$error }"
                                             v-model.trim="$v.data.date_received.$model"
-                                        >
+                                        />
                                     </div>
                                 </div>
                                 <div class="col-6">
@@ -39,7 +39,7 @@
                                             class="form-control"
                                             :class="{ 'is-invalid': $v.data.received_by.$error }"
                                             v-model.trim="$v.data.received_by.$model"
-                                        >
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -51,54 +51,51 @@
                                     class="form-control"
                                     :class="{ 'is-invalid': $v.data.serial.$error }"
                                     v-model.trim="$v.data.serial.$model"
-                                >
+                                />
                             </div>
-                            <div class="row">
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label>Group</label>
-                                        <select
-                                            class="form-control"
-                                            :class="{ 'is-invalid': $v.data.blood_type_id.$error }"
-                                            v-model.trim="$v.data.blood_type_id.$model"
-                                        >
-                                            <option
-                                                v-for="option in bloodTypes"
-                                                v-bind:item="option"
-                                                :value="option.id"
-                                            >{{ option.description }}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label>Product</label>
-                                        <select
-                                            class="form-control"
-                                            :class="{ 'is-invalid': $v.data.blood_component_id.$error }"
-                                            v-model.trim="$v.data.blood_component_id.$model"
-                                        >
-                                            <option
-                                                v-for="option in bloodComponents"
-                                                v-bind:item="option"
-                                                :value="option.id"
-                                            >{{ option.description }}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label>Volume</label>
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            :class="{ 'is-invalid': $v.data.vol.$error }"
-                                            v-model.trim="$v.data.vol.$model"
-                                        >
-                                    </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label>Group</label>
+                                    <select
+                                        class="form-control"
+                                        :class="{ 'is-invalid': $v.data.blood_type_id.$error }"
+                                        v-model.trim="$v.data.blood_type_id.$model"
+                                    >
+                                        <option
+                                            v-for="option in bloodTypes"
+                                            v-bind:item="option"
+                                            :value="option.id"
+                                        >{{ option.description }}</option>
+                                    </select>
                                 </div>
                             </div>
-                            
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label>Product</label>
+                                    <select
+                                        class="form-control"
+                                        v-model.trim="data.blood_component_id"
+                                    >
+                                        <option
+                                            v-for="option in bloodComponents"
+                                            v-bind:item="option"
+                                            :value="option.id"
+                                        >{{ option.description }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label>Volume</label>
+                                    <input
+                                        type="number"
+                                        class="form-control"
+                                        :class="{ 'is-invalid': $v.data.vol.$error }"
+                                        v-model.trim="$v.data.vol.$model"
+                                    />
+                                </div>
+                            </div>
+
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
@@ -108,7 +105,7 @@
                                             class="form-control"
                                             :class="{ 'is-invalid': $v.data.date_extracted.$error }"
                                             v-model.trim="$v.data.date_extracted.$model"
-                                        >
+                                        />
                                     </div>
                                 </div>
                                 <div class="col-6">
@@ -119,7 +116,7 @@
                                             class="form-control"
                                             :class="{ 'is-invalid': $v.data.date_expiry.$error }"
                                             v-model.trim="$v.data.date_expiry.$model"
-                                        >
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -143,10 +140,9 @@
 
 <script>
 import { required, minLength, minValue } from "vuelidate/lib/validators";
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 
 export default {
-
     data() {
         return {
             data: {
@@ -158,19 +154,12 @@ export default {
                 vol: 0,
                 date_extracted: "",
                 date_expiry: "",
-                options: [
-                    'valid@gmail.com',
-                    'invalid email address',
-                ],
+                options: ["valid@gmail.com", "invalid email address"]
             }
         };
     },
     computed: {
-        ...mapState([
-            'bloodTypes',
-            'bloodComponents',
-            'user' 
-        ])
+        ...mapState(["bloodTypes", "bloodComponents", "user"])
     },
 
     methods: {
