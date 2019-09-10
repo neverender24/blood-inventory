@@ -164,6 +164,7 @@ export default {
         },
 
         getData(url = "get-releases") {
+            this.$store.dispatch("toggleLoading", true);
             axios.get(url, { params: this.tableData }).then(response => {
                 let data = response.data;
 
@@ -171,6 +172,7 @@ export default {
                     this.data = data.data.data;
                     this.configPagination(data.data);
                 }
+                this.$store.dispatch("toggleLoading", false);
             });
         },
 
