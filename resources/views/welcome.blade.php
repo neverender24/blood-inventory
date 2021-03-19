@@ -11,7 +11,8 @@
         <!-- Fonts -->
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-
+        <link rel="stylesheet" href="{{ asset('css/loader.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/dimmer.min.css') }}">
     </head>
     <body>
         <div id="app"></div>
@@ -19,5 +20,6 @@
         <script src="{{ asset('js/off-canvas.js') }}"></script>
         <script src="{{ asset('js/hoverable-collapse.js') }}"></script>
         <script src="{{ asset('js/misc.js') }}"></script>
+        <script src="{{ asset('js/dimmer.min.js') }}"></script>
     </body>
 </html>

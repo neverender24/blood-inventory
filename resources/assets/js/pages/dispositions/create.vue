@@ -162,6 +162,11 @@ export default {
         ...mapState(["bloodTypes", "bloodComponents", "user"])
     },
 
+    mounted() {
+        this.$store.dispatch("loadBloodTypes");
+        this.$store.dispatch("loadBloodComponents");
+    },
+
     methods: {
         save() {
             this.$v.$touch();

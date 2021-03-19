@@ -27,8 +27,6 @@ const app = new Vue({
     },
     mounted(){
         this.$store.dispatch('loadUser')
-        this.$store.dispatch("loadBloodTypes");
-        this.$store.dispatch("loadBloodComponents");
     },
     router
 }); 

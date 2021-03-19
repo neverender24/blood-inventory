@@ -28,7 +28,7 @@
                                             class="form-control"
                                             :class="{ 'is-invalid': $v.data.date_received.$error }"
                                             v-model.trim="$v.data.date_received.$model"
-                                        >
+                                        />
                                     </div>
                                 </div>
                                 <div class="col-6">
@@ -39,20 +39,40 @@
                                             class="form-control"
                                             :class="{ 'is-invalid': $v.data.received_by.$error }"
                                             v-model.trim="$v.data.received_by.$model"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label>Serial Number</label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            :class="{ 'is-invalid': $v.data.serial.$error }"
+                                            v-model.trim="$v.data.serial.$model"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label>Source</label>
+                                        <select
+                                            class="form-control"
+                                            v-model="data.blood_station_id"
                                         >
+                                            <option
+                                                v-for="option in bloodStations"
+                                                v-bind:item="option"
+                                                :value="option.id"
+                                            >{{ option.name }}</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label>Serial Number</label>
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    :class="{ 'is-invalid': $v.data.serial.$error }"
-                                    v-model.trim="$v.data.serial.$model"
-                                >
-                            </div>
                             <div class="row">
                                 <div class="col-4">
                                     <div class="form-group">
@@ -94,7 +114,7 @@
                                             class="form-control"
                                             :class="{ 'is-invalid': $v.data.vol.$error }"
                                             v-model.trim="$v.data.vol.$model"
-                                        >
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -108,7 +128,7 @@
                                             class="form-control"
                                             :class="{ 'is-invalid': $v.data.date_extracted.$error }"
                                             v-model.trim="$v.data.date_extracted.$model"
-                                        >
+                                        />
                                     </div>
                                 </div>
                                 <div class="col-6">
@@ -119,7 +139,7 @@
                                             class="form-control"
                                             :class="{ 'is-invalid': $v.data.date_expiry.$error }"
                                             v-model.trim="$v.data.date_expiry.$model"
-                                        >
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -149,6 +169,7 @@ export default {
         return {
             bloodTypes: {},
             bloodComponents: {},
+            bloodStations: {},
             data: {
                 date_received: "",
                 received_by: "",
@@ -168,6 +189,10 @@ export default {
 
         axios.get("blood-components").then(response => {
             this.bloodComponents = response.data;
+        });
+
+        axios.get("blood-stations").then(response => {
+            this.bloodStations = response.data;
         });
     },
 

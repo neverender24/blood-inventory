@@ -1,6 +1,5 @@
 <template>
     <div class="container-scroller">
-        <loader v-if="loading"></loader>
         <nav-bar :notifications="notifications" v-if="user.role == 'Administrator'"></nav-bar>
         <nav-bar-client :notifications="notifications" v-else></nav-bar-client>
         <div class="container-fluid page-body-wrapper">
@@ -29,7 +28,6 @@ import NavBarClient from "./components/NavBarClient.vue";
 import SideBar from "./components/SideBar.vue";
 import SideBarClient from "./components/SideBarClient.vue";
 import { mapState } from "vuex";
-import Loader from "./helpers/loader";
 
 export default {
     components: {
@@ -37,7 +35,6 @@ export default {
         SideBar,
         SideBarClient,
         NavBarClient,
-        Loader
     },
 
     data() {

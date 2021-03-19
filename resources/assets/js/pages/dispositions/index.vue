@@ -2,7 +2,7 @@
     <div>
         <div class="card">
             <div class="card-body">
-                <div class="py-3 d-flex flex-row align-items-center justify-content-between">
+                <div class="py-3 d-flex flex-row align-items-center justify-content-between print_head">
                     <h4 class="card-title">Dispositions</h4>
                     <json-excel
                         class="btn btn-default"
@@ -153,6 +153,11 @@
         <create-disposition @refresh="getData()"></create-disposition>
     </div>
 </template>
+<style>
+.print_head {
+    padding: 0px !important;
+}
+</style>
 
 <script>
 import Datatable from "../../helpers/datatable.vue";
