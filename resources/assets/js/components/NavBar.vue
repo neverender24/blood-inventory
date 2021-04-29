@@ -21,7 +21,11 @@
                     </li>-->
                     <li class="nav-item">
                         <a href="#" class="nav-link">
-                            <i class="fa fa-print"></i>Reports
+                            <i class="fa fa-print"></i> 
+                            <router-link
+                                to="/reports"
+                            >
+                            Reports</router-link>
                         </a>
                     </li>
                     <!-- <li class="nav-item active">

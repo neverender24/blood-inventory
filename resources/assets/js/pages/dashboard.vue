@@ -484,7 +484,7 @@ export default {
 
             _.forEach(this.actualStocks, function(value, key) {
                 chart.push({ 
-                    label: key,
+                    label: key, 
                     backgroundColor: dynamicColors(),
                     data: [value.length]
                 });
@@ -501,6 +501,8 @@ export default {
                 datasets: chart,
                 tooltips: false
             };
+
+            console.log(this.datacollection)
         },
 
         nearExpire(date) {

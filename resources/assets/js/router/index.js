@@ -6,6 +6,7 @@ import DispositionsComponent from "./../pages/dispositions/index.vue";
 import OrdersComponent from "./../pages/orders/index.vue";
 import StocksComponent from "./../pages/dispositions/Stocks.vue";
 import ReleaseComponent from "./../pages/releases/index.vue";
+import ReportComponent from "./../pages/reports.vue";
 
 import OrdersAdminComponent from "./../pages/admin/orders/index.vue";
 import {
@@ -44,6 +45,11 @@ const routes = [{
         name: 'stocks',
         component: StocksComponent,
     },
+     {
+         path: '/reports',
+         name: 'reports',
+         component: ReportComponent,
+     },
     {
         path: '/releases',
         name: 'releases',

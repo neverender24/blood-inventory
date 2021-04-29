@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function () {
     Route::post('serve', 'DispositionController@serveOrder');
     Route::patch('serve/{id}', 'DispositionController@updateOrder');
     Route::patch('receive/{id}', 'OrderController@receive');
-
-
+ 
 });
+Route::get('api/report1', 'ReportController@report1');
+Route::get('api/report2', 'ReportController@report2');
