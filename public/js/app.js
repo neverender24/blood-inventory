@@ -117767,6 +117767,19 @@ var render = function() {
       [_vm._v("Order reports")]
     ),
     _vm._v(" "),
+    _c(
+      "p",
+      {
+        staticClass: "custom-text",
+        on: {
+          click: function($event) {
+            return _vm.print_report2()
+          }
+        }
+      },
+      [_vm._v("Daily stocks")]
+    ),
+    _vm._v(" "),
     _vm._m(0)
   ])
 }
@@ -117866,6 +117879,7 @@ if (false) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
 //
 //
 //

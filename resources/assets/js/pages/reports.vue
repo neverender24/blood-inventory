@@ -2,6 +2,7 @@
     <div>
         <h3>Reports</h3>
         <p class="custom-text" @click="print_report1()">Order reports</p>
+        <p class="custom-text" @click="print_report2()">Daily stocks</p>
 
         
         <!-- Modal -->
