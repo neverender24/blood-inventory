@@ -117912,7 +117912,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         print_report1: function print_report1() {
             // var url = "http://192.168.6.23:8080/jasperserver/flow.html?pp=u%3DJamshasadid%7Cr%3DManager%7Co%3DEMEA,Sales%7Cpa1%3DSweden&_flowId=viewReportFlow&_flowId=viewReportFlow&ParentFolderUri=%2Freports&reportUnit=%2Freports%2Fcafoa&standAlone=tru&decorate=no&cafoa_id="+cafoa_id
-            var url = "http://192.168.6.23:8080/jasperserver/flow.html?pp=u%3DJamshasadid%7Cr%3DManager%7Co%3DEMEA,Sales%7Cpa1%3DSweden&_flowId=viewReportFlow&_flowId=viewReportFlow&ParentFolderUri=%2Freports%2FCAFOA&reportUnit=%2Freports%2FCAFOA%2Fcafoa&standAlone=tru&decorate=no&cafoa_id=" + 1;
+            var url = "http://192.168.6.23:8080/jasperserver/flow.html?pp=u%3DJamshasadid%7Cr%3DManager%7Co%3DEMEA,Sales%7Cpa1%3DSweden&" + "flow.html?_flowId=viewReportFlow&_flowId=viewReportFlow&ParentFolderUri=%2Freports%2Fblood_inventory%2Fblood_report1_files&reportUnit=%2Freports%2Fblood_inventory%2Fblood_report1_files%2Fblood_report1_files&standAlone=true";
+            "&decorate=no";
 
             $("iframe").attr("src", url);
             $("#modal_print_cafoa").modal("show");
