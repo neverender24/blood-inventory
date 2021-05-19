@@ -112152,11 +112152,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            year: ""
+            year: "",
+            report: 0
         };
     },
 
@@ -112172,9 +112174,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             $("iframe").attr("src", url);
         },
         print_report1: function print_report1() {
+            this.report = 1;
             $("#modal_print_cafoa").modal("show");
         },
         print_report2: function print_report2() {
+            this.report = 2;
             $("#modal_print_cafoa").modal("show");
         },
         close: function close() {
@@ -112266,18 +112270,35 @@ var render = function() {
                   }
                 }),
                 _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-primary",
-                    on: {
-                      click: function($event) {
-                        return _vm.display_report1()
-                      }
-                    }
-                  },
-                  [_vm._v("Display")]
-                ),
+                _vm.report == 1
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        on: {
+                          click: function($event) {
+                            return _vm.display_report1()
+                          }
+                        }
+                      },
+                      [_vm._v("Display")]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.report == 2
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        on: {
+                          click: function($event) {
+                            return _vm.display_report1()
+                          }
+                        }
+                      },
+                      [_vm._v("Display")]
+                    )
+                  : _vm._e(),
                 _vm._v(" "),
                 _vm._m(1)
               ]),

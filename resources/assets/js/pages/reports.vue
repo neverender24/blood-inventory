@@ -15,7 +15,8 @@
             <div class="modal-body">
                 <label>Year</label>
                 <input type="text" v-model="year">
-                <button class="btn btn-primary" @click="display_report1()">Display</button>
+                <button class="btn btn-primary" @click="display_report1()" v-if="report == 1">Display</button>
+                <button class="btn btn-primary" @click="display_report1()" v-if="report == 2">Display</button>
                 <div class="embed-responsive embed-responsive-16by9">
                     <iframe class="embed-responsive-item" src=""></iframe> 
                     </div>
@@ -40,7 +41,8 @@
 export default {
     data() {
         return {
-            year: ""
+            year: "",
+            report: 0
         }
     },
     methods: {
@@ -65,9 +67,11 @@ export default {
         },
 
         print_report1() {
+            this.report = 1
             $("#modal_print_cafoa").modal("show");
         },
         print_report2() {
+            this.report = 2
             $("#modal_print_cafoa").modal("show");
         },
 
