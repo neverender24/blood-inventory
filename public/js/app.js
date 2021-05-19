@@ -112292,7 +112292,7 @@ var render = function() {
                         staticClass: "btn btn-primary",
                         on: {
                           click: function($event) {
-                            return _vm.display_report1()
+                            return _vm.display_report2()
                           }
                         }
                       },

@@ -16,7 +16,7 @@
                 <label>Year</label>
                 <input type="text" v-model="year">
                 <button class="btn btn-primary" @click="display_report1()" v-if="report == 1">Display</button>
-                <button class="btn btn-primary" @click="display_report1()" v-if="report == 2">Display</button>
+                <button class="btn btn-primary" @click="display_report2()" v-if="report == 2">Display</button>
                 <div class="embed-responsive embed-responsive-16by9">
                     <iframe class="embed-responsive-item" src=""></iframe> 
                     </div>
