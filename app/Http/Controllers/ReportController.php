@@ -96,19 +96,7 @@ class ReportController extends Controller
         return $expire;
     }
 
-    public function report1() {
-        // return $this->order
-        //         ->select(
-        //             'blood_types.description', 
-        //             DB::raw('count(*) as total'),
-        //             DB::raw('MONTHNAME(dispositions.created_at) as month')
-        //         )
-        //         ->leftJoin('blood_types', 'dispositions.blood_type_id', '=', 'blood_types.id')
-        //         ->leftJoin('disposition_order_detail', 'disposition_order_detail.disposition_id', '=', 'dispositions.id')
-        //         ->whereYear('dispositions.created_at', 2019)
-        //         ->groupBy('blood_type_id', DB::raw('MONTHNAME(dispositions.created_at)'))
-        //         ->get();
-
+    public function report1(Request $request) {
         return $this->orderDetails
             ->select(
                     'blood_types.description',
@@ -118,7 +106,7 @@ class ReportController extends Controller
             ->leftJoin('orders', 'order_details.order_id', '=', 'orders.id')
             ->leftJoin('blood_types', 'order_details.blood_type_id', '=', 'blood_types.id')
             ->groupBy(DB::raw('MONTHNAME(orders.order_date)'), 'order_details.blood_type_id')
-            ->whereYear('orders.order_date', 2019)
+            ->whereYear('orders.order_date', $request->year)
             ->orderBy(DB::raw('MONTH(orders.order_date)'))
             ->get();
     }
