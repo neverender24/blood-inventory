@@ -11,9 +11,6 @@
             <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel"><span class="fa fa-print"></span> PRINT</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
             </div>
             <div class="modal-body">
                 <label>Year</label>
@@ -24,7 +21,7 @@
                     </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger btn-sm" @click="close()">Close</button>
             </div>
             </div>
         </div>
@@ -57,24 +54,27 @@ export default {
             $("iframe").attr("src", url);
         },
 
-        print_report1() {
-            $("#modal_print_cafoa").modal("show");
-
-            //uncomment for testing
-            // axios.get('/print_cafoa_get?cafoa_id=75').then( response => {})
-        },
-        print_report2() {
-            // var url = "http://192.168.6.23:8080/jasperserver/flow.html?pp=u%3DJamshasadid%7Cr%3DManager%7Co%3DEMEA,Sales%7Cpa1%3DSweden&_flowId=viewReportFlow&_flowId=viewReportFlow&ParentFolderUri=%2Freports&reportUnit=%2Freports%2Fcafoa&standAlone=tru&decorate=no&cafoa_id="+cafoa_id
+        display_report2() {
             var url =
                 "http://192.168.6.23:8080/jasperserver/flow.html?pp=u%3DJamshasadid%7Cr%3DManager%7Co%3DEMEA,Sales%7Cpa1%3DSweden&" +
                 "flow.html?_flowId=viewReportFlow&_flowId=viewReportFlow&ParentFolderUri=%2Freports%2Fblood_inventory&reportUnit=%2Freports%2Fblood_inventory%2Fblood_report2_files&standAlone=true" +
-                "&decorate=no";
+                "&decorate=no" +
+                "&year="+this.year;
 
             $("iframe").attr("src", url);
-            $("#modal_print_cafoa").modal("show");
+        },
 
-            //uncomment for testing
-            // axios.get('/print_cafoa_get?cafoa_id=75').then( response => {})
+        print_report1() {
+            $("#modal_print_cafoa").modal("show");
+        },
+        print_report2() {
+            $("#modal_print_cafoa").modal("show");
+        },
+
+        close() {
+            this.year = ""
+             $("iframe").attr("src", "");
+             $("#modal_print_cafoa").modal("hide");
         }
     }
 }

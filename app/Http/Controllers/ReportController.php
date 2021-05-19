@@ -111,7 +111,7 @@ class ReportController extends Controller
             ->get();
     }
 
-    public function report2() {
+    public function report2(Request $request) {
         return $this->bloodStation
                     ->select(
                         'blood_stations.name',
@@ -145,7 +145,7 @@ class ReportController extends Controller
                     ->leftJoin('dispositions',  'dispositions.id', '=',  'blood_station_disposition.disposition_id')
                     ->leftJoin('blood_types',  'blood_types.id', '=',  'dispositions.blood_type_id')
                     ->leftJoin('blood_components',  'blood_components.id', '=',  'dispositions.blood_component_id')
-                    ->whereYear('dispositions.created_at', 2020)
+                    ->whereYear('dispositions.created_at', $request->year)
                     ->groupBy('blood_stations.id')
                     ->get();
 
