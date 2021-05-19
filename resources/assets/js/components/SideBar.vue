@@ -22,21 +22,21 @@
             </div>
           </li>
           <li class="nav-item">
-            <router-link to="/" class="nav-link">
+            <router-link to="/" active-class="active" class="nav-link">
               <i class="menu-icon fa fa-television"></i>
               <span class="menu-title">Dashboard</span>
             </router-link>
             </a>
           </li>
           <li class="nav-item">
-            <router-link to="dispositions" class="nav-link">
+            <router-link to="dispositions" active-class="active" class="nav-link">
               <i class="menu-icon fa fa-list-alt"></i>
               <span class="menu-title">Dispositions</span>
             </router-link>
             </a>
           </li>
           <li class="nav-item">
-            <router-link to="orders-admin" class="nav-link">
+            <router-link to="orders-admin" active-class="active" class="nav-link">
               <i class="menu-icon fa fa-tint"></i>
               <span class="menu-title">Orders</span>
             </router-link>

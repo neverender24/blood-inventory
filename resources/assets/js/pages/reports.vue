@@ -70,6 +70,7 @@ export default {
             this.report = 1
             $("#modal_print_cafoa").modal("show");
         },
+        
         print_report2() {
             this.report = 2
             $("#modal_print_cafoa").modal("show");
