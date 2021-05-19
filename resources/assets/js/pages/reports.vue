@@ -17,7 +17,7 @@
             </div>
             <div class="modal-body">
                 <label>Year</label>
-                <input type="text">
+                <input type="text" v-model="year">
                 <button class="btn btn-primary" @click="display_report1()">Display</button>
                 <div class="embed-responsive embed-responsive-16by9">
                     <iframe class="embed-responsive-item" src=""></iframe> 

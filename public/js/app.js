@@ -112248,7 +112248,26 @@ var render = function() {
               _c("div", { staticClass: "modal-body" }, [
                 _c("label", [_vm._v("Year")]),
                 _vm._v(" "),
-                _c("input", { attrs: { type: "text" } }),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.year,
+                      expression: "year"
+                    }
+                  ],
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.year },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.year = $event.target.value
+                    }
+                  }
+                }),
                 _vm._v(" "),
                 _c(
                   "button",
