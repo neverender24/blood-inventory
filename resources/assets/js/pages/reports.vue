@@ -52,7 +52,7 @@ export default {
                 "http://192.168.6.23:8080/jasperserver/flow.html?pp=u%3DJamshasadid%7Cr%3DManager%7Co%3DEMEA,Sales%7Cpa1%3DSweden&" +
                 "flow.html?_flowId=viewReportFlow&_flowId=viewReportFlow&ParentFolderUri=%2Freports%2Fblood_inventory%2Fblood_report1_files&reportUnit=%2Freports%2Fblood_inventory%2Fblood_report1_files%2Fblood_report1_files&standAlone=true" +
                 "&decorate=no" +
-                "year="+this.year;
+                "&year="+this.year;
 
             $("iframe").attr("src", url);
         },
