@@ -166,7 +166,7 @@ class ReportController extends Controller
                     'blood_components.id'
                 )
                 ->leftJoin('dispositions', 'blood_components.id', '=', 'dispositions.blood_component_id')
-                ->whereYear('dispositions.date_received', 2020)
+                ->whereYear('dispositions.date_received', $request->year)
                 ->groupBy('blood_components.id')
                 ->orderBy(DB::raw('MONTH(dispositions.date_received)'))
                 ->get();

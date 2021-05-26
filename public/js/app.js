@@ -112162,6 +112162,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -112182,12 +112184,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             $("iframe").attr("src", url);
         },
+        display_bm6: function display_bm6() {
+            var url = "http://192.168.6.23:8080/jasperserver/flow.html?pp=u%3DJamshasadid%7Cr%3DManager%7Co%3DEMEA,Sales%7Cpa1%3DSweden&" + "flow.html?_flowId=viewReportFlow&_flowId=viewReportFlow&ParentFolderUri=%2Freports%2Fblood_inventory&reportUnit=%2Freports%2Fblood_inventory%2Fbm6&standAlone=true" + "&decorate=no" + "&year=" + this.year;
+
+            $("iframe").attr("src", url);
+        },
         print_report1: function print_report1() {
             this.report = 1;
             $("#modal_print_cafoa").modal("show");
         },
         print_report2: function print_report2() {
             this.report = 2;
+            $("#modal_print_cafoa").modal("show");
+        },
+        print_bm6: function print_bm6() {
+            this.report = 3;
             $("#modal_print_cafoa").modal("show");
         },
         close: function close() {
@@ -112233,6 +112244,19 @@ var render = function() {
         }
       },
       [_vm._v("Daily stocks")]
+    ),
+    _vm._v(" "),
+    _c(
+      "p",
+      {
+        staticClass: "custom-text",
+        on: {
+          click: function($event) {
+            return _vm.print_bm6()
+          }
+        }
+      },
+      [_vm._v("BM-06")]
     ),
     _vm._v(" "),
     _c(
@@ -112302,6 +112326,21 @@ var render = function() {
                         on: {
                           click: function($event) {
                             return _vm.display_report2()
+                          }
+                        }
+                      },
+                      [_vm._v("Display")]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.report == 3
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        on: {
+                          click: function($event) {
+                            return _vm.display_bm6()
                           }
                         }
                       },

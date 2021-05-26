@@ -3,6 +3,7 @@
         <h3>Reports</h3>
         <p class="custom-text" @click="print_report1()">Order reports</p>
         <p class="custom-text" @click="print_report2()">Daily stocks</p>
+        <p class="custom-text" @click="print_bm6()">BM-06</p>
 
         
         <!-- Modal -->
@@ -17,6 +18,7 @@
                 <input type="text" v-model="year">
                 <button class="btn btn-primary" @click="display_report1()" v-if="report == 1">Display</button>
                 <button class="btn btn-primary" @click="display_report2()" v-if="report == 2">Display</button>
+                <button class="btn btn-primary" @click="display_bm6()" v-if="report == 3">Display</button>
                 <div class="embed-responsive embed-responsive-16by9">
                     <iframe class="embed-responsive-item" src=""></iframe> 
                     </div>
@@ -66,6 +68,16 @@ export default {
             $("iframe").attr("src", url);
         },
 
+        display_bm6() {
+            var url =
+                "http://192.168.6.23:8080/jasperserver/flow.html?pp=u%3DJamshasadid%7Cr%3DManager%7Co%3DEMEA,Sales%7Cpa1%3DSweden&" +
+                "flow.html?_flowId=viewReportFlow&_flowId=viewReportFlow&ParentFolderUri=%2Freports%2Fblood_inventory&reportUnit=%2Freports%2Fblood_inventory%2Fbm6&standAlone=true" +
+                "&decorate=no" +
+                "&year="+this.year;
+
+            $("iframe").attr("src", url);
+        },
+
         print_report1() {
             this.report = 1
             $("#modal_print_cafoa").modal("show");
@@ -73,6 +85,10 @@ export default {
         
         print_report2() {
             this.report = 2
+            $("#modal_print_cafoa").modal("show");
+        },
+        print_bm6() {
+            this.report = 3
             $("#modal_print_cafoa").modal("show");
         },
 
