@@ -45,3 +45,4 @@ Route::middleware('auth')->group(function () {
 });
 Route::get('api/report1', 'ReportController@report1');
 Route::get('api/report2', 'ReportController@report2');
+Route::get('api/bm6', 'ReportController@bm6');

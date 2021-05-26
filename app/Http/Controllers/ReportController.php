@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\BloodComponent;
 use App\Order;
 use App\Disposition;
 use App\BloodStation;
@@ -17,11 +18,13 @@ class ReportController extends Controller
         Order $order,
         BloodStation $bloodStation,
         BloodType $bloodTypes,
-        OrderDetail $orderDetails
+        OrderDetail $orderDetails,
+        BloodComponent $bloodComponents
     ) {
         $this->disposition = $disposition;
         $this->order = $order;
         $this->bloodStation = $bloodStation;
+        $this->bloodComponents = $bloodComponents;
         $this->bloodTypes = $bloodTypes;
         $this->orderDetails = $orderDetails;
     }
@@ -149,5 +152,64 @@ class ReportController extends Controller
                     ->groupBy('blood_stations.id')
                     ->get();
 
+    }
+
+     public function bm6(Request $request) {
+        $data = $this->bloodComponents
+                ->select(
+                    DB::raw('sum( IF(MONTHNAME(dispositions.date_received) = "January" , 1, 0 )) as totalJan'),
+                    DB::raw('sum( IF(MONTHNAME(dispositions.date_received) = "February" , 1, 0 )) as totalFeb'),
+                    DB::raw('sum( IF(MONTHNAME(dispositions.date_received) = "March" , 1, 0 )) as totalMar'),
+                    DB::raw('sum( IF(MONTHNAME(dispositions.date_received) = "April" , 1, 0 )) as totalApr'),
+                    DB::raw('sum( IF(MONTHNAME(dispositions.date_received) = "May" , 1, 0 )) as totalMay'),
+                    'blood_components.description',
+                    'blood_components.id'
+                )
+                ->leftJoin('dispositions', 'blood_components.id', '=', 'dispositions.blood_component_id')
+                ->whereYear('dispositions.date_received', 2020)
+                ->groupBy('blood_components.id')
+                ->orderBy(DB::raw('MONTH(dispositions.date_received)'))
+                ->get();
+
+        $emptyBlood = [];
+
+        for ($x = 0; $x < 4; $x++) {
+           if (!empty($data[$x]['id'])) {
+                array_push($emptyBlood, $data[$x]['id']);
+            }
+        }
+
+        for ($x = 1; $x <= 4; $x++) {
+            if (!in_array($x, $emptyBlood)) {
+                $data[] =
+                    ["totalJan" => "0",
+                    "totalFeb" => "0",
+                    "totalMar" => "0",
+                    "totalApr" => "0",
+                    "totalMay" => "0",
+                    "description" => $this->blood_components($x),
+                    "id" => $x];
+            }   
+        }
+
+        return $data;
+    }
+
+    public function blood_components($id) {
+        if ($id == 1) {
+            return "Whole Blood";
+        }
+
+        if ($id == 2) {
+            return "Packed RBC";
+        }
+
+        if ($id == 3) {
+            return "Plasma";
+        }
+
+        if ($id == 4) {
+            return "Platelet";
+        }
     }
 }
