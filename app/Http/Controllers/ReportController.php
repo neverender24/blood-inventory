@@ -162,6 +162,13 @@ class ReportController extends Controller
                     DB::raw('sum( IF(MONTHNAME(dispositions.date_received) = "March" , 1, 0 )) as totalMar'),
                     DB::raw('sum( IF(MONTHNAME(dispositions.date_received) = "April" , 1, 0 )) as totalApr'),
                     DB::raw('sum( IF(MONTHNAME(dispositions.date_received) = "May" , 1, 0 )) as totalMay'),
+                    DB::raw('sum( IF(MONTHNAME(dispositions.date_received) = "June" , 1, 0 )) as totalJun'),
+                    DB::raw('sum( IF(MONTHNAME(dispositions.date_received) = "July" , 1, 0 )) as totalJul'),
+                    DB::raw('sum( IF(MONTHNAME(dispositions.date_received) = "August" , 1, 0 )) as totalAug'),
+                    DB::raw('sum( IF(MONTHNAME(dispositions.date_received) = "September" , 1, 0 )) as totalSep'),
+                    DB::raw('sum( IF(MONTHNAME(dispositions.date_received) = "October" , 1, 0 )) as totalOct'),
+                    DB::raw('sum( IF(MONTHNAME(dispositions.date_received) = "November" , 1, 0 )) as totalNov'),
+                    DB::raw('sum( IF(MONTHNAME(dispositions.date_received) = "December" , 1, 0 )) as totalDec'),
                     'blood_components.description',
                     'blood_components.id'
                 )
@@ -172,13 +179,15 @@ class ReportController extends Controller
                 ->get();
 
         $emptyBlood = [];
-
+        
+        //check tanan available na blood components
         for ($x = 0; $x < 4; $x++) {
            if (!empty($data[$x]['id'])) {
                 array_push($emptyBlood, $data[$x]['id']);
             }
         }
 
+        //add blank if wala data
         for ($x = 1; $x <= 4; $x++) {
             if (!in_array($x, $emptyBlood)) {
                 $data[] =
@@ -187,6 +196,13 @@ class ReportController extends Controller
                     "totalMar" => "0",
                     "totalApr" => "0",
                     "totalMay" => "0",
+                    "totalJun" => "0",
+                    "totalJul" => "0",
+                    "totalAug" => "0",
+                    "totalSep" => "0",
+                    "totalOct" => "0",
+                    "totalNov" => "0",
+                    "totalDec" => "0",
                     "description" => $this->blood_components($x),
                     "id" => $x];
             }   
