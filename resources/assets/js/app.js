@@ -11,6 +11,7 @@ import Vuelidate from 'vuelidate';
 import 'es6-promise/auto';
 import { store } from './store/store'
 import vSelect from 'vue-select'
+import 'vue-search-select/dist/VueSearchSelect.css'
 
 Vue.component('v-select', vSelect)
 Vue.use(Vuelidate)

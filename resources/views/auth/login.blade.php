@@ -12,6 +12,12 @@
 
   <link rel="stylesheet" href="{{ asset('css/style.css') }}">
   <link rel="stylesheet" href="{{ asset('vendors/iconfonts/mdi/css/materialdesignicons.min.css') }}">
+
+  <style>
+    .auth.auth-bg-1 {
+      background: radial-gradient(ellipse at center, #754306 1%, #1c2b5a 150%) !important;
+    }
+  </style>
 </head>
 
 <body>
@@ -21,6 +27,14 @@
         <div class="row w-100">
           <div class="col-lg-4 mx-auto">
             <div class="auto-form-wrapper">
+              <div class="row text-center">
+                <div class="col-md-offset-4">
+                  <img src="images/logo.png" class="img-responsive w-50" alt="">
+                </div>
+
+                <h3>Blood Distribution Management System</h3>
+              </div>
+              <hr>
               <form method="POST" action="{{ route('login') }}" >
                 @csrf 
                 <div class="form-group">

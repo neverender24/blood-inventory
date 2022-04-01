@@ -40,10 +40,14 @@
                                 <div class="row" v-for="(o,index) in orders">
                                     <div class="col-md-2">
                                         <span
-                                            class="fa fa-close text-danger"
+                                            class="text-danger"
                                             style="cursor: pointer;"
                                             @click="removeDispositionOrder(index)"
-                                        ></span>
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                                            </svg>
+                                        </span>
                                     </div>
                                     <div class="col-md-4">
                                         <p>{{o.serial}}</p>
@@ -59,18 +63,14 @@
 
                             <div class="row" v-for="(row, index) in $v.new_orders.$each.$iter">
                                 <div class="col-md-10">
-                                    <select
+                                    <model-select
                                         v-model.trim="row.disposition_id.$model"
-                                        class="form-control"
-                                        :class="{ 'is-invalid': row.disposition_id.$error }"
+                                        :options="localDispositions"
+                                        class="ui search dropdown form-control"
                                         v-if="setDispositions && addNewDisposition"
                                     >
-                                        <option value="0">-- Select --</option>
-                                        <option
-                                            v-for="(value,key) in localDispositions"
-                                            :value="value.id"
-                                        >{{ value.serial }}</option>
-                                    </select>
+                                
+                                    </model-select>
                                 </div>
                                 <div class="col-md-2">
                                     <button
@@ -78,7 +78,11 @@
                                         class="btn btn-danger"
                                         @click="removeDisposition(index)"
                                     >
-                                        <i class="fa fa-trash"></i>
+                                        <i>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                              <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                                            </svg>
+                                        </i>
                                     </button>
                                 </div>
                             </div>
@@ -132,9 +136,13 @@
 </style>
 
 <script>
+import { ModelSelect } from "vue-search-select";
 import { required, minLength, minValue } from "vuelidate/lib/validators";
 export default {
     props: ["user", "data", "dispositions"],
+    components: {
+        ModelSelect
+    },
     data() {
         return {
             orders: [],
@@ -149,6 +157,13 @@ export default {
             final_orders: [],
             localDispositions: []
         };
+    },
+    mounted() {
+         $(function(){
+            $(".ui.search.dropdown").dropdown({
+                fullTextSearch: true,
+            });
+        })
     },
 
     computed: {
@@ -201,11 +216,20 @@ export default {
             dispositions = _.filter(this.localDispositions, function(e) {
                 _.forEach(components, function(element) {
                     if (element == e.blood_component_id) {
-                        disp.push(e);
+                        
+                        let dup = _.findIndex(disp, ["value", e.id])
+
+                        if (dup == -1) {
+                            disp.push({
+                                value: e.id,
+                                text: e.serial
+                            });
+                        }
                     }
                 });
             });
-            this.localDispositions = _.uniq(disp);
+
+            this.localDispositions = disp;
 
             return true;
         },

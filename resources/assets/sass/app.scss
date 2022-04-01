@@ -11,15 +11,20 @@
 // @import '~mdi/scss/materialdesignicons';
 
 // fa
-@import '~font-awesome/scss/font-awesome';
+// @import '~font-awesome/scss/font-awesome';
 
-@import "~vue-snotify/styles/material";
+@import "~vue-snotify/styles/material"; 
 
 @import '~vue-search-select/dist/VueSearchSelect.css';
+
 
 .navbar-laravel {
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.navbar.default-layout {
+    background: linear-gradient(120deg, #7e4006, #9d640fd1) !important;
 }
 
 .card {
