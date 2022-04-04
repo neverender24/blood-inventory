@@ -50,7 +50,7 @@ class DispositionController extends Controller
         if ($print == "true") {
             $index = $index->get();
         } else {
-            $index = $index->paginate($length);
+            $index = $index->simplePaginate($length);
         }
 
         $this->addExpiryField($index);
