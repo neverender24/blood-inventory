@@ -47,7 +47,13 @@
                         />
                     </div>
                 </div>
-
+                <div class="row text-center" v-if="loading">
+                    <div class="col-md-12">
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </div>
                 <datatable
                     :columns="columns"
                     :sortKey="sortKey"
@@ -172,7 +178,8 @@ export default {
             },
             data: [],
             id: "",
-            editData: {}
+            editData: {},
+            loading: false
         };
     },
 
@@ -210,6 +217,7 @@ export default {
 
         getData(url = "client-dispositions") {
             this.$store.dispatch("toggleLoading", true);
+            this.loading = true
             axios.get(url, { params: this.tableData }).then(response => {
                 let data = response.data;
 
@@ -218,6 +226,7 @@ export default {
                     this.configPagination(data.data);
                 }
                 this.$store.dispatch("toggleLoading", false);
+                this.loading = false
             });
         },
 

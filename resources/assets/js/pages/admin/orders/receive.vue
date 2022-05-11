@@ -19,10 +19,9 @@
                     </div>
 
                     <div class="modal-body">
-                        <label class="badge badge-dark">
+                        <label class="badge badge-dark" v-for="row,index in data.order_details">
                             <button
                                 type="button"
-                                v-for="row,index in data.order_details"
                                 class="btn btn-primary btn-fw"
                                 @click="filterDisposition(row.id, row.qty, row.blood_component_id, row.blood_type_id)"
                             >({{ row.qty }}) {{ row.blood_type.description }} ({{ row.blood_component.description }})</button>
@@ -44,7 +43,9 @@
                                             class="btn btn-icons btn-rounded btn-success"
                                             @click="getSerial()"
                                         >
-                                            <i class="fa fa-check"></i>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+                                              <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
+                                            </svg>
                                         </button>
                                     </div>
                                 </div>
