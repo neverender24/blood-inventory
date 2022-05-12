@@ -464,7 +464,7 @@ export default {
         this.$store.dispatch("toggleLoading", true);
         this.$store.dispatch("countPendingOrders");
         this.loading = !this.loading;
-        await axios.get("all-stocks").then(response => {
+        await axios.post("all-stocks", this.user).then(response => {
             let stocks = response.data;
             let self = this;
             var nearExpiryMon = [];

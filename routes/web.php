@@ -16,7 +16,7 @@ Route::get('get-dispositions', 'DispositionController@getDispositions');
 Route::get('get-releases', 'ReleaseController@getReleaseDispositions');
 Route::get('get-details', 'OrderController@getDetails');
 
-Route::get('all-stocks', 'ReportController@getAllStocks');
+Route::post('all-stocks', 'ReportController@getAllStocks');
 Route::post('total-stocks', 'ReportController@getTotalStocks');
 Route::get('pending-orders', 'ReportController@getPendingOrders');
 Route::post('expired-blood', 'ReportController@getExpiredDispositions');

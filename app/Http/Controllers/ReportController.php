@@ -29,14 +29,19 @@ class ReportController extends Controller
         $this->orderDetails = $orderDetails;
     }
 
-    public function getAllStocks() {
-        return $this->bloodStation->with(['dispositions'=>function($q){
-                    $q->with(['bloodComponent', 'bloodType'])->doesntHave('releases')->get();
-                }])->whereHas('dispositions', function($a){
-                    $a->available();
-                })->withCount(['dispositions'=>function($q){
-                    $q->available();
-                }])->get();
+    public function getAllStocks(Request $request) {
+
+        $bloodStationId = auth()->user()->blood_station_id;
+
+            return $this->bloodStation->with(['dispositions'=>function($q) use ($bloodStationId){
+                $q->with(['bloodComponent', 'bloodType'])->clientDispositions($bloodStationId)->available()->get();
+            }])->whereHas('dispositions', function($a) use ($bloodStationId){
+                $a->clientDispositions($bloodStationId)->available();
+            })->withCount(['dispositions'=>function($q) use ($bloodStationId){
+                $q->clientDispositions($bloodStationId)->available();
+            }])->get();
+            
+        
     }
 
     public function getTotalStocks(Request $request) {
@@ -75,8 +80,7 @@ class ReportController extends Controller
             $expire = $expire->clientDispositions($bloodStationId);
         }
         
-        $expire = $expire->doesntHave('releases')
-                        ->nearExpiry()
+        $expire = $expire->nearExpiry()
                         ->get();
 
         return $expire;
