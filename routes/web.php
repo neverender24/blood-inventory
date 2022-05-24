@@ -4,9 +4,7 @@
 
 Auth::routes();
 
-Route::get('/', function () {
-    return view('welcome');
-})->middleware('auth');
+Route::get('/', 'UserController@welcome')->middleware('auth');
 
 Route::get('blood-types', 'BloodTypeController@index');
 Route::get('blood-components', 'BloodComponentController@index');
