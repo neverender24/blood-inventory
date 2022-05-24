@@ -6,6 +6,7 @@ use App\Order;
 use App\Disposition;
 use App\BloodStation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use JasperPHP\JasperPHP as JasperPHP;
 
 class OrderController extends Controller
@@ -106,14 +107,25 @@ class OrderController extends Controller
 
     public function destroy($id) {
 
-        $delete = $this->model->findOrFail($id);
+        DB::beginTransaction();
+        try {
 
-        $delete->delete();
+            $delete = $this->model->findOrFail($id);
+            $delete->delete();
 
-        return $delete;
+            DB::commit();
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $e;
+        }
+
+        return "Deleted Successfully";
+
     }
 
-    public function receive(Request $request, $id) {
+    public function receive(Request $request, $id)
+    {
        
         $details = $request->all();
 
@@ -133,7 +145,8 @@ class OrderController extends Controller
         $order->save();
     }
     
-    public function generateCode() {
+    public function generateCode()
+    {
         $prefix = BloodStation::where('id', auth()->user()->blood_station_id)->value('prefix');
 
         // $totalOrder = $this->model->whereHas('user', function($q){
@@ -142,12 +155,17 @@ class OrderController extends Controller
 
         $totalOrder = $this->model->whereHas('user', function($q){
             $q->where('blood_station_id', auth()->user()->blood_station_id);
-        })->whereYear('order_date', date('Y'))->orderBy("created_at", "desc")->first();
+        })->whereYear('order_date', date('Y'))->orderBy("created_at", "desc")->get();
         
+        $sortedCode = [];
+        foreach($totalOrder as $order) {
+            $getLastDigit = explode("-", $order->transaction_code);
+            array_push($sortedCode, (int)end($getLastDigit));
+        }
+        
+        rsort($sortedCode);
 
-        $getLastDigit = explode("-", $totalOrder->transaction_code);
-
-        return $prefix."-".date('Y')."-".($getLastDigit[2] + 1);
+        return $prefix."-".date('Y')."-".($sortedCode[0] + 1);
     }
 
     public function print(Request $request)

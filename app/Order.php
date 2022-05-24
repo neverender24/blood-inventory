@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
 {
-    use SoftDeletes;
+    // use SoftDeletes;
     
     protected $fillable = [
         'transaction_code',
@@ -15,7 +15,7 @@ class Order extends Model
         'order_time',
         'delivery_date',
         'delivery_time',
-        'routine',
+        'routine', 
         'user_id'
     ];
 

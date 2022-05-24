@@ -1,92 +1,20 @@
 <template>
     <div class="content-wrapper">
         <div class="row">
-            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
-                <div class="card card-statistics">
-                    <div v-if="loading" class="ui inverted active dimmer">
-                        <div class="ui active loader"></div>
-                    </div>
-                    <div class="card-body">
-                        <h4>Montevista</h4>
-                        <div class="clearfix">
-                            <div class="float-left">
-                                <i class="text-primary">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-hospital" viewBox="0 0 16 16">
-                                      <path d="M8.5 5.034v1.1l.953-.55.5.867L9 7l.953.55-.5.866-.953-.55v1.1h-1v-1.1l-.953.55-.5-.866L7 7l-.953-.55.5-.866.953.55v-1.1h1ZM13.25 9a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5ZM13 11.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-.5Zm.25 1.75a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5Zm-11-4a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5A.25.25 0 0 0 3 9.75v-.5A.25.25 0 0 0 2.75 9h-.5Zm0 2a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5ZM2 13.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-.5Z"/>
-                                      <path d="M5 1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1a1 1 0 0 1 1 1v4h3a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h3V3a1 1 0 0 1 1-1V1Zm2 14h2v-3H7v3Zm3 0h1V3H5v12h1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3Zm0-14H6v1h4V1Zm2 7v7h3V8h-3Zm-8 7V8H1v7h3Z"/>
-                                    </svg>
-                                </i>
-                            </div>
-                            <div class="float-right">
-                                <p class="mb-0 text-right">Stock</p>
-                                <div class="fluid-container">
-                                    <h3 class="font-weight-medium text-right mb-0" v-text="mont"></h3>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6" v-for="(row, item) in actualMon">
-                                <p class="mt-1 mb-0">
-                                    <i aria-hidden="true">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
-                                          <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                        </svg>
-                                    </i>
-                                    {{ item }} ({{row.length}})
-                                </p>
-                            </div>
-                        </div>
-                        <hr />
-                        <small class="text-danger">Near Expiry</small>
-                        <div class="row">
-                            <div class="col-6" v-for="(row, item) in nearExpiryMon">
-                                <p class="mt-1 mb-0">
-                                    <i aria-hidden="true">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
-                                          <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                        </svg>
-                                    </i>
-                                    {{ item }} ({{row.length}})
-                                </p>
-                            </div>
-                        </div>
-                        <button
-                            @click="showNearExpiryDetails('mon')"
-                            type="button"
-                            class="btn btn-primary btn-xs"
-                            data-toggle="modal"
-                            data-target="#expiryModal"
-                        >Details</button>
-                    </div>
-                </div>
-            </div>
 
-            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 mb-1">
                 <div class="card card-statistics">
                     <div v-if="loading" class="ui inverted active dimmer">
                         <div class="ui active loader"></div>
                     </div>
                     <div class="card-body">
-                        <h4>Maragusan</h4>
-                        <div class="clearfix">
-                            <div class="float-left">
-                                <i class="text-warning">
-                                    <i class="text-primary">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-hospital" viewBox="0 0 16 16">
-                                          <path d="M8.5 5.034v1.1l.953-.55.5.867L9 7l.953.55-.5.866-.953-.55v1.1h-1v-1.1l-.953.55-.5-.866L7 7l-.953-.55.5-.866.953.55v-1.1h1ZM13.25 9a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5ZM13 11.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-.5Zm.25 1.75a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5Zm-11-4a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5A.25.25 0 0 0 3 9.75v-.5A.25.25 0 0 0 2.75 9h-.5Zm0 2a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5ZM2 13.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-.5Z"/>
-                                          <path d="M5 1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1a1 1 0 0 1 1 1v4h3a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h3V3a1 1 0 0 1 1-1V1Zm2 14h2v-3H7v3Zm3 0h1V3H5v12h1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3Zm0-14H6v1h4V1Zm2 7v7h3V8h-3Zm-8 7V8H1v7h3Z"/>
-                                        </svg>
-                                    </i>
-                                </i>
-                            </div>
+                        <div class="d-flex justify-content-between">
+                            <h4>Maragusan</h4>
                             <div class="float-right">
-                                <p class="mb-0 text-right">Stock</p>
-                                <div class="fluid-container">
-                                    <h3 class="font-weight-medium text-right mb-0" v-text="mara"></h3>
-                                </div>
+                                    <h3 class="font-weight-medium text-right" v-text="mara"></h3>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row mb-1">
                             <div class="col-6" v-for="(row, item) in actualMar">
                                 <p class="mt-1 mb-0">
                                     <i aria-hidden="true">
@@ -98,10 +26,32 @@
                                 </p>
                             </div>
                         </div>
-                        <hr />
-                        <small class="text-danger">Near Expiry</small>
-                        <div class="row">
-                            <div class="col-6" v-for="(row, item) in nearExpiryMar">
+                        <a 
+                            href="#"
+                            class="text-danger" 
+                            @click="showNearExpiryDetails('laa')" 
+                            v-if="nearExpiryMar.length != 0"
+                        >
+                            <small>Near Expiry</small>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 mb-1">
+                <div class="card card-statistics">
+                    <div v-if="loading" class="ui inverted active dimmer">
+                        <div class="ui active loader"></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h4>Montevista</h4>
+                            <div class="float-right">
+                                    <h3 class="font-weight-medium text-right" v-text="mont"></h3>
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col-6" v-for="(row, item) in actualMon">
                                 <p class="mt-1 mb-0">
                                     <i aria-hidden="true">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
@@ -112,42 +62,30 @@
                                 </p>
                             </div>
                         </div>
-                        <button
-                            @click="showNearExpiryDetails('mar')"
-                            type="button"
-                            class="btn btn-primary btn-xs"
-                            data-toggle="modal"
-                            data-target="#expiryModal"
-                        >Details</button>
+                        <a 
+                            href="#"
+                            class="text-danger" 
+                            @click="showNearExpiryDetails('mon')" 
+                            v-if="nearExpiryMon.length != 0"
+                        >
+                            <small>Near Expiry</small>
+                        </a>
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 mb-1">
                 <div class="card card-statistics">
                     <div v-if="loading" class="ui inverted active dimmer">
                         <div class="ui active loader"></div>
                     </div>
                     <div class="card-body">
-                        <h4>Laak</h4>
-                        <div class="clearfix">
-                            <div class="float-left">
-                                <i class="text-success">
-                                    <i class="text-primary">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-hospital" viewBox="0 0 16 16">
-                                          <path d="M8.5 5.034v1.1l.953-.55.5.867L9 7l.953.55-.5.866-.953-.55v1.1h-1v-1.1l-.953.55-.5-.866L7 7l-.953-.55.5-.866.953.55v-1.1h1ZM13.25 9a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5ZM13 11.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-.5Zm.25 1.75a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5Zm-11-4a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5A.25.25 0 0 0 3 9.75v-.5A.25.25 0 0 0 2.75 9h-.5Zm0 2a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5ZM2 13.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-.5Z"/>
-                                          <path d="M5 1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1a1 1 0 0 1 1 1v4h3a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h3V3a1 1 0 0 1 1-1V1Zm2 14h2v-3H7v3Zm3 0h1V3H5v12h1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3Zm0-14H6v1h4V1Zm2 7v7h3V8h-3Zm-8 7V8H1v7h3Z"/>
-                                        </svg>
-                                    </i>
-                                </i>
-                            </div>
+                        <div class="d-flex justify-content-between">
+                            <h4>Laak</h4>
                             <div class="float-right">
-                                <p class="mb-0 text-right">Stock</p>
-                                <div class="fluid-container">
-                                    <h3 class="font-weight-medium text-right mb-0">{{ laak }}</h3>
-                                </div>
+                                <h3 class="font-weight-medium text-right" v-text="laak"></h3>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row mb-2">
                             <div class="col-6" v-for="(row, item) in actualLaa">
                                 <p class="mt-1 mb-0">
                                     <i aria-hidden="true">
@@ -159,56 +97,30 @@
                                 </p>
                             </div>
                         </div>
-                        <hr />
-                        <small class="text-danger">Near Expiry</small>
-                        <div class="row">
-                            <div class="col-6" v-for="(row, item) in nearExpiryLaa">
-                                <p class="mt-1 mb-0">
-                                    <i aria-hidden="true">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
-                                          <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                        </svg>
-                                    </i>
-                                    {{ item }} ({{row.length}})
-                                </p>
-                            </div>
-                        </div>
-                        <button
-                            @click="showNearExpiryDetails('laa')"
-                            type="button"
-                            class="btn btn-primary btn-xs"
-                            data-toggle="modal"
-                            data-target="#expiryModal"
-                        >Details</button>
+                        <a 
+                            href="#"
+                            class="text-danger" 
+                            @click="showNearExpiryDetails('laa')" 
+                            v-if="nearExpiryLaa.length != 0"
+                        >
+                           <small> <small>Near Expiry</small> detected</small>
+                        </a>
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 mb-1">
                 <div class="card card-statistics">
                     <div v-if="loading" class="ui inverted active dimmer">
                         <div class="ui active loader"></div>
                     </div>
                     <div class="card-body">
-                        <h4>Pantukan</h4>
-                        <div class="clearfix">
-                            <div class="float-left">
-                                <i class="text-info">
-                                    <i class="text-primary">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-hospital" viewBox="0 0 16 16">
-                                          <path d="M8.5 5.034v1.1l.953-.55.5.867L9 7l.953.55-.5.866-.953-.55v1.1h-1v-1.1l-.953.55-.5-.866L7 7l-.953-.55.5-.866.953.55v-1.1h1ZM13.25 9a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5ZM13 11.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-.5Zm.25 1.75a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5Zm-11-4a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5A.25.25 0 0 0 3 9.75v-.5A.25.25 0 0 0 2.75 9h-.5Zm0 2a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5ZM2 13.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-.5Z"/>
-                                          <path d="M5 1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1a1 1 0 0 1 1 1v4h3a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h3V3a1 1 0 0 1 1-1V1Zm2 14h2v-3H7v3Zm3 0h1V3H5v12h1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3Zm0-14H6v1h4V1Zm2 7v7h3V8h-3Zm-8 7V8H1v7h3Z"/>
-                                        </svg>
-                                    </i>
-                                </i>
-                            </div>
+                        <div class="d-flex justify-content-between">
+                            <h4>Pantukan</h4>
                             <div class="float-right">
-                                <p class="mb-0 text-right">Stock</p>
-                                <div class="fluid-container">
-                                    <h3 class="font-weight-medium text-right mb-0">{{ pant }}</h3>
-                                </div>
+                                <h3 class="font-weight-medium text-right" v-text="pant"></h3>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row mb-1">
                             <div class="col-6" v-for="(row, item) in actualPan">
                                 <p class="mt-1 mb-0">
                                     <i aria-hidden="true">
@@ -220,10 +132,31 @@
                                 </p>
                             </div>
                         </div>
-                        <hr />
-                        <small class="text-danger">Near Expiry</small>
-                        <div class="row">
-                            <div class="col-6" v-for="(row, item) in nearExpiryPan">
+                        <a 
+                            href="#"
+                            class="text-danger" 
+                            @click="showNearExpiryDetails('pan')" 
+                            v-if="nearExpiryPan.length != 0"
+                        >
+                            <small>Near Expiry</small>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 mb-1">
+                <div class="card card-statistics">
+                    <div v-if="loading" class="ui inverted active dimmer">
+                        <div class="ui active loader"></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h4>Cabrera</h4>
+                            <div class="float-right">
+                                <h3 class="font-weight-medium text-right" v-text="cabrera"></h3>
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col-6" v-for="(row, item) in actualCabrera">
                                 <p class="mt-1 mb-0">
                                     <i aria-hidden="true">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
@@ -234,23 +167,59 @@
                                 </p>
                             </div>
                         </div>
-                        <button
-                            @click="showNearExpiryDetails('pan')"
-                            type="button"
-                            class="btn btn-primary btn-xs"
-                            data-toggle="modal"
-                            data-target="#expiryModal"
-                        >Details</button>
+                        <a 
+                            href="#"
+                            class="text-danger" 
+                            @click="showNearExpiryDetails('cabrera')" 
+                            v-if="nearExpiryCabrera.length != 0"
+                        >
+                            <small>Near Expiry</small>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 mb-1">
+                <div class="card card-statistics">
+                    <div v-if="loading" class="ui inverted active dimmer">
+                        <div class="ui active loader"></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h4>DCH</h4>
+                            <div class="float-right">
+                                <h3 class="font-weight-medium text-right" v-text="dch"></h3>
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col-6" v-for="(row, item) in actualDch">
+                                <p class="mt-1 mb-0">
+                                    <i aria-hidden="true">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+                                          <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                        </svg>
+                                    </i>
+                                    {{ item }} ({{row.length}})
+                                </p>
+                            </div>
+                        </div>
+                        <a 
+                            href="#" 
+                            class="text-danger" 
+                            @click="showNearExpiryDetails('dch')" 
+                            v-if="nearExpiryDch.length != 0"
+                        >
+                            <small>Near Expiry</small>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
-
+<hr>
         <div class="row">
             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
                 <div class="card card-statistics">
                     <div class="card-body">
-                        <h4>Near Expiry</h4>
+                        <h4><small>Near Expiry</small></h4>
                         <div class="clearfix">
                             <div class="float-left">
                                 <i class="text-danger">
@@ -358,7 +327,7 @@
                                 <i class="fa fa-check" aria-hidden="true"></i>
                                 {{ item }} - {{row.length}}
                         </p>-->
-                        <line-chart :chart-data="datacollection"></line-chart>
+                        <line-chart :chartData="datacollection"></line-chart>
                     </div>
                 </div>
             </div>
@@ -375,7 +344,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Near Expiry</h5>
+                        <h5 class="modal-title" id="exampleModalLabel"><small>Near Expiry</small></h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -432,16 +401,22 @@ export default {
             laak: 0,
             mara: 0,
             pant: 0,
+            cabrera: 0,
+            dch: 0,
             stock: 0,
             showExpiries: [],
             nearExpiryMon: [],
             nearExpiryLaa: [],
             nearExpiryMar: [],
             nearExpiryPan: [],
+            nearExpiryCabrera: [],
+            nearExpiryDch: [],
             actualMon: [],
             actualLaa: [],
             actualMar: [],
             actualPan: [],
+            actualCabrera: [],
+            actualDch: [],
             actualStocks: [],
             options: {
                 responsive: true,
@@ -537,6 +512,38 @@ export default {
                         nearExpiryPan,
                         "blood_type.description"
                     );
+                }  else if (stock.prefix == "CAB") {
+                    //pantukan
+                    self.cabrera = stock.dispositions_count;
+                    self.actualCabrera = _.groupBy(
+                        stock.dispositions,
+                        "blood_type.description"
+                    ); 
+                    _.forEach(stock.dispositions, function(dispositions) {
+                        if (self.nearExpire(dispositions.date_expiry)) {
+                            nearExpiryPan.push(dispositions);
+                        }
+                    });
+                    self.nearExpiryCabrera = _.groupBy(
+                        nearExpiryCabrera,
+                        "blood_type.description"
+                    );
+                } else if (stock.prefix == "DCH") {
+                    //pantukan
+                    self.dch = stock.dispositions_count;
+                    self.actualDch = _.groupBy(
+                        stock.dispositions,
+                        "blood_type.description"
+                    ); 
+                    _.forEach(stock.dispositions, function(dispositions) {
+                        if (self.nearExpire(dispositions.date_expiry)) {
+                            nearExpiryPan.push(dispositions);
+                        }
+                    });
+                    self.nearExpiryDch = _.groupBy(
+                        nearExpiryDch,
+                        "blood_type.description"
+                    );
                 }
             });
             this.loading = !this.loading;
@@ -593,6 +600,9 @@ export default {
         },
 
         showNearExpiryDetails(details) {
+
+            $('#expiryModal').modal('show')
+
             if (details == "mon") {
                 this.showExpiries = this.nearExpiryMon;
             } else if (details == "mar") {
@@ -601,6 +611,10 @@ export default {
                 this.showExpiries = this.nearExpiryLaa;
             } else if (details == "pan") {
                 this.showExpiries = this.nearExpiryPan;
+            } else if (details == "dch") {
+                this.showExpiries = this.nearExpiryDch;
+            } else if (details == "cabrera") {
+                this.showExpiries = this.nearExpiryCabrera;
             }
         }
     }

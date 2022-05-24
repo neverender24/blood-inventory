@@ -166,7 +166,7 @@
 </style>
 
 <script>
-import { required, minLength, minValue } from "vuelidate/lib/validators";
+import { required, minValue } from "vuelidate/lib/validators";
 import { mapState } from "vuex";
 
 export default {
