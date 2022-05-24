@@ -213,7 +213,7 @@ class DispositionController extends Controller
         $show = $request->show;
         $serial = $request->serial;
 
-        $index = $this->model->with(['bloodType', 'bloodComponent'])
+        $index = $this->model->withRelationships()
             ->whereHas('users', function ($u) {
                 $u->where('blood_station_id', auth()->user()->blood_station_id);
             })

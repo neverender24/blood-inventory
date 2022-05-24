@@ -69,6 +69,7 @@
                             <td>{{ item.vol }}</td>
                             <td>{{ item.date_extracted }}</td>
                             <td>{{ item.date_expiry }}</td>
+                            <td>{{ item.order_details.length ? item.order_details[0].order.transaction_code : '' }}</td>
                             <td v-if="user.id == item.user_id">
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <button
@@ -142,11 +143,12 @@ export default {
         let columns = [
             { width: "1%", label: "", name: "flag" },
             { width: "20%", label: "Serial", name: "serial" },
-            { width: "20%", label: "Group", name: "group" },
+            { width: "5%", label: "Group", name: "group" },
             { width: "20%", label: "Product", name: "product" },
-            { width: "20%", label: "Volume", name: "volume" },
+            { width: "5%", label: "Volume", name: "volume" },
             { width: "20%", label: "Extracted", name: "extracted" },
-            { width: "20%", label: "Expiry", name: "expiry" }
+            { width: "20%", label: "Expiry", name: "expiry" },
+            { width: "20%", label: "Transaction", name: "Transaction" },
         ];
 
         columns.forEach(column => {

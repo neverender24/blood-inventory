@@ -32,7 +32,7 @@
                             @click="showNearExpiryDetails('laa')" 
                             v-if="nearExpiryMar.length != 0"
                         >
-                            <small>Near Expiry</small>
+                            <small>Near Expiry detected</small>
                         </a>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                             @click="showNearExpiryDetails('mon')" 
                             v-if="nearExpiryMon.length != 0"
                         >
-                            <small>Near Expiry</small>
+                            <small>Near Expiry detected</small>
                         </a>
                     </div>
                 </div>
@@ -103,7 +103,7 @@
                             @click="showNearExpiryDetails('laa')" 
                             v-if="nearExpiryLaa.length != 0"
                         >
-                           <small> <small>Near Expiry</small> detected</small>
+                           <small>Near Expiry detected</small>
                         </a>
                     </div>
                 </div>
@@ -138,7 +138,7 @@
                             @click="showNearExpiryDetails('pan')" 
                             v-if="nearExpiryPan.length != 0"
                         >
-                            <small>Near Expiry</small>
+                            <small>Near Expiry detected</small>
                         </a>
                     </div>
                 </div>
@@ -173,7 +173,7 @@
                             @click="showNearExpiryDetails('cabrera')" 
                             v-if="nearExpiryCabrera.length != 0"
                         >
-                            <small>Near Expiry</small>
+                            <small>Near Expiry detected</small>
                         </a>
                     </div>
                 </div>
@@ -208,7 +208,7 @@
                             @click="showNearExpiryDetails('dch')" 
                             v-if="nearExpiryDch.length != 0"
                         >
-                            <small>Near Expiry</small>
+                            <small>Near Expiry detected</small>
                         </a>
                     </div>
                 </div>
