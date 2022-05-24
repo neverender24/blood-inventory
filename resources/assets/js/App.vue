@@ -65,14 +65,14 @@ export default {
                 );
             });
 
-            axios.post("expired-blood", this.user).then(response => {
-                this.notifications.expired = response.data;
-                this.actual_near_expire = _.groupBy(
-                    response.data,
-                    "blood_type.description"
-                );
-                this.$store.dispatch("toggleLoading", false);
-            });
+            // axios.post("expired-blood", this.user).then(response => {
+            //     this.notifications.expired = response.data;
+            //     this.actual_near_expire = _.groupBy(
+            //         response.data,
+            //         "blood_type.description"
+            //     );
+            //     this.$store.dispatch("toggleLoading", false);
+            // });
         }
     }
 };

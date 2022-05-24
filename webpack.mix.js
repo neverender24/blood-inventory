@@ -12,6 +12,8 @@ let mix = require('laravel-mix');
  */
 
 mix.js('resources/assets/js/app.js', 'public/js')
-   .extract(['vue', 'jquery', 'bootstrap', 'axios', 'lodash', 'moment', 'vuex'])
+   .extract(['jquery', 'bootstrap'], 'public/js/vendor.js')
+   .extract(['vue', 'vuex'], 'public/js/vue.js')
+   .extract(['axios', 'lodash', 'vuelidate', 'vue-toasted'], 'public/js/packages.js')
    .sass('resources/assets/sass/app.scss', 'public/css')
    .version();

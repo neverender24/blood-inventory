@@ -2,7 +2,7 @@
 @import 'variables';
 
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
+// @import '~bootstrap/scss/bootstrap';
 
 // hover
 // @import '~hover.css/scss/hover';
@@ -12,6 +12,8 @@
 
 // fa
 // @import '~font-awesome/scss/font-awesome';
+
+@import "style.css";
 
 @import "~vue-snotify/styles/material"; 
 

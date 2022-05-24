@@ -10,14 +10,15 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         <link rel="stylesheet" href="{{ asset('css/loader.min.css') }}">
         <link rel="stylesheet" href="{{ asset('css/dimmer.min.css') }}">
     </head>
     <body>
         <div id="app"></div>
         <script src="{{ mix('js/manifest.js') }}"></script>
+        <script src="{{ mix('js/packages.js') }}"></script>
         <script src="{{ mix('js/vendor.js') }}"></script>
+        <script src="{{ mix('js/vue.js') }}"></script>
         <script src="{{ mix('js/app.js') }}"></script>
         <script src="{{ asset('js/off-canvas.js') }}"></script>
         <script src="{{ asset('js/hoverable-collapse.js') }}"></script>
