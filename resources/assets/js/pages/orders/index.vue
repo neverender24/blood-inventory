@@ -80,7 +80,7 @@
                             <td v-else>
                                 <label class="badge badge-primary">No</label>
                             </td>
-                            <td v-if="item.received_date==null">
+                            <td v-if="item.delivery_date==null && item.received_date==null">
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <button
                                         type="button"
