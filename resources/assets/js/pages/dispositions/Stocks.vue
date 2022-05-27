@@ -2,6 +2,9 @@
     <div>
         <div class="card">
             <div class="card-body">
+                <div v-if="loading" class="ui inverted active dimmer">
+                    <div class="ui active loader"></div>
+                </div>
                 <h4 class="card-title">Stocks</h4>
                 <div class="row">
                     <div class="form-group col-2">
@@ -218,7 +221,6 @@ export default {
         },
 
         getData(url = "client-dispositions") {
-            this.$store.dispatch("toggleLoading", true);
             this.loading = true
             axios.get(url, { params: this.tableData }).then(response => {
                 let data = response.data;
@@ -227,7 +229,6 @@ export default {
                     this.data = data.data.data;
                     this.configPagination(data.data);
                 }
-                this.$store.dispatch("toggleLoading", false);
                 this.loading = false
             });
         },

@@ -2,6 +2,9 @@
     <div>
         <div class="card">
             <div class="card-body">
+                <div v-if="loading" class="ui inverted active dimmer">
+                    <div class="ui active loader"></div>
+                </div>
                 <h4 class="card-title">Orders</h4>
 
                 <div class="row">
@@ -123,17 +126,17 @@
             </div>
         </div>
 
-        <edit :id="id" :data="editData" :user="user" @refresh="getData()"></edit>
+        <edit :id="id" :data="editData" :user="user" @refresh="getData()" :loading="modalLoading"></edit>
 
         <create
             :user="user"
-            :current_date="current_date"
+            :current_date="current_date" 
             :current_time="current_time"
             :code="code"
             @refresh="getData()"
         ></create>
 
-        <detail :user="user" :data="editData" @refresh="getData()"></detail>
+        <detail :user="user" :data="editData" @refresh="getData()" :loading="modalLoading"></detail>
     </div>
 </template>
 
@@ -204,7 +207,9 @@ export default {
             editData: {},
             current_date: "",
             current_time: "",
-            code: ""
+            code: "",
+            modalLoading: false,
+            loading: true
         };
     },
 
@@ -241,14 +246,14 @@ export default {
 
         getData(url = "orders") {
             this.getDateTime();
-            this.$store.dispatch("toggleLoading", true);
+            this.loading = true
             axios.get(url, { params: this.tableData }).then(response => {
                 let data = response.data;
                 if (this.tableData.draw == data.draw) {
                     this.data = data.data.data;
                     this.configPagination(data.data);
                 }
-                this.$store.dispatch("toggleLoading", false);
+                this.loading = false
             });
         },
 
@@ -257,9 +262,10 @@ export default {
          */
         edit(id, data) {
             this.id = id;
-
+            this.modalLoading = true
             axios.get("/orders/" + this.id + "/edit").then(response => {
                 this.editData = response.data;
+                this.modalLoading = false
             });
         },
 

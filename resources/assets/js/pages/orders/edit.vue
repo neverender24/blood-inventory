@@ -18,6 +18,9 @@
                         </button>
                     </div>
                     <div class="modal-body">
+                        <div v-if="loading" class="ui inverted active dimmer">
+                            <div class="ui active loader"></div>
+                        </div>
                         <form
                             class="forms-sample needs-validation"
                             @submit.prevent="submit"
@@ -160,7 +163,7 @@ import { required, minValue } from "vuelidate/lib/validators";
 import { mapState } from "vuex";
 
 export default {
-    props: ["id", "data"],
+    props: ["id", "data", 'loading'],
     data() {
         return {
             list: {
@@ -174,7 +177,8 @@ export default {
                     }
                 ],
                 transaction_code: ""
-            }
+            },
+            loads: false
         };
     },
 
@@ -182,6 +186,11 @@ export default {
         data: function() {
             let self = this;
             self.list = this.data;
+        },
+        loading(value) {
+            console.log(value)
+            this.loads = value
+            // return loads
         }
     },
 
@@ -252,7 +261,8 @@ export default {
                     }
                 }
             }
-        }
+        },
+        loads: false
     }
 };
 </script>

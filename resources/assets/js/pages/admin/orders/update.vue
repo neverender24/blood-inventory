@@ -19,6 +19,9 @@
                     </div>
 
                     <div class="modal-body">
+                        <div v-if="loading" class="ui inverted active dimmer">
+                            <div class="ui active loader"></div>
+                        </div>
                         <label
                             class="badge badge-danger"
                             v-for="details in data.order_details"
@@ -40,6 +43,7 @@
                                 <div class="row" v-for="(o,index) in orders">
                                     <div class="col-md-2">
                                         <span
+                                             v-if="$v.data.$model.received_date == null"
                                             class="text-danger"
                                             style="cursor: pointer;"
                                             @click="removeDispositionOrder(index)"
@@ -114,7 +118,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success" @click="save()">Save</button>
+                        <button type="button" class="btn btn-success" @click="save()" v-if="$v.data.$model.received_date == null">Save</button>
                         <button
                             type="button"
                             class="btn btn-light"
@@ -139,7 +143,7 @@
 import { ModelSelect } from "vue-search-select";
 import { required, minLength, minValue } from "vuelidate/lib/validators";
 export default {
-    props: ["user", "data", "dispositions"],
+    props: ["user", "data", "dispositions", "loading"],
     components: {
         ModelSelect
     },

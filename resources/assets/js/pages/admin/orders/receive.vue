@@ -19,6 +19,9 @@
                     </div>
 
                     <div class="modal-body">
+                        <div v-if="loading" class="ui inverted active dimmer">
+                            <div class="ui active loader"></div>
+                        </div>
                         <label class="badge badge-dark" v-for="row,index in data.order_details">
                             <button
                                 type="button"
@@ -120,6 +123,7 @@
 <script>
 import { required, minLength, minValue } from "vuelidate/lib/validators";
 import { ModelSelect } from "vue-search-select";
+import loaderVue from '../../../helpers/loader.vue';
 
 export default {
     props: ["user", "data", "dispositions"],
@@ -138,7 +142,8 @@ export default {
             order_detail_id: 0,
             dispositionList: [],
             localDispositions: [],
-            counter: []
+            counter: [],
+            loading: false
         };
     },
 
@@ -168,6 +173,7 @@ export default {
     methods: {
         save() {
             this.$v.$touch();
+            
             if (this.$v.$invalid) {
                 this.$toasted.show("Fill up required fields.", {
                     type: "error",
@@ -178,7 +184,7 @@ export default {
 
                 return false;
             }
-
+            this.loading = true
             axios
                 .post("serve", {
                     orders: this.dispositionList,
@@ -193,6 +199,7 @@ export default {
                     });
                     this.$emit("notify");
                     this.$emit("refresh");
+                    this.loading = false
                 });
         },
 

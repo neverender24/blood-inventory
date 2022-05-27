@@ -18,6 +18,9 @@
                         </button>
                     </div>
                     <div class="modal-body">
+                        <div v-if="loading" class="ui inverted active dimmer">
+                            <div class="ui active loader"></div>
+                        </div>
                         <table class="table table-hover table-bordered table-sm">
                             <thead>
                                 <tr>
@@ -93,7 +96,7 @@
 import { required, minValue } from "vuelidate/lib/validators";
 import { mapState } from "vuex";
 export default {
-    props: ["data"],
+    props: ["data", 'loading'],
     data() {
         return {
             editable: true

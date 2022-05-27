@@ -2,6 +2,9 @@
     <div>
         <div class="card">
             <div class="card-body">
+                <div v-if="loading" class="ui inverted active dimmer">
+                    <div class="ui active loader"></div>
+                </div>
                 <div class="py-3 d-flex flex-row align-items-center justify-content-between print_head">
                     <h4 class="card-title">Dispositions</h4>
                     <json-excel
@@ -233,7 +236,8 @@ export default {
             data: [],
             printData: [],
             id: "",
-            editData: {}
+            editData: {},
+            loading: false
         };
     },
 
@@ -277,14 +281,14 @@ export default {
         },
 
         getData(url = "dispositions") {
-            this.$store.dispatch("toggleLoading", true);
+            this.loading = true
             axios.get(url, { params: this.tableData }).then(response => {
                 let data = response.data;
                 if (this.tableData.draw == data.draw) {
                     this.data = data.data.data;
                     this.configPagination(data.data);
                 }
-                this.$store.dispatch("toggleLoading", false);
+                this.loading = false
 
                 this.tableData.print = false;
             });
