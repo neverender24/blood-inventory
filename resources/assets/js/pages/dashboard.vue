@@ -446,6 +446,8 @@ export default {
             var nearExpiryLaa = [];
             var nearExpiryMar = [];
             var nearExpiryPan = [];
+            var nearExpiryDch = [];
+            var nearExpiryCabrera= [];
 
             _.forEach(stocks, function(stock) {
                 if (stock.prefix == "MON") {
