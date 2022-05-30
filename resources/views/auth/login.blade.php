@@ -10,7 +10,7 @@
   <title>Blood Inventory</title>
   <!-- plugins:css -->
 
-  <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+  <link rel="stylesheet" href="{{ mix('css/app.css') }}" media="screen">
 
   <style>
     .auth.auth-bg-1 {
