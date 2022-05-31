@@ -220,7 +220,7 @@ export default {
             return array.findIndex(i => i[key] == value);
         },
 
-        getData(url = "client-dispositions") {
+        getData: _.debounce(function(url = "client-dispositions") {
             this.loading = true
             axios.get(url, { params: this.tableData }).then(response => {
                 let data = response.data;
@@ -231,7 +231,7 @@ export default {
                 }
                 this.loading = false
             });
-        },
+        }, 500),
 
         release() {},
 

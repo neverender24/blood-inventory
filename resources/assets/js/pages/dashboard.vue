@@ -208,7 +208,7 @@
                             @click="showNearExpiryDetails('dch')" 
                             v-if="nearExpiryDch.length != 0"
                         >
-                            <small>Near Expiry detected</small>
+                            <small>Near Expiry detected</small> 
                         </a>
                     </div>
                 </div>
