@@ -255,7 +255,7 @@ export default {
                 }
                 this.loading = false
             });
-        }, 500),
+        }, 1000),
 
         /**
          * Editing button trigger.
