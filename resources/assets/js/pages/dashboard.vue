@@ -523,7 +523,7 @@ export default {
                     ); 
                     _.forEach(stock.dispositions, function(dispositions) {
                         if (self.nearExpire(dispositions.date_expiry)) {
-                            nearExpiryPan.push(dispositions);
+                            nearExpiryCabrera.push(dispositions);
                         }
                     });
                     self.nearExpiryCabrera = _.groupBy(
@@ -539,7 +539,7 @@ export default {
                     ); 
                     _.forEach(stock.dispositions, function(dispositions) {
                         if (self.nearExpire(dispositions.date_expiry)) {
-                            nearExpiryPan.push(dispositions);
+                            nearExpiryDch.push(dispositions);
                         }
                     });
                     self.nearExpiryDch = _.groupBy(
