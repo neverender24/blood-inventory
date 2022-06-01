@@ -130,10 +130,10 @@ class DispositionController extends Controller
     {
         $request['user_id'] = auth()->user()->id;
         $request['vol'] = (int) $request->vol;
-        $created = $this->model->create($request->all());
+
+        $created = $this->model->create($request->except(['blood_station_id']));
         $disposition = $this->model->find($created->id);
         $bloodStationId = auth()->user()->blood_station_id;
-
         if (!$disposition->users->contains($bloodStationId)) {
             $disposition->users()->attach($bloodStationId);
         }

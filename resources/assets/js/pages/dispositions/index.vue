@@ -280,7 +280,7 @@ export default {
             return array.findIndex(i => i[key] == value);
         },
 
-        getData(url = "dispositions") {
+        getData: _.debounce(function(url = "dispositions") {
             this.loading = true
             axios.get(url, { params: this.tableData }).then(response => {
                 let data = response.data;
@@ -292,7 +292,7 @@ export default {
 
                 this.tableData.print = false;
             });
-        },
+        }, 500),
 
         edit(id, data) {
             this.id = id;

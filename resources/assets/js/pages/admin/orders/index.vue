@@ -255,7 +255,7 @@ export default {
             return array.findIndex(i => i[key] == value);
         },
 
-        getData(url = "orders") {
+        getData: _.debounce(function(url = "orders") {
 
             this.loading = true
             axios.get(url, { params: this.tableData }).then(response => {
@@ -267,7 +267,7 @@ export default {
                 }
                 this.loading = false
             });
-        },
+        }, 500),
 
         /**
          * Editing button trigger.
