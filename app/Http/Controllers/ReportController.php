@@ -33,14 +33,22 @@ class ReportController extends Controller
 
         $bloodStationId = auth()->user()->blood_station_id;
 
-            return $this->bloodStation->with(['dispositions'=>function($q) use ($bloodStationId){
-                $q->with(['bloodComponent', 'bloodType'])->clientDispositions($bloodStationId)->available()->get();
-            }])->whereHas('dispositions', function($a) use ($bloodStationId){
-                $a->clientDispositions($bloodStationId)->available();
-            })->withCount(['dispositions'=>function($q) use ($bloodStationId){
-                $q->clientDispositions($bloodStationId)->available();
-            }])->get();
+            // return $this->bloodStation->with(['dispositions'=>function($q) use ($bloodStationId){
+            //     $q->with(['bloodComponent', 'bloodType'])->clientDispositions($bloodStationId)->available()->get();
+            // }])->whereHas('dispositions', function($a) use ($bloodStationId){
+            //     $a->clientDispositions($bloodStationId)->available();
+            // })->withCount(['dispositions'=>function($q) use ($bloodStationId){
+            //     $q->clientDispositions($bloodStationId)->available();
+            // }])->get();
             
+            return $this->bloodStation->with(['dispositions' => function ($q) use ($bloodStationId) {
+                $q->with(['bloodComponent', 'bloodType'])->available()->get();
+            }])->whereHas('dispositions', function ($a) use ($bloodStationId) {
+                $a->available();
+            })->withCount(['dispositions' => function ($q) use ($bloodStationId) {
+                $q->available();
+            }])->get();
+
         
     }
 

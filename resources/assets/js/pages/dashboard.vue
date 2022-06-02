@@ -29,10 +29,10 @@
                         <a 
                             href="#"
                             class="text-danger" 
-                            @click="showNearExpiryDetails('laa')" 
-                            v-if="nearExpiryMar.length != 0"
+                            @click="showNearExpiryDetails('mar')" 
+                            v-if="nearExpiryDetected(nearExpiryMar)"
                         >
-                            <small>Near Expiry detected</small>
+                            <small>({{ countExpiryDetected(nearExpiryMar) }}) Near Expiry detected</small>
                         </a>
                     </div>
                 </div>
@@ -66,9 +66,9 @@
                             href="#"
                             class="text-danger" 
                             @click="showNearExpiryDetails('mon')" 
-                            v-if="nearExpiryMon.length != 0"
+                            v-if="nearExpiryDetected(nearExpiryMon)"
                         >
-                            <small>Near Expiry detected</small>
+                            <small>({{ countExpiryDetected(nearExpiryMon) }}) Near Expiry detected</small>
                         </a>
                     </div>
                 </div>
@@ -101,9 +101,9 @@
                             href="#"
                             class="text-danger" 
                             @click="showNearExpiryDetails('laa')" 
-                            v-if="nearExpiryLaa.length != 0"
+                            v-if="nearExpiryDetected(nearExpiryLaa)"
                         >
-                           <small>Near Expiry detected</small>
+                           <small>({{ countExpiryDetected(nearExpiryLaa) }}) Near Expiry detected</small>
                         </a>
                     </div>
                 </div>
@@ -136,9 +136,9 @@
                             href="#"
                             class="text-danger" 
                             @click="showNearExpiryDetails('pan')" 
-                            v-if="nearExpiryPan.length != 0"
+                            v-if="nearExpiryDetected(nearExpiryPan)"
                         >
-                            <small>Near Expiry detected</small>
+                            <small>({{ countExpiryDetected(nearExpiryPan) }}) Near Expiry detected</small>
                         </a>
                     </div>
                 </div>
@@ -171,9 +171,9 @@
                             href="#"
                             class="text-danger" 
                             @click="showNearExpiryDetails('cabrera')" 
-                            v-if="nearExpiryCabrera.length != 0"
+                            v-if="nearExpiryDetected(nearExpiryCabrera)"
                         >
-                            <small>Near Expiry detected</small>
+                            <small>({{ countExpiryDetected(nearExpiryCabrera) }}) Near Expiry detected</small>
                         </a>
                     </div>
                 </div>
@@ -206,9 +206,9 @@
                             href="#" 
                             class="text-danger" 
                             @click="showNearExpiryDetails('dch')" 
-                            v-if="nearExpiryDch.length != 0"
+                            v-if="nearExpiryDetected(nearExpiryDch)"
                         >
-                            <small>Near Expiry detected</small> 
+                            <small>({{ countExpiryDetected(nearExpiryDch) }}) Near Expiry detected</small> 
                         </a>
                     </div>
                 </div>
@@ -514,7 +514,7 @@ export default {
                         nearExpiryPan,
                         "blood_type.description"
                     );
-                }  else if (stock.prefix == "CAB") {
+                } else if (stock.prefix == "CAB") {
                     //pantukan
                     self.cabrera = stock.dispositions_count;
                     self.actualCabrera = _.groupBy(
@@ -531,7 +531,7 @@ export default {
                         "blood_type.description"
                     );
                 } else if (stock.prefix == "DCH") {
-                    //pantukan
+
                     self.dch = stock.dispositions_count;
                     self.actualDch = _.groupBy(
                         stock.dispositions,
@@ -585,7 +585,7 @@ export default {
                 tooltips: false
             };
 
-            console.log(this.datacollection)
+            // console.log(this.datacollection)
         },
 
         nearExpire(date) {
@@ -618,7 +618,32 @@ export default {
             } else if (details == "cabrera") {
                 this.showExpiries = this.nearExpiryCabrera;
             }
+        },
+
+        nearExpiryDetected(obj) {
+            if (Object.keys(obj).length != 0) {
+                return true
+            }
+
+            return false
+        },
+
+        countExpiryDetected(obj) {
+           // console.log(obj)
+            var count = 0
+            if (Object.keys(obj).length == 0) {
+                return ""
+            }
+
+            _.forEach(obj, function(e) {
+                 _.forEach(e, function(i) {
+                     count++
+                 })
+            })
+
+            return count
         }
+        
     }
 };
 </script>
