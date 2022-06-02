@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +8,7 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>Blood Inventory</title>
   <!-- plugins:css -->
-
+  <link rel="icon" type="image/x-icon" href="/images/favicon.png">
   <link rel="stylesheet" href="{{ mix('css/app.css') }}" media="screen">
 
   <style>
@@ -27,7 +26,7 @@
           <div class="col-lg-4 mx-auto">
             <div class="auto-form-wrapper">
               <div class="row text-center">
-                <div class="col-md-offset-4">
+                <div class="col-md-12">
                   <img src="images/logo.png" class="img-responsive w-50" alt="">
                 </div>
 
