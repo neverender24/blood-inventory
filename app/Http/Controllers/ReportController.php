@@ -88,7 +88,7 @@ class ReportController extends Controller
             $expire = $expire->clientDispositions($bloodStationId);
         }
         
-        $expire = $expire->nearExpiry()
+        $expire = $expire->available()->nearExpiry()
                         ->get();
 
         return $expire;
