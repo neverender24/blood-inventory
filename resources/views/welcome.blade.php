@@ -7,7 +7,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>Blood Inventory</title>
-
+         <link rel="icon" type="image/x-icon" href="/images/favicon.png">
         <!-- Fonts -->
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
         <link rel="stylesheet" href="{{ asset('css/loader.min.css') }}">
