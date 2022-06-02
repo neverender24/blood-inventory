@@ -94,6 +94,21 @@ class ReportController extends Controller
         return $expire;
     }
 
+    public function getAdminStocks(Request $request) {
+
+        $bloodStationId = auth()->user()->blood_station_id;
+
+        $expire = $this->disposition->withRelationships();
+
+
+        $expire = $expire->adminDispositions($bloodStationId);
+
+        $expire = $expire->available()
+                        ->get();
+
+        return $expire;
+    }
+
     public function getExpiredDispositions(Request $request) {
         
         $bloodStationId = auth()->user()->blood_station_id;

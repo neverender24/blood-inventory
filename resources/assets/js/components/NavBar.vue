@@ -210,6 +210,7 @@ export default {
         axios.get("blood-stations").then(response => {
             this.bloodStations = response.data;
         });
+
     },
     methods: {
         logout() {

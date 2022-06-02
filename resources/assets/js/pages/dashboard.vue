@@ -216,6 +216,34 @@
         </div>
 <hr>
         <div class="row">
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 mb-1" v-if="user.role == 'Administrator'">
+                <div class="card card-statistics">
+                    <div v-if="loading" class="ui inverted active dimmer">
+                        <div class="ui active loader"></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h4>PHO Blood Bank</h4>
+                            <div class="float-right">
+                                <h3 class="font-weight-medium text-right" v-text="pho"></h3>
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col-6" v-for="(row, item) in adminStocks">
+                                <p class="mt-1 mb-0">
+                                    <i aria-hidden="true">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+                                          <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                        </svg>
+                                    </i>
+                                    {{ item }} ({{row}})
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
                 <div class="card card-statistics">
                     <div class="card-body">
@@ -428,7 +456,9 @@ export default {
                 }
             },
             datacollection: null,
-            loading: false
+            loading: false,
+            adminStocks: [],
+            pho: 0
         };
     },
     computed: {
@@ -549,6 +579,8 @@ export default {
                 }
             });
             this.loading = !this.loading;
+
+            this.getAdminStocks()
         });
 
         await axios.post("total-stocks", this.user).then(response => {
@@ -578,6 +610,23 @@ export default {
         });
     },
     methods: {
+        async getAdminStocks() {
+            var actualStocks = []
+            var vm = this
+            await axios.post('admin-stocks').then( response => {
+                actualStocks = _.countBy(
+                    response.data,
+                    "blood_type.description"
+                );
+                // console.log(actualStocks)
+                this.adminStocks = actualStocks
+            })
+
+            _.forEach(this.adminStocks, function(e) {
+                vm.pho+= e
+            })
+        },
+
         fillData(chart) {
             this.datacollection = {
                 labels: [""],
