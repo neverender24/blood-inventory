@@ -63,4 +63,13 @@ class ReleaseController extends Controller
 
     	return ['data'=>$index, 'draw'=> $request->draw]; 
     }
+
+    public function getReleasedBy() {
+        $data = $this->model->where('blood_station_id', auth()->user()->blood_station_id)
+                    ->select('released_by')
+                    ->groupBy('released_by')
+                    ->get();
+
+        return $data;
+    }
 }

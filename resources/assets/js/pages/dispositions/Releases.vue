@@ -21,12 +21,17 @@
                         <form class="forms-sample">
                             <div class="form-group">
                                 <label>Released By</label>
-                                <input
+                                <!-- <input
                                     type="text"
                                     class="form-control"
                                     :class="{ 'is-invalid': $v.data.released_by.$error }"
                                     v-model.trim="$v.data.released_by.$model"
-                                />
+                                /> -->
+                                <input list="encodings" class="form-control" :class="{ 'is-invalid': $v.data.released_by.$error }"
+                                v-model.trim="$v.data.released_by.$model">
+                                <datalist id="encodings">
+                                    <option :value="item.released_by" v-for="item in releasedBy">{{ item.released_by }}</option>
+                                </datalist>
                             </div>
 
                             <div class="form-group">
@@ -137,11 +142,15 @@ export default {
                 released_date: "",
                 type: "",
                 remarks: "",
-                dispositions: []
-            }
+                dispositions: [],
+            },
+            releasedBy:[]
         };
     },
-    mounted() {},
+    mounted() {
+        this.getAllReleasedBy()
+        
+    },
     components: {
         ModelSelect
     },
@@ -188,6 +197,12 @@ export default {
 
                 this.$emit("refresh");
             });
+        },
+
+        getAllReleasedBy() {
+            axios.post('get-released-by').then( response => {
+                this.releasedBy = response.data
+            })
         },
 
         addDisposition(index) {

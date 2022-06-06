@@ -21,6 +21,7 @@ Route::post('expired-blood', 'ReportController@getExpiredDispositions');
 Route::post('near-expired-blood', 'ReportController@getNearExpiredDispositions');
 Route::post('admin-stocks', 'ReportController@getAdminStocks');
 Route::post('generate-code', 'OrderController@generateCode');
+Route::post('get-released-by', 'ReleaseController@getReleasedBy');
 
 Route::get('client-dispositions', 'DispositionController@getClientDispositions');
 

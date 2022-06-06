@@ -58,7 +58,7 @@ class ReportController extends Controller
 
         $expire = $this->disposition->withRelationships();
 
-            if ($request['role'] == 'Administrator') {
+            if (auth()->user()->role == 'Administrator') {
                 $expire = $expire->adminDispositions($bloodStationId);
             } else {
                 $expire = $expire->clientDispositions($bloodStationId);
@@ -82,7 +82,7 @@ class ReportController extends Controller
 
         $expire = $this->disposition->withRelationships();
 
-        if ($request['role'] == 'Administrator') {
+        if (auth()->user()->role == 'Administrator') {
             $expire = $expire->adminDispositions($bloodStationId);
         } else {
             $expire = $expire->clientDispositions($bloodStationId);
@@ -115,7 +115,7 @@ class ReportController extends Controller
 
         $expire = $this->disposition->withRelationships();
 
-        if ($request['role'] == 'Administrator') {
+        if (auth()->user()->role == 'Administrator') {
             $expire = $expire->adminDispositions($bloodStationId);
         } else {
             $expire = $expire->clientDispositions($bloodStationId);

@@ -34,12 +34,17 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label>Received By</label>
-                                        <input
+                                        <!-- <input
                                             type="text"
                                             class="form-control"
                                             :class="{ 'is-invalid': $v.data.received_by.$error }"
                                             v-model.trim="$v.data.received_by.$model"
-                                        />
+                                        /> -->
+                                         <input list="encodings" class="form-control" :class="{ 'is-invalid': $v.data.received_by.$error }"
+                                        v-model.trim="$v.data.received_by.$model">
+                                        <datalist id="encodings">
+                                            <option :value="item.released_by" v-for="item in receivedBy">{{ item.released_by }}</option>
+                                        </datalist>
                                     </div>
                                 </div>
                             </div>
@@ -179,7 +184,8 @@ export default {
                 vol: 0,
                 date_extracted: "",
                 date_expiry: ""
-            }
+            },
+            receivedBy: []
         };
     },
     mounted() {
@@ -194,9 +200,19 @@ export default {
         axios.get("blood-stations").then(response => {
             this.bloodStations = response.data;
         });
+
+        this.getAllReceivedBy()
+
+
     },
 
     methods: {
+        getAllReceivedBy() {
+            axios.post('get-released-by').then( response => {
+                this.receivedBy = response.data
+            })
+        },
+
         save() {
             this.$v.$touch();
             if (this.$v.$invalid) {

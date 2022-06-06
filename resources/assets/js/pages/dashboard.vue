@@ -583,7 +583,7 @@ export default {
             this.getAdminStocks()
         });
 
-        await axios.post("total-stocks", this.user).then(response => {
+        await axios.post("total-stocks").then(response => {
             this.stock = response.data;
             this.actualStocks = _.groupBy(this.stock, "blood_type.description");
 
