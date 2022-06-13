@@ -24,6 +24,7 @@ Route::post('generate-code', 'OrderController@generateCode');
 Route::post('get-released-by', 'ReleaseController@getReleasedBy');
 
 Route::get('client-dispositions', 'DispositionController@getClientDispositions');
+Route::post('get-available-dispositions-client', 'DispositionController@getAvailableClientDispositions');
 
 Route::post("printer","OrderController@print");
 

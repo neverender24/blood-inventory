@@ -104,7 +104,7 @@ class ReportController extends Controller
         $expire = $expire->adminDispositions($bloodStationId);
 
         $expire = $expire->available()
-                        ->get();
+                        ->orderBy('serial')->get();
 
         return $expire;
     }

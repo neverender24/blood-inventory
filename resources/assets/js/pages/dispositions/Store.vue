@@ -239,6 +239,12 @@ export default {
                 this.data.vol = "";
 
                 this.$emit("refresh");
+            }).catch( error => {
+                this.$toasted.show("Error: " + error.response.data.message, {
+                    theme: "bubble",
+                    position: "top-right",
+                    duration: 5000
+                });
             });
         },
 

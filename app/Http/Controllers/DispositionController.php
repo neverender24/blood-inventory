@@ -128,6 +128,13 @@ class DispositionController extends Controller
 
     public function storeClient(Request $request)
     {
+
+        $duplicate = $this->model->where('serial', $request->serial)->doesntHave('releases')->first();
+
+        if ($duplicate) {
+            return abort(404, "Duplicate Serial, please release the existing one");
+        }
+
         $request['user_id'] = auth()->user()->id;
         $request['vol'] = (int) $request->vol;
 
@@ -220,10 +227,27 @@ class DispositionController extends Controller
             ->doesntHave('releases')
             ->orderBy($sortFields[$column], $dir);
 
+        if ($show == 'available') {
+            $index->available();
+        } else if ($show == 'near_expiry') {
+            $index->nearExpiry();
+        } else if ($show == 'expired') {
+            $index->expired();
+        }
+
         $this->searchSerial($index, $serial);
         $index = $index->paginate($length);
         $this->addExpiryField($index);
 
         return ['data' => $index, 'draw' => $request->draw];
+    }
+
+    public function getAvailableClientDispositions(Request $request)
+    {
+        return $this->model->withRelationships()
+            ->whereHas('users', function ($u) {
+                $u->where('blood_station_id', auth()->user()->blood_station_id);
+            })
+            ->doesntHave('releases')->available()->get();
     }
 }
