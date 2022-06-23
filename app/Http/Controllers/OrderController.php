@@ -25,12 +25,21 @@ class OrderController extends Controller
 		$dir = $request->dir;
         $date_ordered = $request->date_ordered;
         $transaction_code = $request->transaction_code;
-        
+        $show = $request->show;
+
         $index = $this->model->with(['user', 'order_details'])
                     ->orderBy($sortFields[$column], $dir);
 
         if (auth()->user()->role != 'Administrator') {
             $index->isOwner();
+        }
+
+        if ($show == 'Pending') {
+            $index->whereNull('delivery_date');
+        } else if ($show == 'Delivered') {
+            $index->whereNotNull('delivery_date')->whereNull('received_date');
+        } else if ($show == 'Completed') {
+            $index->whereNotNull('delivery_date')->whereNotNull('received_date');
         }
 
         if ($transaction_code) {
@@ -45,7 +54,7 @@ class OrderController extends Controller
 			});
 		}
 
-		$index = $index->paginate($length);
+		$index = $index->latest()->paginate($length);
 
     	return ['data'=>$index, 'draw'=> $request->draw];
     }

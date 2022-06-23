@@ -9,7 +9,7 @@ Route::get('/', 'UserController@welcome')->middleware('auth');
 Route::get('blood-types', 'BloodTypeController@index');
 Route::get('blood-components', 'BloodComponentController@index');
 Route::get('blood-stations', 'BloodStationController@index');
-Route::get('get-no-dispositions', 'DispositionController@getNoDispositions');
+Route::post('get-no-dispositions', 'DispositionController@getNoDispositions');
 Route::get('get-dispositions', 'DispositionController@getDispositions');
 Route::get('get-releases', 'ReleaseController@getReleaseDispositions');
 Route::get('get-details', 'OrderController@getDetails');

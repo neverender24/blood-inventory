@@ -49,7 +49,10 @@ export default {
         };
     },
 
-    mounted() {},
+    mounted() {
+        this.$store.dispatch("loadBloodTypes");
+        this.$store.dispatch("loadBloodComponents");
+    },
 
     computed: {
         ...mapState(["user", "loading"])

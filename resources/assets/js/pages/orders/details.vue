@@ -1,21 +1,12 @@
 <template>
     <div>
         <!-- Modal starts -->
-        <div
-            class="modal fade"
-            id="detailsModal"
-            tabindex="-1"
-            role="dialog"
-            aria-labelledby="exampleModalLabel"
-            aria-hidden="true"
-        >
+        <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog modal-md" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Details</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
                     </div>
                     <div class="modal-body">
                         <div v-if="loading" class="ui inverted active dimmer">
@@ -45,36 +36,25 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label>Recieve Date</label>
-                                        <input
-                                            type="date"
-                                            class="form-control"
+                                        <input type="date" class="form-control"
                                             :class="{ 'is-invalid': $v.data.received_date.$error }"
-                                            v-model.trim="$v.data.received_date.$model"
-                                        />
+                                            v-model.trim="$v.data.received_date.$model" />
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label>Receive Time</label>
-                                        <input
-                                            type="time"
-                                            class="form-control"
+                                        <input type="time" class="form-control"
                                             :class="{ 'is-invalid': $v.data.received_time.$error }"
-                                            v-model.trim="$v.data.received_time.$model"
-                                        />
+                                            v-model.trim="$v.data.received_time.$model" />
                                     </div>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button
-                            type="button"
-                            class="btn btn-success"
-                            @click="save()"
-                            v-if="editable"
-                        >Save</button>
-                        <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-success" @click="save()" v-if="editable">Save</button>
+                        <button type="button" class="btn btn-light" @click="cancel()">Close</button>
                     </div>
                 </div>
             </div>
@@ -93,7 +73,7 @@
 </style>
 
 <script>
-import { required, minValue } from "vuelidate/lib/validators";
+import { required } from "vuelidate/lib/validators";
 import { mapState } from "vuex";
 export default {
     props: ["data", 'loading'],
@@ -102,20 +82,20 @@ export default {
             editable: true
         };
     },
-    mounted() {},
-    watch: {
-        data: function() {
-            let self = this;
+    mounted() {
+        var vm = this
 
-            if (self.data.received_date != null) {
-                self.editable = false;
-            } else {
-                self.editable = true;
-            }
+        $('#detailsModal').modal('show')
+
+        if (vm.data.received_date != null) {
+            vm.editable = false;
+        } else {
+            vm.editable = true;
         }
     },
     computed: {
         ...mapState(["user"]),
+
         newDetails: function() {
             var details = [];
             _.forEach(this.data.order_details, function(e) {
@@ -134,7 +114,7 @@ export default {
     methods: {
         save() {
             this.$v.$touch();
-            if (this.$v.$invalid) {
+            if (this.$v.$invalid || this.newDetails == 0) {
                 this.$toasted.show("Fix some errors", {
                     type: "error",
                     theme: "bubble",
@@ -154,8 +134,13 @@ export default {
                         duration: 5000
                     });
 
+                    this.cancel()
                     this.$emit("refresh");
                 });
+        },
+        cancel() {
+            $("#detailsModal").modal('hide')
+            this.$emit("closeModal");
         }
     },
 

@@ -135,34 +135,13 @@
                             class="dropdown-menu dropdown-menu-right navbar-dropdown"
                             aria-labelledby="UserDropdown"
                         >
-                            <!-- <a class="dropdown-item p-0">
-                                <div class="d-flex border-bottom">
-                                    <div
-                                        class="py-3 px-4 d-flex align-items-center justify-content-center"
-                                    >
-                                        <i class="fa fa-bookmark mr-0 text-gray"></i>
-                                    </div>
-                                    <div
-                                        class="py-3 px-4 d-flex align-items-center justify-content-center border-left border-right"
-                                    >
-                                        <i class="fa fa-user mr-0 text-gray"></i>
-                                    </div>
-                                    <div
-                                        class="py-3 px-4 d-flex align-items-center justify-content-center"
-                                    >
-                                        <i class="fa fa-address-book mr-0 text-gray"></i>
-                                    </div>
-                                </div>
-                            </a> -->
                             <a
                                 class="dropdown-item mt-2"
-                                data-toggle="modal"
-                                data-target="#registerModal"
+                                @click="register()"
                             >Register User</a>
                             <a
                                 class="dropdown-item"
-                                data-toggle="modal"
-                                data-target="#changePasswordModal"
+                                @click="change()"
                             >Change Password</a>
                             <a href="#" v-on:click="logout()" class="dropdown-item">Sign Out</a>
                         </div>
@@ -181,8 +160,16 @@
                 </button>
             </div>
         </nav>
-        <register :bloodStations="bloodStations"></register>
-        <change-password></change-password>
+
+        <register 
+            v-if="registerModal"
+            @closeModal="registerModal=false"
+        ></register>
+
+        <change-password
+            v-if="changeModal"
+            @closeModal="changeModal=false"
+        ></change-password>
     </div>
 </template>
 
@@ -200,17 +187,13 @@ export default {
 
     data() {
         return {
-            bloodStations: []
+            bloodStations: [],
+            registerModal: false,
+            changeModal: false,
         };
     },
     computed: {
         ...mapState(["user"])
-    },
-    mounted() {
-        axios.get("blood-stations").then(response => {
-            this.bloodStations = response.data;
-        });
-
     },
     methods: {
         logout() {
@@ -220,6 +203,12 @@ export default {
                 .catch(error => {
                     location.reload();
                 });
+        },
+        change() {
+            this.changeModal = true
+        },
+        register() {
+            this.registerModal = true
         }
     }
 };

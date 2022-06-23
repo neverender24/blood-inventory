@@ -1,111 +1,95 @@
 <template>
     <div>
         <!-- Modal starts -->
-        <div
-            class="modal fade"
-            id="receiveOrderModal"
-            tabindex="-1"
-            role="dialog"
-            aria-labelledby="exampleModalLabel"
-            aria-hidden="true"
-        >
+        <div class="modal fade" id="receiveOrderModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog modal-md" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Serve Order</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
                     </div>
 
                     <div class="modal-body">
                         <div v-if="loading" class="ui inverted active dimmer">
                             <div class="ui active loader"></div>
                         </div>
-                        <label class="badge badge-dark" v-for="row,index in data.order_details">
-                            <button
-                                type="button"
-                                class="btn btn-primary btn-fw"
-                                @click="filterDisposition(row.id, row.qty, row.blood_component_id, row.blood_type_id)"
-                            >({{ row.qty }}) {{ row.blood_type.description }} ({{ row.blood_component.description }})</button>
+                        <label class="badge badge-dark" v-for="row, index in data.order_details">
+                            <button type="button" class="btn btn-primary btn-fw"
+                                @click="filterDisposition(row.id, row.qty, row.blood_component_id, row.blood_type_id)">({{
+                                row.qty
+                                }}) {{ row.blood_type.description }} ({{ row.blood_component.description
+                                }})</button>
                         </label>
                         <label class="badge badge-dark">
                             <h6>TOTAL: {{ totalOrder }}</h6>
                         </label>
-                            <div class="form-group">
-                                <div class="row" v-if="selectDisposition.length">
-                                    <div class="col-10">
-                                        <model-select
-                                            :options="selectDisposition"
-                                            v-model="disposition_id"
-                                            placeholder="select item"
-                                        ></model-select>
-                                    </div>
-                                    <div class="col-2">
-                                        <button
-                                            class="btn btn-icons btn-rounded btn-success"
-                                            @click="getSerial()"
-                                        >
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
-                                              <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
-                                            </svg>
-                                        </button>
+                        <div class="form-group">
+                            <div class="row" v-if="selectDisposition.length">
+                                <div class="col-md-10">
+                                    <model-select :options="selectDisposition" v-model="disposition_id"
+                                        placeholder="select item"></model-select>
+                                </div>
+                                <div class="col-md-2">
+                                    <button class="btn btn-success" @click="getSerial()">
+                                        Add
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <hr>
+                            <div class="row" v-if="dispositionList.length">
+                                <div class="col-12">
+                                    <table class="table table-bordered table-sm">
+                                        <tr>
+                                            <td>Serial</td>
+                                            <td>Component</td>
+                                            <td>Type</td>
+                                            <td>Action</td>
+                                        </tr>
+                                        <tr v-for="row, index in dispositionList">
+                                            <td>{{ row.serial }}</td>
+                                            <td>{{ row.component }}</td>
+                                            <td>{{ row.blood }}</td>
+                                            <td>
+                                                <span class="badge badge-danger" @click="removeDisposition(index)"
+                                                    style="cursor: pointer;">Remove</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div v-else>
+                                <div class="row">
+                                    <div class="col-md-12 text-center text-danger">
+                                        No dispositions added
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="row" v-if="dispositionList.length">
-                                    <div class="col-12">
-                                        <table class="table table-bordered table-sm">
-                                            <tr>
-                                                <td>Serial</td>
-                                                <td>Component</td>
-                                                <td>Type</td>
-                                                <td>Action</td>
-                                            </tr>
-                                            <tr v-for="row,index in dispositionList">
-                                                <td>{{row.serial}}</td>
-                                                <td>{{row.component}}</td>
-                                                <td>{{row.blood}}</td>
-                                                <td>
-                                                    <span
-                                                        class="badge badge-danger"
-                                                        @click="removeDisposition(index)"
-                                                    >Remove</span>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Date</label>
+                                    <input type="date" class="form-control"
+                                        :class="{ 'is-invalid': $v.details.delivery_date.$error }"
+                                        v-model.trim="$v.details.delivery_date.$model" />
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label>Date</label>
-                                        <input
-                                            type="date"
-                                            class="form-control"
-                                            :class="{ 'is-invalid': $v.details.delivery_date.$error }"
-                                            v-model.trim="$v.details.delivery_date.$model"
-                                        />
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label>Time</label>
-                                        <input
-                                            type="time"
-                                            class="form-control"
-                                            :class="{ 'is-invalid': $v.details.delivery_time.$error }"
-                                            v-model.trim="$v.details.delivery_time.$model"
-                                        />
-                                    </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Time</label>
+                                    <input type="time" class="form-control"
+                                        :class="{ 'is-invalid': $v.details.delivery_time.$error }"
+                                        v-model.trim="$v.details.delivery_time.$model" />
                                 </div>
                             </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-success" @click="save()">Save</button>
-                        <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-light" @click="closeModal()">Close</button>
                     </div>
                 </div>
             </div>
@@ -121,12 +105,11 @@
 </style>
 
 <script>
-import { required, minLength, minValue } from "vuelidate/lib/validators";
+import { required } from "vuelidate/lib/validators";
 import { ModelSelect } from "vue-search-select";
-import loaderVue from '../../../helpers/loader.vue';
 
 export default {
-    props: ["user", "data", "dispositions"],
+    props: ["user", "data"],
     components: {
         ModelSelect
     },
@@ -143,23 +126,32 @@ export default {
             dispositionList: [],
             localDispositions: [],
             counter: [],
-            loading: false
+            loading: false,
+            dispositions: []
         };
     },
 
+    mounted() {
+        $('#receiveOrderModal').modal('show')
+
+        axios.post("get-no-dispositions").then(response => {
+            this.dispositions = response.data;
+        });
+    },
+
     computed: {
-        totalOrder: function() {
+        totalOrder: function () {
             return _.sumBy(this.data.order_details, "qty");
         },
 
         /**
          * Select unique and available dispositions from list. We need this to re-display serial in selectbox
          */
-        selectDisposition: function() {
+        selectDisposition: function () {
             var self = this;
             var select = [];
 
-            _.forEach(_.uniqBy(self.localDispositions, "serial"), function(e) {
+            _.forEach(_.uniqBy(self.localDispositions, "serial"), function (e) {
                 select.push({
                     value: e.id,
                     text: e.serial
@@ -173,8 +165,8 @@ export default {
     methods: {
         save() {
             this.$v.$touch();
-            
-            if (this.$v.$invalid) {
+
+            if (this.$v.$invalid || this.dispositionList.length == 0) {
                 this.$toasted.show("Fill up required fields.", {
                     type: "error",
                     theme: "bubble",
@@ -197,6 +189,8 @@ export default {
                         position: "top-right",
                         duration: 5000
                     });
+
+
                     this.$emit("notify");
                     this.$emit("refresh");
                     this.loading = false
@@ -218,8 +212,13 @@ export default {
             });
         },
 
-        removeDisposition: function(index) {
+        removeDisposition: function (index) {
             this.dispositionList.splice(index, 1);
+        },
+
+        closeModal() {
+            this.$emit("closeModal");
+            $('#receiveOrderModal').modal('hide')
         },
 
         getSerial() {
@@ -230,7 +229,7 @@ export default {
             });
 
             var tot = 1;
-            _.forEach(self.dispositionList, function(f) {
+            _.forEach(self.dispositionList, function (f) {
                 if (
                     f.component_id == self.counter.component &&
                     f.type == self.counter.type
@@ -284,7 +283,7 @@ export default {
                 required
             }
         },
-        orders: {
+        dispositionList: {
             $each: {
                 disposition_id: {
                     required

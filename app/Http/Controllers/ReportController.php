@@ -70,10 +70,15 @@ class ReportController extends Controller
     }
 
     public function getPendingOrders() {
-        return $this->order->whereHas('user', function($q){
-            $q->where('blood_station_id', auth()->user()->blood_station_id)
-                ->orWhere('blood_station_id', 5);
-        })->whereNull('delivery_date')->count();
+
+        if (auth()->user()->blood_station_id == 5 ) {
+            return $this->order->whereNull('delivery_date')->count();
+        } else {
+            return $this->order->whereHas('user', function($q){
+                $q->where('blood_station_id', auth()->user()->blood_station_id);
+                    // ->orWhere('blood_station_id', 5);
+            })->whereNull('delivery_date')->count();
+        }
     }
 
     public function getNearExpiredDispositions(Request $request) {

@@ -7,6 +7,12 @@
                 </div>
                 <div class="py-3 d-flex flex-row align-items-center justify-content-between print_head">
                     <h4 class="card-title">Dispositions</h4>
+
+                     <button @click="createDisposition()" class="btn btn-success btn-sm float-right">New Disposition
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                        </svg>
+                      </button>
                     <json-excel
                         class="btn btn-default"
                         :fetch="print"
@@ -23,6 +29,7 @@
                             </span>
                         </button>
                     </json-excel>
+
                 </div>
                 <div class="row">
                     <div class="form-group col-2">
@@ -158,8 +165,10 @@
             :data="editData"
             @refresh="getData()"
             @notify="refreshNotification()"
+            @closeModal="editModal=false" 
+             v-if="editModal"
         ></edit-disposition>
-        <create-disposition @refresh="getData()"></create-disposition>
+        <create-disposition @refresh="getData()" @closeModal="createModal=false" v-if="createModal"></create-disposition>
     </div>
 </template>
 <style>
@@ -237,7 +246,9 @@ export default {
             printData: [],
             id: "",
             editData: {},
-            loading: false
+            loading: false,
+            createModal: false,
+            editModal: false,
         };
     },
 
@@ -245,8 +256,8 @@ export default {
         // this.$store.dispatch("toggleLoading", true);
         this.getData();
 
-        this.$store.dispatch("loadBloodTypes");
-        this.$store.dispatch("loadBloodComponents");
+        // this.$store.dispatch("loadBloodTypes");
+        // this.$store.dispatch("loadBloodComponents");
 
         setTimeout(() => {
             this.$emit("notify");
@@ -275,7 +286,7 @@ export default {
             this.tableData.dir = this.sortOrders[key] === 1 ? "asc" : "desc";
             this.getData();
         },
-
+ 
         getIndex(array, key, value) {
             return array.findIndex(i => i[key] == value);
         },
@@ -291,12 +302,14 @@ export default {
                 this.loading = false
 
                 this.tableData.print = false;
+                // this.createModal = false
+                // this.editModal = false
             });
         }, 500),
 
         edit(id, data) {
             this.id = id;
-
+            this.editModal = true
             axios.get("/dispositions/" + this.id + "/edit").then(response => {
                 this.editData = response.data;
             });
@@ -330,6 +343,10 @@ export default {
                     { text: "No", action: () => this.$snotify.remove() }
                 ]
             });
+        },
+
+        createDisposition() {
+            this.createModal = true
         },
 
         nearExpire(expiry) {

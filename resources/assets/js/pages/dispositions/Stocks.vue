@@ -12,8 +12,6 @@
                             type="button"
                             class="btn btn-outline-primary btn-sm btn-block"
                             @click="store()"
-                            data-toggle="modal"
-                            data-target="#storeModal"
                         >Store</button>
                     </div>
                     <div class="form-group col-2">
@@ -121,14 +119,22 @@
                 ></pagination>
             </div>
         </div>
-        <releases :dispositions="dispositions"></releases>
+        <releases 
+            :dispositions="dispositions" 
+            v-if="releaseModal" 
+            @closeModal=" 
+            releaseModal=false"
+        ></releases>
+
         <edit-disposition
             :id="id"
             :data="editData"
             @refresh="getData()"
             @notify="refreshNotification()"
+            @closeModal="editModal=false" 
+             v-if="editModal"
         ></edit-disposition>
-        <store></store>
+        <store v-if="storeModal" @closeModal="storeModal=false" ></store>
     </div>
 </template>
 
@@ -193,7 +199,10 @@ export default {
             id: "",
             editData: {},
             loading: false,
-            dispositions: []
+            dispositions: [],
+            storeModal: false,
+            editModal: false,
+            releaseModal: false,
         };
     },
 
@@ -245,16 +254,22 @@ export default {
         release() {
             axios.post("/get-available-dispositions-client").then( response => {
                 this.dispositions = response.data
+
+                this.releaseModal = true
             })
         },
 
-        store() {},
+        store() {
+            this.storeModal = true
+        },
 
         edit(id, data) {
             this.id = id;
 
             axios.get("/dispositions/" + this.id + "/edit").then(response => {
                 this.editData = response.data;
+
+                this.editModal = true
             });
         },
 

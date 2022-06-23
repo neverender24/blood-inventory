@@ -403,11 +403,9 @@
                 </div>
             </div>
         </div>
-        <create-disposition></create-disposition>
     </div>
 </template>
 <script>
-import CreateDisposition from "./dispositions/create.vue";
 import LineChart from "./LineChart.js";
 import { mapState } from "vuex";
 
@@ -420,7 +418,6 @@ export default {
         "actual_near_expire"
     ],
     components: {
-        CreateDisposition,
         LineChart
     },
     data() {

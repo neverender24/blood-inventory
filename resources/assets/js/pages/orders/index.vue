@@ -9,15 +9,13 @@
 
                 <div class="row">
                     <div class="form-group col-1">
-                        <button
-                            class="btn btn-success btn-block"
-                            data-toggle="modal"
-                            data-target="#orderModal"
-                            @click="add()"
-                        >
+                        <button class="btn btn-success btn-block" data-toggle="modal" data-target="#orderModal"
+                            @click="add()">
                             <i>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-                                  <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                        d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
                                 </svg>
                             </i>
                         </button>
@@ -27,37 +25,33 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
                                     <i>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel-fill" viewBox="0 0 16 16">
-                                          <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2z"/>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-funnel-fill" viewBox="0 0 16 16">
+                                            <path
+                                                d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2z" />
                                         </svg>
                                     </i>
                                 </span>
                             </div>
-                            <input
-                                type="date"
-                                class="form-control"
-                                v-model="tableData.date_ordered"
-                                @input="getData()"
-                            />
+                            <input type="date" class="form-control" v-model="tableData.date_ordered"
+                                @input="getData()" />
                         </div>
                     </div>
                     <div class="form-group col-3">
-                        <input
-                            type="text"
-                            class="form-control"
-                            v-model="tableData.transaction_code"
-                            placeholder="Enter transaction code"
-                            @input="getData()"
-                        />
+                        <input type="text" class="form-control" v-model="tableData.transaction_code"
+                            placeholder="Enter transaction code" @input="getData()" />
+                    </div>
+                    <div class="form-group col-2">
+                        <select v-model="tableData.show" @change="getData()" class="form-control form-control-sm">
+                            <option value="all">All</option>
+                            <option value="Pending" selected>Pending</option>
+                            <option value="Delivered">Delivered</option>
+                            <option value="Completed">Completed</option>
+                        </select>
                     </div>
                 </div>
 
-                <datatable
-                    :columns="columns"
-                    :sortKey="sortKey"
-                    :sortOrders="sortOrders"
-                    @sort="sortBy"
-                >
+                <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
                     <tbody>
                         <tr v-for="item in data" :key="item.serial">
                             <td>{{ item.transaction_code }}</td>
@@ -67,76 +61,53 @@
                             <td>{{ item.delivery_date }}</td>
                             <td>{{ item.delivery_time }}</td>
                             <!-- Check Status -->
-                            <td v-if="item.received_date!=null">
+                            <td v-if="item.received_date != null">
                                 <label class="badge badge-success">Completed</label>
                             </td>
-                            <td v-else-if="item.delivery_date!=null">
+                            <td v-else-if="item.delivery_date != null">
                                 <label class="badge badge-info">Delivered</label>
                             </td>
                             <td v-else>
                                 <label class="badge badge-warning">Pending</label>
                             </td>
 
-                            <td v-if="item.routine==1">
+                            <td v-if="item.routine == 1">
                                 <label class="badge badge-danger">Yes</label>
                             </td>
                             <td v-else>
                                 <label class="badge badge-primary">No</label>
                             </td>
-                            <td v-if="item.delivery_date==null && item.received_date==null">
+                            <td v-if="item.delivery_date == null && item.received_date == null">
                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                    <button
-                                        type="button"
-                                        class="btn btn-outline-primary"
-                                        @click="edit(item.id)"
-                                        data-toggle="modal"
-                                        data-target="#editOrderModal"
-                                    >Edit</button>
-                                    <button
-                                        type="button"
-                                        class="btn btn-outline-danger"
-                                        @click="del(item.id)"
-                                    >Delete</button>
+                                    <button type="button" class="btn btn-outline-primary"
+                                        @click="edit(item.id, 'edit')">Edit</button>
+                                    <button type="button" class="btn btn-outline-danger"
+                                        @click="del(item.id)">Delete</button>
                                 </div>
                             </td>
                             <td v-else>
                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                    <button
-                                        type="button"
-                                        class="btn btn-outline-primary"
-                                        @click="edit(item.id)"
-                                        data-toggle="modal"
-                                        data-target="#detailsModal"
-                                    >Details</button>
-                                    <button
-                                        type="button"
-                                        class="btn btn-outline-primary"
-                                        @click="printer(item.id)"
-                                    >Print</button>
+                                    <button type="button" class="btn btn-outline-primary"
+                                        @click="edit(item.id, 'details')">Details</button>
+                                    <button type="button" class="btn btn-outline-primary"
+                                        @click="printer(item.id)">Print</button>
                                 </div>
                             </td>
                         </tr>
                     </tbody>
                 </datatable>
-                <pagination
-                    :pagination="pagination"
-                    @prev="getData(pagination.prevPageUrl)"
-                    @next="getData(pagination.nextPageUrl)"
-                ></pagination>
+                <pagination :pagination="pagination" @prev="getData(pagination.prevPageUrl)"
+                    @next="getData(pagination.nextPageUrl)"></pagination>
             </div>
         </div>
 
-        <edit :id="id" :data="editData" :user="user" @refresh="getData()" :loading="modalLoading"></edit>
+        <edit :id="id" :data="editData" :user="user" @refresh="getData()" :loading="modalLoading"
+            @closeModal="editModal = false" v-if="editModal"></edit>
 
-        <create
-            :user="user"
-            :current_date="current_date" 
-            :current_time="current_time"
-            :code="code"
-            @refresh="getData()"
-        ></create>
+        <create :user="user" @refresh="getData()" @closeModal="editModal = false" v-if="createModal"></create>
 
-        <detail :user="user" :data="editData" @refresh="getData()" :loading="modalLoading"></detail>
+        <detail :user="user" :data="editData" @refresh="getData()" :loading="modalLoading"
+            @closeModal="detailModal = false" v-if="detailModal"></detail>
     </div>
 </template>
 
@@ -146,7 +117,7 @@ import Pagination from "../../helpers/pagination.vue";
 import Edit from "./edit";
 import Create from "./create.vue";
 import Detail from "./details.vue";
-import { mapActions } from "vuex";
+import { mapState } from "vuex";
 
 export default {
     props: ["user"],
@@ -190,7 +161,8 @@ export default {
                 transaction_code: "",
                 column: 0,
                 dir: "desc",
-                serial: ""
+                serial: "",
+                show: "all"
             },
             pagination: {
                 lastPage: "",
@@ -205,19 +177,20 @@ export default {
             data: [],
             id: "",
             editData: {},
-            current_date: "",
-            current_time: "",
-            code: "",
             modalLoading: false,
-            loading: true
+            loading: true,
+            editModal: false,
+            createModal: false,
+            detailModal: false,
         };
     },
 
     mounted() {
-        this.$store.dispatch("loadBloodTypes");
-        this.$store.dispatch("loadBloodComponents");
-
         this.getData();
+    },
+
+    computed: {
+        ...mapState(["bloodTypes", "bloodComponents"])
     },
 
     methods: {
@@ -244,8 +217,7 @@ export default {
             return array.findIndex(i => i[key] == value);
         },
 
-        getData: _.debounce(function(url = "orders") {
-            this.getDateTime();
+        getData: _.debounce(function (url = "orders") {
             this.loading = true
             axios.get(url, { params: this.tableData }).then(response => {
                 let data = response.data;
@@ -260,12 +232,18 @@ export default {
         /**
          * Editing button trigger.
          */
-        edit(id, data) {
+        edit(id, type) {
             this.id = id;
             this.modalLoading = true
             axios.get("/orders/" + this.id + "/edit").then(response => {
                 this.editData = response.data;
                 this.modalLoading = false
+
+                if (type == 'edit') {
+                    this.editModal = true
+                } else {
+                    this.detailModal = true
+                }
             });
         },
 
@@ -273,10 +251,7 @@ export default {
          * Adding button trigger.
          */
         add() {
-            axios.post("generate-code").then(response => {
-                this.code = response.data;
-            });
-            this.getDateTime();
+            this.createModal = true
         },
 
         /**
@@ -306,31 +281,6 @@ export default {
                     { text: "No", action: () => this.$snotify.remove() }
                 ]
             });
-        },
-
-        /**
-         * getting the current date and time.
-         * This will be used as default values to create inputs.
-         */
-        getDateTime() {
-            var date = new Date();
-            this.current_date = date.toISOString().slice(0, 10);
-            this.current_time =
-                this.leadZero(date.getHours()) +
-                ":" +
-                this.leadZero(date.getMinutes()) +
-                ":00";
-        },
-
-        /**
-         * Add leading zero to time to be accepted with the browser as default.
-         */
-        leadZero(time) {
-            if (parseInt(time) < 10) {
-                return "0" + time;
-            }
-
-            return time;
         },
 
         /**

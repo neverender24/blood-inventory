@@ -131,8 +131,7 @@
                             </a> -->
                             <a
                                 class="dropdown-item"
-                                data-toggle="modal"
-                                data-target="#changePasswordModal"
+                                @click="change()"
                             >Change Password</a>
                             <a href="#" v-on:click="logout()" class="dropdown-item">Sign Out</a>
                         </div>
@@ -151,24 +150,27 @@
                 </button>
             </div>
         </nav>
-        <register></register>
-        <change-password></change-password>
+
+        <change-password
+            v-if="changeModal"
+            @closeModal="changeModal=false"
+        ></change-password>
     </div>
 </template>
 
 <script>
-import Register from "../pages/users/register";
 import ChangePassword from "../pages/users/changePassword";
 import { mapState } from "vuex";
 
 export default {
     props: ["notifications"],
     components: {
-        Register,
         ChangePassword
     },
     data() {
-        return {};
+        return {
+            changeModal: false,
+        };
     },
     computed: {
         ...mapState(["user"])
@@ -181,6 +183,9 @@ export default {
                 .catch(error => {
                     location.reload();
                 });
+        },
+        change() {
+            this.changeModal = true
         }
     }
 };

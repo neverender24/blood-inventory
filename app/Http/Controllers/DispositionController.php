@@ -108,9 +108,10 @@ class DispositionController extends Controller
         }
     }
 
-    public function getNoDispositions()
+    public function getNoDispositions(Request $request)
     {
-        return $this->model->with(['bloodType', 'bloodComponent'])->doesntHave('order_details')->get();
+        return $this->model->with(['bloodType', 'bloodComponent'])
+            ->where('serial',  'LIKE', '%' . $request->q . '%')->get();
     }
 
     public function getDispositions()
@@ -137,6 +138,7 @@ class DispositionController extends Controller
 
         $request['user_id'] = auth()->user()->id;
         $request['vol'] = (int) $request->vol;
+        $request['source'] = (int) $request->source;
 
         $created = $this->model->create($request->except(['blood_station_id']));
         $disposition = $this->model->find($created->id);
@@ -199,8 +201,17 @@ class DispositionController extends Controller
         }
 
         foreach ($details["orders"] as $detail => $value) {
-            if ($value["disposition_id"]) {
-                $disposition = $this->model->find($value["disposition_id"]);
+
+            $id = null;
+            if (gettype($value["disposition_id"]) != 'array') {
+                $id = $value["disposition_id"];
+            } else {
+                $id = $value["disposition_id"]['value'];
+            }
+
+
+            if ($id) {
+                $disposition = $this->model->find($id);
                 if (!$disposition->order_details->contains($value["order_detail_id"])) {
                     $disposition->order_details()->attach($value["order_detail_id"]);
                 }
@@ -248,6 +259,6 @@ class DispositionController extends Controller
             ->whereHas('users', function ($u) {
                 $u->where('blood_station_id', auth()->user()->blood_station_id);
             })
-            ->doesntHave('releases')->available()->get();
+            ->doesntHave('releases')->get();
     }
 }

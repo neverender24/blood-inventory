@@ -16,7 +16,8 @@ class Disposition extends Model
         'blood_component_id',
         'blood_type_id',
         'user_id',
-        'blood_station_id'
+        'blood_station_id',
+        'source'
     ];
 
     public function bloodType() {
