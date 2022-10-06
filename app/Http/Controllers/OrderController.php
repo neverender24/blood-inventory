@@ -7,14 +7,12 @@ use App\Disposition;
 use App\BloodStation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use JasperPHP\JasperPHP as JasperPHP;
 
 class OrderController extends Controller
 {
-    public function __construct(Order $order, JasperPHP $jasper) {
+    public function __construct(Order $order) {
         $this->model = $order;
         $this->middleware('auth');
-        $this->jasper = $jasper;
     }
 
     public function index(Request $request) {
@@ -176,23 +174,5 @@ class OrderController extends Controller
 
         return $prefix."-".date('Y')."-".($sortedCode[0] + 1);
     }
-
-    public function print(Request $request)
-    {
-        $path = public_path();
-        
-        $this->jasper->compile($path . '/reports/report3.jrxml')->execute();
-
-        $this->jasper->process(
-            $path . '/reports/report3.jasper',
-            $path . '/reports/report3',
-            array("pdf"),
-            array(
-              "order_id"=> $request->id
-            ),
-            config('database.connections.mysql') //DB connection array
-        )->execute();
-    }
-
 
 }
