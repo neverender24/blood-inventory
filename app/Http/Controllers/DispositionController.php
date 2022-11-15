@@ -30,9 +30,9 @@ class DispositionController extends Controller
         $blood_component_id = $request->blood_component_id;
         $print = $request->print;
 
-        $index = $this->model->withRelationships()
-            ->doesntHave('users')
-            ->orderBy($sortFields[$column], $dir);
+        $index = $this->model->withRelationships();
+            // ->doesntHave('users');
+            // ->orderBy($sortFields[$column], $dir);
 
         if ($show == 'available') {
             $index->doesntHave('order_details')->available();
@@ -76,7 +76,7 @@ class DispositionController extends Controller
 
         if ($searchValue) {
             return $collection->where(function ($query) use ($searchValue) {
-                $query->orWhere('date_received', 'LIKE', '%' . $searchValue . '%');
+                $query->whereDate('date_received', $searchValue);
             });
         }
     }
