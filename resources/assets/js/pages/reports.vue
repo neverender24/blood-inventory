@@ -8,7 +8,7 @@
         
         <!-- Modal -->
         <div class="modal fade" id="modal_print_cafoa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel"><span class="fa fa-print"></span> PRINT</h5>
@@ -19,9 +19,6 @@
                 <button class="btn btn-primary" @click="display_report1()" v-if="report == 1">Display</button>
                 <button class="btn btn-primary" @click="display_report2()" v-if="report == 2">Display</button>
                 <button class="btn btn-primary" @click="display_bm6()" v-if="report == 3">Display</button>
-                <div class="embed-responsive embed-responsive-16by9">
-                    <iframe class="embed-responsive-item" src=""></iframe> 
-                    </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger btn-sm" @click="close()">Close</button>
@@ -55,7 +52,10 @@ export default {
                 "&decorate=no" +
                 "&year="+this.year;
 
-            $("iframe").attr("src", url);
+            window.open(
+              url,
+              '_blank'
+            );
         },
 
         display_report2() {
@@ -65,7 +65,10 @@ export default {
                 "&decorate=no" +
                 "&year="+this.year;
 
-            $("iframe").attr("src", url);
+            window.open(
+              url,
+              '_blank'
+            );
         },
 
         display_bm6() {
@@ -75,7 +78,10 @@ export default {
                 "&decorate=no" +
                 "&year="+this.year;
 
-            $("iframe").attr("src", url);
+            window.open(
+              url,
+              '_blank'
+            );
         },
 
         print_report1() {
