@@ -31,6 +31,15 @@
                     </json-excel>
 
                 </div>
+                <div class="form-group col-2">
+                    <button
+                        type="button"
+                        class="btn btn-outline-primary btn-sm btn-block"
+                        @click="release()"
+                        data-toggle="modal"
+                        data-target="#releaseModal"
+                    >Release</button>
+                </div>
                 <div class="row">
                     <div class="form-group col-2">
                         <select v-model="tableData.show" @change="getData()" class="form-control">
@@ -106,7 +115,10 @@
                             <td>{{ item.vol }}</td>
                             <td>{{ item.date_extracted }}</td>
                             <td>{{ item.date_expiry }}</td>
-                            <td>{{ item.order_details.length ? item.order_details[0].order.transaction_code : '' }}</td>
+
+                            <td v-if="item.releases.length != 0 && item.order_details.length == 0">Released</td>
+                            <td v-else>{{ item.order_details.length ? item.order_details[0].order.transaction_code : '' }}</td>
+
                             <td v-if="!item.order_details.length">
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <button
@@ -169,6 +181,12 @@
              v-if="editModal"
         ></edit-disposition>
         <create-disposition @refresh="getData()" @closeModal="createModal=false" v-if="createModal"></create-disposition>
+        <releases 
+            :dispositions="dispositions" 
+            v-if="releaseModal" 
+            @closeModal=" 
+            releaseModal=false"
+        ></releases>
     </div>
 </template>
 <style>
@@ -181,6 +199,7 @@
 import Datatable from "../../helpers/datatable.vue";
 import Pagination from "../../helpers/pagination.vue";
 import EditDisposition from "./edit";
+import Releases from "./Releases.vue";
 import CreateDisposition from "./create.vue";
 import { mapState } from "vuex";
 import JsonExcel from "vue-json-excel";
@@ -191,6 +210,7 @@ export default {
         pagination: Pagination,
         EditDisposition,
         CreateDisposition,
+        Releases,
         JsonExcel
     },
     data() {
@@ -249,6 +269,7 @@ export default {
             loading: false,
             createModal: false,
             editModal: false,
+            releaseModal: false,
         };
     },
 
@@ -306,6 +327,14 @@ export default {
                 // this.editModal = false
             });
         }, 500),
+
+        release() {
+            axios.post("/get-available-dispositions-client").then( response => {
+                this.dispositions = response.data
+
+                this.releaseModal = true
+            })
+        },
 
         edit(id, data) {
             this.id = id;

@@ -19,7 +19,7 @@
                 <button class="btn btn-primary" @click="display_report1()" v-if="report == 1">Display</button>
                 <button class="btn btn-primary" @click="display_report2()" v-if="report == 2">Display</button>
                 <button class="btn btn-primary" @click="display_bm6()" v-if="report == 3">Display</button>
-            </div>
+            </div> 
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger btn-sm" @click="close()">Close</button>
             </div>

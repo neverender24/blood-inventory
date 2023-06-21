@@ -57,6 +57,12 @@
             </router-link>
           </li>
           <li class="nav-item">
+            <router-link to="releases" class="nav-link">
+              <i class="menu-icon fa fa-list"></i>
+              <span class="menu-title">Releases</span>
+            </router-link>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
               <i class="menu-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sliders2" viewBox="0 0 16 16">

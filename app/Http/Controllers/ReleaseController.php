@@ -7,11 +7,13 @@ use Illuminate\Http\Request;
 
 class ReleaseController extends Controller
 {
-    public function __construct(Release $model) {
+    public function __construct(Release $model)
+    {
         $this->model = $model;
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         
         $data = $request['dispositions'];
         $request['blood_station_id'] = auth()->user()->blood_station_id;
@@ -21,10 +23,10 @@ class ReleaseController extends Controller
             $request['disposition_id'] = $save['disposition_id'];
             $this->model->create($request->all());
         }
-       
     }
 
-    public function getReleaseDispositions(Request $request) {
+    public function getReleaseDispositions(Request $request)
+    {
         $sortFields = ['released_date'];
 
 		$length = $request->length;
@@ -57,14 +59,14 @@ class ReleaseController extends Controller
                 $query->where('serial','LIKE','%'.$serial.'%');
             });
         }
-		
 
 		$index = $index->paginate($length);
 
     	return ['data'=>$index, 'draw'=> $request->draw]; 
     }
 
-    public function getReleasedBy() {
+    public function getReleasedBy()
+    {
         $data = $this->model->where('blood_station_id', auth()->user()->blood_station_id)
                     ->select('released_by')
                     ->groupBy('released_by')

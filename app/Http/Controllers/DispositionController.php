@@ -255,6 +255,11 @@ class DispositionController extends Controller
 
     public function getAvailableClientDispositions(Request $request)
     {
+        if (auth()->user()->blood_station_id == 5) { //PHO 
+            return $this->model->withRelationships()
+            ->doesntHave('order_details')->available()->get();
+        }
+
         return $this->model->withRelationships()
             ->whereHas('users', function ($u) {
                 $u->where('blood_station_id', auth()->user()->blood_station_id);
