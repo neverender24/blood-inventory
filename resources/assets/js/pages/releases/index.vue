@@ -53,15 +53,7 @@
                             <td>{{ item.released_by }}</td>
                             <td>{{ item.released_date }}</td>
                             <td>{{ item.released_time }}</td>
-                            <td v-if="item.type == 'Transfer'">
-                                <label class="badge badge-primary">{{ item.type }}</label>
-                            </td>
-                            <td v-if="item.type == 'Transfuse'">
-                                <label class="badge badge-info">{{ item.type }}</label>
-                            </td>
-                            <td v-if="item.type == 'Sell'">
-                                <label class="badge badge-success">{{ item.type }}</label>
-                            </td>
+                            <td>{{ item.type }}</td>
                             <td>{{ item.remarks }}</td>
                             <td>{{ item.disposition.serial }}</td>
                             <td>{{ item.disposition.blood_type.description }}</td>
