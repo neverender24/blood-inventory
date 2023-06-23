@@ -33,8 +33,18 @@
                                     :class="{ 'is-invalid': $v.data.remarks.$error }"
                                     v-model.trim="$v.data.remarks.$model"></textarea>
                             </div>
-
-                            <div class="form-group">
+                            <!-- IF PHO -->
+                            <div class="form-group" v-if="user.blood_station_id == 5">
+                                <label>Type</label>
+                                <select class="form-control" :class="{ 'is-invalid': $v.data.type.$error }"
+                                    v-model.trim="$v.data.type.$model">
+                                    <option value></option>
+                                    <option value="Walk-In">Walk-In</option>
+                                    <option value="Transfer">Transfer</option>
+                                    <option value="Discard">Discard</option>
+                                </select>
+                            </div>
+                            <div v-else class="form-group">
                                 <label>Type</label>
                                 <select class="form-control" :class="{ 'is-invalid': $v.data.type.$error }"
                                     v-model.trim="$v.data.type.$model">
@@ -101,6 +111,7 @@
 <script>
 import { required } from "vuelidate/lib/validators";
 import { ModelSelect } from "vue-search-select";
+import { mapState } from "vuex";
 
 export default {
     props: ["dispositions"],
@@ -126,6 +137,8 @@ export default {
         ModelSelect
     },
     computed: {
+        ...mapState(["user"]),
+
         searchOfficeSelect: function() {
             var self = this;
             var select = [];
