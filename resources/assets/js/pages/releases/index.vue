@@ -49,6 +49,7 @@
                 >
                     <tbody>
                         <tr v-for="item in data" :key="item.id">
+                            <td>{{ item.id }}</td>
                             <td>{{ item.released_by }}</td>
                             <td>{{ item.released_date }}</td>
                             <td>{{ item.released_time }}</td>
@@ -95,6 +96,7 @@ export default {
         let sortOrders = {};
 
         let columns = [
+            { width: "10%", label: "id", name: "id" },
             { width: "10%", label: "Released By", name: "released_by" },
             { width: "10%", label: "Date", name: "released_date" },
             { width: "10%", label: "Time", name: "released_time" },
